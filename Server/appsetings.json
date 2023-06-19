@@ -1,5 +1,0 @@
-{
-    "ConnectionStrings": {
-        "MainConnectionString": "Data Source = localhost; Initial Catalog=DBBooks; User ID=db_admin;Password=Qwert;TrustServerCertificate = True"
-    }
-}

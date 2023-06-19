@@ -1,5 +1,5 @@
 {
     "ConnectionStrings": {
-        "MainConnectionString": "Data Source = localhost; Initial Catalog=DBBooks; User ID=db_admin;Password=Qwert;TrustServerCertificate = True"
+        "MainConnectionString": "Data Source = WIN-1HRDSL41TSK\\SQLEXPRESS; Initial Catalog=DBBooks; User ID=db_admin;Password=Qwert;TrustServerCertificate = True"
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.models;
+namespace ClientTest;
 public class UserDto
 {
     public int Id { get; set; }
