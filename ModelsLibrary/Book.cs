@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ClientTest;
+namespace ModelsLibrary;
 public class Book
 {
     public int Id { get; set; }
+    [Column(TypeName = "nvarchar(50)")]
     public string Name { get; set; } = null!;
+    [Column(TypeName = "nvarchar(50)")]
     public string NameAuthor { get; set; } = null!;
+    [Column(TypeName = "nvarchar(50)")]
     public string Publisher { get; set; } = null!;
+    [Column(TypeName = "nvarchar(50)")]
     public string Genre { get; set; } = null!;
     public int NumberOfPages { get; set; }
     public DateTime TimeOfPublication { get; set; }
@@ -20,4 +19,3 @@ public class Book
     public byte[] Image { get; set; }
     public List<User> Users { get; set; } = new();
 }
-

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Server.models;
+using ModelsLibrary;
 
 namespace Server.Context;
 
