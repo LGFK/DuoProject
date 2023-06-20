@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="config\appsetings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

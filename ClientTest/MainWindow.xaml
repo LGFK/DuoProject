@@ -22,7 +22,7 @@
         <Image Name="Image1" Grid.Column="0" Grid.Row="0"/>
         <Image Name="Image2" Grid.Column="0" Grid.Row="1"/>
         <Image Name="Image3" Grid.Column="1" Grid.Row="0"/>
-        <Image Name="Image4" Grid.Column="1" Grid.Row="1"/>
+        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="2"/>
 
         <Button Grid.Column="3" Grid.Row="3" Click="Button_Click">Get image</Button>
     </Grid>

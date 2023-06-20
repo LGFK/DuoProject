@@ -1,5 +1,7 @@
+using ModelsLibrary;
 using Newtonsoft.Json;
 using Server.Context;
+using Server.core;
 using Server.DbContextsShop;
 using Server.Helper;
 using Server.models;
@@ -11,10 +13,12 @@ namespace Server;
 
 public partial class Form1 : Form
 {
+    ServerCore _server;
     public Form1()
     {
         InitializeComponent();
-
+        _server= new ServerCore();
+        //itin default books
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
             //db.Database.EnsureDeleted();
@@ -34,33 +38,23 @@ public partial class Form1 : Form
             }
         }
     }
-
-    private async void button1_Click(object sender, EventArgs e)
+    private void button1_Click_1(object sender, EventArgs e)
     {
-        /*        var config = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsetings.json")
-                   .Build();
+        _server.StartServer();
+    }
+}
 
-                var options = new DbContextOptionsBuilder<BookShopDbContext>()
-                    .UseSqlServer(config.GetConnectionString("MainConnectionString"))
-                    .Options;*/
-
-
-        DbBook db = new DbBook(DbOptions.GetOptions());
-        //db.GetAllBooks().ForEach(book => { listBox1.Items.Add(book.Name); });
-        //var res = db.GetAllBooks().FirstOrDefault(b => b.Id == 1);
-        List<Book> res = db.GetAllBooks();
+//how get Book/ how get image from List book /
+//DbBook db = new DbBook(DbOptions.GetOptions());
+//db.GetAllBooks().ForEach(book => { listBox1.Items.Add(book.Name); });
+//var res = db.GetAllBooks().FirstOrDefault(b => b.Id == 1);
+/*        List<Book> res = db.GetAllBooks();
 
         var stream = new MemoryStream(res[0].Image);
         pictureBox1.Image = Image.FromStream(stream);
-        db.GetMaxPriceBooks().ForEach(b => { listBox1.Items.Add($"Name = {b.Name}, Cost = {b.Cost}"); });
+        db.GetMaxPriceBooks().ForEach(b => { listBox1.Items.Add($"Name = {b.Name}, Cost = {b.Cost}"); });*/
 
-
-
-
-        //res[0].Image = new byte[0];
-        TcpListener tcpListener = new TcpListener(IPAddress.Any, 1448);
+/*TcpListener tcpListener = new TcpListener(IPAddress.Any, 1448);
         tcpListener.Start();
         var client = await tcpListener.AcceptTcpClientAsync();
         if (client.Connected)
@@ -73,24 +67,20 @@ public partial class Form1 : Form
 
             networkStream.Write(buffer, 0, buffer.Length);
             networkStream.Write(responseToSend, 0, responseToSend.Length);
-        }
+        }*/
 
-        //using (var dbb = new BookShopDbContext(DbOptions.GetOptions()))
-        //{
-        //    var book = dbb.Books.FirstOrDefault(b=>b.Id == 1);
-        //    if (book != null)
-        //    {
-        //        Image img = Image.FromFile("D:\\Desktop\\3.png");
-        //        MemoryStream tmpStream = new MemoryStream();
-        //        img.Save(tmpStream,ImageFormat.Png);
-        //        book.Image = tmpStream.ToArray();
-        //        dbb.SaveChanges();
-        //    }
-        //}
-    }
-}
-
-
+//using (var dbb = new BookShopDbContext(DbOptions.GetOptions()))//add book img
+//{
+//    var book = dbb.Books.FirstOrDefault(b=>b.Id == 1);
+//    if (book != null)
+//    {
+//        Image img = Image.FromFile("D:\\Desktop\\3.png");
+//        MemoryStream tmpStream = new MemoryStream();
+//        img.Save(tmpStream,ImageFormat.Png);
+//        book.Image = tmpStream.ToArray();
+//        dbb.SaveChanges();
+//    }
+//}
 
 /*        using (var db = new  BookShopDbContext(options))
         {
