@@ -16,6 +16,6 @@ public class Book
     public DateTime TimeOfPublication { get; set; }
     public int Cost { get; set; }
     public int PriceForSale { get; set; }
-    public byte[] Image { get; set; }
+    public byte[]? Image { get; set; }
     public List<User> Users { get; set; } = new();
 }

@@ -5,4 +5,5 @@ public enum ComandsLib
     GetAllUsers,
     GetFiveBestBooks,
     Successful,
+    ERROR,
 }

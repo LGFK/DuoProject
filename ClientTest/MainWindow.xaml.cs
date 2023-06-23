@@ -1,15 +1,11 @@
 ﻿using ComandLibrary;
 using CommunicationLibrary;
-using ModelsLibrary;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace ClientTest;
 /// <summary>
@@ -32,26 +28,80 @@ public partial class MainWindow : Window
         var networkStream = client.GetStream();
         var response = new ClientRequest
         {
-            Command = ComandsLib.GetAllBooks,
+            /*Command = ComandsLib.GetAllBooks,*/
+            Command = ComandsLib.GetAllUsers,
             Message = "Hi server, how are you ?"
         };
         var jsonResponse = JsonConvert.SerializeObject(response);
         var responseBytes = Encoding.UTF8.GetBytes(jsonResponse);
         _buffer = BitConverter.GetBytes(responseBytes.Length);
 
-        networkStream.Write(_buffer,0, _buffer.Length);
-        networkStream.Write(responseBytes,0, responseBytes.Length);
+        networkStream.Write(_buffer, 0, _buffer.Length);
+        networkStream.Write(responseBytes, 0, responseBytes.Length);
 
         //get info
-        networkStream.Read(_buffer,0, _buffer.Length);
+        networkStream.Read(_buffer, 0, _buffer.Length);
         var resSize = BitConverter.ToInt32(_buffer, 0);
 
         var requestToReceive = new byte[resSize];
-        networkStream.Read(requestToReceive,0,requestToReceive.Length);
+        networkStream.Read(requestToReceive, 0, requestToReceive.Length);
 
         string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
-        var books = JsonConvert.DeserializeObject<GetBookResponse>(jsonToReceive);
-        if(books != null && books.Books != null && books.Books.Count > 0)
+        var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
+
+        if (comand != null)
+        {
+            switch (comand.Command)
+            {
+                case ComandsLib.GetAllBooks:
+                    var books = JsonConvert.DeserializeObject<GetBookResponse>(jsonToReceive);
+                    if (books!=null && books.Books != null)
+                    {
+                        foreach (var book in books.Books)
+                        {
+                            ListBox.Items.Add(book.Name);
+                        }
+                    }
+
+                    break;
+                case ComandsLib.GetAllUsers:
+                    var users = JsonConvert.DeserializeObject<UsersResponse>(jsonToReceive);
+                    //логіка додавання в бокс
+                    if (users != null && users.Users != null)
+                    {
+                        foreach (var user in users.Users)
+                        {
+                            ListBox.Items.Add(user.Name);
+                        }
+                    }
+                    break;
+                case ComandsLib.GetFiveBestBooks:
+                    var booksFive = JsonConvert.DeserializeObject<GetBookResponse>(jsonToReceive);
+                    if (booksFive != null && booksFive.Books != null)
+                    {
+                        foreach (var book in booksFive.Books)
+                        {
+                            ListBox.Items.Add(book.Name);
+                        }
+                    }
+                    break;
+                case ComandsLib.ERROR:
+                    var ERROR = JsonConvert.DeserializeObject<ClientRequest>(jsonToReceive);
+                    if (ERROR != null)
+                    {
+                        ListBox.Items.Add ($"Error: {ERROR.Message}");
+                    }
+                        break;
+                default:
+                    break;
+            }
+        }
+
+        /*        if(books as GetBookResponse )
+                {
+
+                }*/
+        /*if(books != null && books.Books != null && books.Books.Count > 0)
         {
             foreach (var book in books.Books)
             {
@@ -68,7 +118,7 @@ public partial class MainWindow : Window
                 Image1.Source = image;
                 
             }
-        }
+        }*/
         client.Close();
     }
 }
