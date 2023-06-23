@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ComandLibrary\ComandLibrary.csproj" />
     <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
+    <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />
   </ItemGroup>
 
 </Project>
