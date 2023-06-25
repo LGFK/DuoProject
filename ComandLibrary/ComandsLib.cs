@@ -5,5 +5,6 @@ public enum ComandsLib
     GetAllUsers,
     GetFiveBestBooks,
     Successful,
+    ApiWeather,
     ERROR,
 }

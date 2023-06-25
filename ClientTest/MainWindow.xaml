@@ -23,7 +23,9 @@
         <Image Name="Image2" Grid.Column="0" Grid.Row="1"/>
         <Image Name="Image3" Grid.Column="1" Grid.Row="0"/>
         <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="2"/>
+        <ListBox x:Name="ListBox2" Grid.Row="0" Grid.Column="2"/>
 
-        <Button Grid.Column="3" Grid.Row="3" Click="Button_Click">Get image</Button>
+        <Button x:Name="Get_Btn" Grid.Column="2" Grid.Row="2" Click="Get_Btn_Click">Get</Button>
+        <Button x:Name="Btn_Connect" Grid.Column="1" Grid.Row="2" Click="Btn_Connect_Click">Connect</Button>
     </Grid>
 </Window>

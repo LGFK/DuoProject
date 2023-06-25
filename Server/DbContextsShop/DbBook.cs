@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ModelsLibrary;
 using Server.Context;
-using Server.models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.DbContextsShop;
 public class DbBook
@@ -16,7 +10,7 @@ public class DbBook
     {
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
     }
-    ~DbBook() 
+    ~DbBook()
     {
         _dbContext.Dispose();
     }
@@ -30,7 +24,7 @@ public class DbBook
     }
     public List<Book> GetTopFiveGanre(string? ganre)
     {
-        return _dbContext.Books.Where(b=>b.Genre == ganre).OrderByDescending(b => b.Cost).Take(5).ToList();
+        return _dbContext.Books.Where(b => b.Genre == ganre).OrderByDescending(b => b.Cost).Take(5).ToList();
     }
     public void AddNewBook(Book book)
     {
@@ -50,7 +44,7 @@ public class DbBook
             _dbContext.SaveChanges();
         }
     }
-    public void EditBoks(int id,Book book)
+    public void EditBoks(int id, Book book)
     {
         var bk = _dbContext.Books.FirstOrDefault(b => b.Id == id);
         if (bk != null)
