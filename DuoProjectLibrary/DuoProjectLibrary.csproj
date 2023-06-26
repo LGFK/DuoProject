@@ -7,4 +7,20 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Img\books.png" />
+    <None Remove="Img\free-icon-book-5831907.png" />
+    <None Remove="Img\free-icon-manuscript-2501234.png" />
+    <None Remove="Img\MainScreenBackgoround.jpg" />
+    <None Remove="Img\shopping-cart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Img\books.png" />
+    <Resource Include="Img\free-icon-book-5831907.png" />
+    <Resource Include="Img\free-icon-manuscript-2501234.png" />
+    <Resource Include="Img\MainScreenBackgoround.jpg" />
+    <Resource Include="Img\shopping-cart.png" />
+  </ItemGroup>
+
 </Project>

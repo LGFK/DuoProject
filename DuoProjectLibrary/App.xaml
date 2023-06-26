@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/ButtonBlack.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/Font.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/ListBoxStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
