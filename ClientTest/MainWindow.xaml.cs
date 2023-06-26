@@ -192,9 +192,20 @@ public partial class MainWindow : Window
 
     private async void Get_Btn_Click(object sender, RoutedEventArgs e)
     {
+        /*        var requestToReceive = await _clientCore.SendRequestAsync("test");
+                string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
+                var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);*/
+
         var requestToReceive = await _clientCore.SendRequestAsync("test");
-        string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
-        var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
+        if(requestToReceive.Success)
+        {
+            string jsonToReceive = Encoding.UTF8.GetString(requestToReceive.Data);
+            var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
+        }
+        else
+        {
+            MessageBox.Show($"{requestToReceive.ErrorMessage},");
+        }
 
     }
 

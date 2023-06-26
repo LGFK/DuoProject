@@ -25,22 +25,22 @@ public partial class Form1 : Form
             if (db.Database.EnsureCreated())
             {
                 //default create 
-                /*db.Books.AddRange(
-                new Books { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now },
-                new Books { Name = "Book2", NameAuthor = "Author2", Cost = 2, Genre = "Ganre2", NumberOfPages = 2, PriceForSale = 2, Publisher = "Publisher2", TimeOfPublication = DateTime.Now },
-                new Books { Name = "Book3", NameAuthor = "Author3", Cost = 3, Genre = "Ganre3", NumberOfPages = 3, PriceForSale = 3, Publisher = "Publisher3", TimeOfPublication = DateTime.Now },
-                new Books { Name = "Book4", NameAuthor = "Author4", Cost = 4, Genre = "Ganre4", NumberOfPages = 4, PriceForSale = 4, Publisher = "Publisher4", TimeOfPublication = DateTime.Now },
-                new Books { Name = "Book5", NameAuthor = "Author5", Cost = 5, Genre = "Ganre5", NumberOfPages = 5, PriceForSale = 5, Publisher = "Publisher5", TimeOfPublication = DateTime.Now }
+                db.Books.AddRange(
+                new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now },
+                new Book { Name = "Book2", NameAuthor = "Author2", Cost = 2, Genre = "Ganre2", NumberOfPages = 2, PriceForSale = 2, Publisher = "Publisher2", TimeOfPublication = DateTime.Now },
+                new Book { Name = "Book3", NameAuthor = "Author3", Cost = 3, Genre = "Ganre3", NumberOfPages = 3, PriceForSale = 3, Publisher = "Publisher3", TimeOfPublication = DateTime.Now },
+                new Book { Name = "Book4", NameAuthor = "Author4", Cost = 4, Genre = "Ganre4", NumberOfPages = 4, PriceForSale = 4, Publisher = "Publisher4", TimeOfPublication = DateTime.Now },
+                new Book { Name = "Book5", NameAuthor = "Author5", Cost = 5, Genre = "Ganre5", NumberOfPages = 5, PriceForSale = 5, Publisher = "Publisher5", TimeOfPublication = DateTime.Now }
                 );
-            db.SaveChanges();*/
+                //db.SaveChanges();
 
-/*                db.Users.AddRange(
-                    new User {  Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
+                db.Users.AddRange(
+                    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
                     new User { Name = "Name2", Email = "asdf@gmail.com", Password = "56789", RegisterTime = DateTime.Now, Books = new List<Book>() },
                     new User { Name = "Name3", Email = "zxcvb@gmail.com", Password = "rffvv ", RegisterTime = DateTime.Now, Books = new List<Book>() },
                     new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
                     new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
-                db.SaveChanges();*/
+                db.SaveChanges();
             }
         }
     }
