@@ -29,7 +29,6 @@ public struct TimesTamp
             }
         }
         return "Nope";
-
     }
 
     internal static void SaveTimesTamp(string? timesTamp)

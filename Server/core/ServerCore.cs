@@ -55,7 +55,7 @@ internal class ServerCore
 
     private void ChoiseCommand(NetworkStream networkStream, ClientRequest? clientRequest)
     {
-        if (clientRequest != null && clientRequest.Message != TimesTamp.GetTimesTamp())
+        if (clientRequest != null && clientRequest.TimesTamp != TimesTamp.GetTimesTamp())
         {
             switch (clientRequest.Command)
             {
@@ -133,6 +133,7 @@ internal class ServerCore
         {
             Books = books,
             Command = ComandsLib.GetAllBooks,
+            TimesTamp = TimesTamp.GetTimesTamp(),
         };
         JsonResponseWrite(networkStream, response);
     }

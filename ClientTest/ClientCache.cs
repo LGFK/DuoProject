@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ClientTest;
+
 internal class ClientCache
 {
     private Dictionary<string, object> _cache;
