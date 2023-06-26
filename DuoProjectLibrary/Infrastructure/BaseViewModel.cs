@@ -12,9 +12,9 @@ namespace DuoProjectLibrary.Infrastructure
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string _propName="")
+        public void OnPropertyChanged([CallerMemberName] string _propName=null)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(_propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_propName));
         }
     }
 }

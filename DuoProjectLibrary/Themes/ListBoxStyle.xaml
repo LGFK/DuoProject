@@ -1,0 +1,87 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Style x:Key="LbAllBooksStyle" TargetType="ListBox">
+        <Setter Property="ItemsSource" Value="{Binding Books}"></Setter>
+        <Setter Property="SelectedItem" Value="{Binding Book}"></Setter>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"></Setter>
+        <Setter Property="ItemsControl.ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid Height="40" Margin="4 6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding  }"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        
+
+    </Style>
+    <Style x:Key="CustomScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <ScrollContentPresenter Grid.Column="0" Grid.Row="0"/>
+
+                        <ScrollBar x:Name="PART_VerticalScrollBar"
+                               Grid.Column="1"
+                               Value="{TemplateBinding VerticalOffset}"
+                               Maximum="{TemplateBinding ScrollableHeight}"
+                               ViewportSize="{TemplateBinding ScrollableHeight}"
+                               
+                               Width="25"
+                               
+                               ClipToBounds="False">
+                            <ScrollBar.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                                    <Grid Background="Aqua">
+                                        <Track x:Name="PART_Track"
+                                           Margin="-10 0 0 0 "
+                                           IsDirectionReversed="True"
+                                           Panel.ZIndex="1"
+                                           
+                                           
+                                           >
+                                            
+                                            <Track.Thumb>
+                                                <Thumb x:Name="Thumb" Width="40">
+                                                    <Thumb.Template>
+
+                                                        <ControlTemplate TargetType="{x:Type Thumb}">
+
+                                                            <Image Margin="-7 0 0 0 " Width="45" Source="/Img/free-icon-manuscript-2501234.png">
+                                                                
+                                                            </Image>
+                                                        </ControlTemplate>
+                                                    </Thumb.Template>
+                                                </Thumb>
+                                            </Track.Thumb>
+                                        </Track>
+                                       
+                                    </Grid>
+                                </ControlTemplate>
+                            </ScrollBar.Template>
+                            <ScrollBar.RenderTransform>
+                                <TranslateTransform/>
+                            </ScrollBar.RenderTransform>
+                        </ScrollBar>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

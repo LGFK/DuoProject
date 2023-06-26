@@ -4,31 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DuoProjectLibrary"
+        xmlns:viewModel="clr-namespace:DuoProjectLibrary.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None" WindowStartupLocation="CenterScreen">
-        
+        Title="MainWindow" MinHeight="450" MinWidth="800" Height="450" Width="800" WindowStyle="None" WindowStartupLocation="CenterScreen">
     
-    <Grid Background="Aqua">
+    
+    <Window.DataContext>
+        <viewModel:MainWindowViewModel></viewModel:MainWindowViewModel>
+    </Window.DataContext>
+    
+
+    <Grid Background="Aqua" ClipToBounds="True" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.3*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Margin="10 10 10 10">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0">Some Button</Button>
-            <Button Grid.Row="1">Another Button</Button>
+
+            <Button Grid.Row="0" Command="{Binding AllBooksButtonClick}">
+                    <Image Source="/Img/books.png" Height="70"/>
+                </Button>
+           
+            
+            <Button Grid.Row="1">
+                <Image  Source="/Img/shopping-cart.png" Stretch="Fill" Width="70" Height="80" Margin="0 0 10 0"/>
+            </Button>
             <Button Grid.Row="2">And Another One</Button>
             
         </Grid>
        
-            <Grid Background="Gray" Grid.Column="1" Margin="10">
-                <ContentControl>
-                    
-                </ContentControl>
+            <Grid Background="Gray" Grid.Column="1" Margin="0 10 10 10">
+            <Image Source="/Img/MainScreenBackgoround.jpg" Stretch="Fill" />
+                  <Frame NavigationUIVisibility="Hidden" Source="{Binding CurrentPage}">
+                         
+
+                 </Frame>
             </Grid>
        
         
