@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace ClientTest.Core;
 internal class ClientCore
 {
-    private byte[] _buffer = new byte[4];
+    //private byte[] _buffer = new byte[4];
     private IPEndPoint _endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
     private ClientCache _cache;
     private const int MaxConnectionAttempts = 3;
@@ -78,9 +78,10 @@ internal class ClientCore
     }
     private async Task<byte[]> ReceiveResponse(NetworkStream networkStream)
     {
-        Array.Clear(_buffer, 0, _buffer.Length);
-        await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-        var responseSize = BitConverter.ToInt32(_buffer, 0);
+        byte[] buffer = new byte[4];
+        Array.Clear(buffer, 0, buffer.Length);
+        await networkStream.ReadAsync(buffer, 0, buffer.Length);
+        var responseSize = BitConverter.ToInt32(buffer, 0);
 
         var responseBytes = new byte[responseSize];
         var bytesRead = 0;
