@@ -1,6 +1,9 @@
 ﻿using DuoProjectLibrary.Infrastructure;
+using DuoProjectLibrary.MVVM.Model;
+using ModelsLibrary;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,26 +13,44 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 {
     public class MainWindowViewModel:BaseViewModel
     {
-        public Uri _observaPage;
-        public Uri CurrentPage
+        
+        public BaseViewModel _observablePage;
+        public BaseViewModel CurrentPage
         {
-            get { return _observaPage; }
-            set { _observaPage = value; OnPropertyChanged(nameof(CurrentPage)); }
+            get { return _observablePage; }
+            set { _observablePage = value; 
+                OnPropertyChanged(nameof(CurrentPage)); }
         }
-        ICommand _allBooksButtonClick;
+        private ICommand _allBooksButtonClick;
         public ICommand AllBooksButtonClick
         {
             get => _allBooksButtonClick ?? (_allBooksButtonClick = new RelayCommand(AllBooks));
         }
+        private ICommand _cartBttnClick;
 
-        void AllBooks(object? param)
+        public ICommand CartBttnClick
         {
-            CurrentPage = new Uri("AllBooksPage.xaml", UriKind.Relative);
+            get => _cartBttnClick ?? (_cartBttnClick = new RelayCommand(Cart));
+        }
+        private void Cart(object? param)
+        {
+           
+            var cartVM = new CartViewModel();
+            
+            CurrentPage = cartVM;
+        }
+        private void AllBooks(object? param)
+        {
+            var allBooksPageViewModel = new AllBooksPageViewModel();
+            
+            CurrentPage = allBooksPageViewModel;
+            
         }
 
         public MainWindowViewModel()
         {
-            CurrentPage = new Uri("GreatingPage.xaml", UriKind.Relative);
+            CurrentPage = new GreetingPageViewModel();
+            
         }
             
     }

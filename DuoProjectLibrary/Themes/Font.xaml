@@ -2,12 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="ThreeDTextStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontFamily" Value="Impact"/>
         <Setter Property="FontSize" Value="24"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="#FF00C4F7"/>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect ShadowDepth="2" Color="Black" Opacity="0.8"/>
+                <DropShadowEffect ShadowDepth="4" Color="Red" Opacity="0.8"/>
             </Setter.Value>
         </Setter>
     </Style>

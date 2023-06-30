@@ -5,18 +5,90 @@
         <Setter Property="ItemsSource" Value="{Binding Books}"></Setter>
         <Setter Property="SelectedItem" Value="{Binding Book}"></Setter>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"></Setter>
+        <Setter Property="Padding" Value="0 0 5 0"></Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Margin" Value="5 2"></Setter>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Aqua"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF661A9E"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                
+            </Setter.Value>
+        </Setter>
+       
         <Setter Property="ItemsControl.ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid Height="40" Margin="4 6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding  }"></TextBlock>
-                    </Grid>
+                    
+                    <Border BorderBrush="Aqua" BorderThickness="3 3 0 3" CornerRadius="10 10 0 10">
+                       
+                        <Grid Height="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35*"></ColumnDefinition>
+                                <ColumnDefinition Width="48*"></ColumnDefinition>
+                                <ColumnDefinition Width="40*"></ColumnDefinition>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="Aqua" BorderThickness="0 0 1 0" Grid.Column="0" >
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"   Text="{Binding Name }">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Border>
+                            <Border BorderBrush="Aqua" BorderThickness="0 0 0 0" Grid.Column="1">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Text="{Binding NameAuthor }">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Border>
+                            <Border  Grid.Column="2" BorderBrush="Aqua" BorderThickness="1 0 0 0" >
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" Text="{Binding Genre }">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                            </Border>
+                            <Border BorderThickness="1 0 0 0" BorderBrush="Aqua" Grid.Column="3">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"    Text="{Binding  Cost }">
+                                    <TextBlock.Effect>
+                                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                                    </TextBlock.Effect>
+                                </TextBlock>
+                       
+                            </Border>
+                            <Border BorderBrush="Red"  Grid.Column="4" >
+                                <Button Margin="0 -3 0 0" Height="67" Style="{StaticResource addToCartButtonStyle}" Command="{Binding ElementName = lbAllBooks,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
+                                    
+                                    <Image Width="23" Source="/Img/shopping-cart-button.png" />
+
+                                    
+                                </Button>
+                            </Border>
+                            
+                        </Grid>
+                    </Border>
+                    
                 </DataTemplate>
             </Setter.Value>
         </Setter>

@@ -9,7 +9,9 @@
                 <ResourceDictionary Source="/Themes/ButtonBlack.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/Themes/Font.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/Themes/ListBoxStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/BorderStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
+    
 </Application>

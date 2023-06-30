@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DuoProjectLibrary.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for GreatingPage.xaml
+    /// Interaction logic for GreetingPageControll.xaml
     /// </summary>
-    public partial class GreatingPage : Page
+    public partial class GreetingPageControll : UserControl
     {
-        public GreatingPage()
+        public GreetingPageControll()
         {
             InitializeComponent();
         }
