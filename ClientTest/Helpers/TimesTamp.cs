@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace ClientTest;
+namespace ClientTest.Helpers;
 public struct TimesTamp
 {
     private const string? _fileTimesTamp = "TmpTimesTamp.json";
@@ -20,7 +20,7 @@ public struct TimesTamp
     {
         var js = new JsonSerializer();
         js.Formatting = Formatting.Indented;
-        if(File.Exists(_fileTimesTamp))
+        if (File.Exists(_fileTimesTamp))
         {
             using (var sr = File.OpenText(_fileTimesTamp!))
             {
@@ -29,7 +29,6 @@ public struct TimesTamp
             }
         }
         return "Nope";
-
     }
 
     internal static void SaveTimesTamp(string? timesTamp)
@@ -38,7 +37,7 @@ public struct TimesTamp
         js.Formatting = Formatting.Indented;
         using (var sw = File.CreateText(_fileTimesTamp!))
         {
-            js.Serialize(sw, $"{timesTamp}");
+            js.Serialize(sw, $"{timesTamp}.json");
         }
     }
 }

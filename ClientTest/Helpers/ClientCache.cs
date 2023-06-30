@@ -4,32 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientTest;
+namespace ClientTest.Helpers;
+
 internal class ClientCache
 {
     private Dictionary<string, object> _cache;
-    public ClientCache() 
+    public ClientCache()
     {
-        _cache= new Dictionary<string, object>();
+        _cache = new Dictionary<string, object>();
     }
     public bool ContainsKey(string key)
-    {   
+    {
         return _cache.ContainsKey(key);
     }
     public T? Get<T>(string key)
     {
-        if(_cache.TryGetValue(key,out var value) && value is T typedValue)
+        if (_cache.TryGetValue(key, out var value) && value is T typedValue)
         {
             return typedValue;
         }
-        return default(T);
+        return default;
     }
     public void Add<T>(string key, T value)
     {
-        if(value !=null)
+        if (value != null)
             _cache[key] = value;
     }
-    public void Remove(string key) 
+    public void Remove(string key)
     {
         _cache.Remove(key);
     }
