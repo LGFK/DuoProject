@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DuoProjectLibrary.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for AllBooksPage.xaml
+    /// Interaction logic for CartPageControll.xaml
     /// </summary>
-    public partial class AllBooksPage : Page
+    public partial class CartPageControll : UserControl
     {
-        public AllBooksPage()
+        public CartPageControll()
         {
             InitializeComponent();
         }
