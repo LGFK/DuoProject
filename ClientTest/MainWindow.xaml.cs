@@ -1,7 +1,12 @@
-﻿using ComandLibrary;
+﻿using ClientTest.Core;
+using ClientTest.Helpers;
+using ClientTest.TestResult;
+using ComandLibrary;
 using CommunicationLibrary;
+using ModelsLibrary;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -67,7 +72,6 @@ public partial class MainWindow : Window
                     break;
                 case ComandsLib.GetAllUsers:
                     var users = JsonConvert.DeserializeObject<UsersResponse>(jsonToReceive);
-                    //логіка додавання в бокс
                     _cache.Add(ComandsLib.GetAllUsers.ToString(), users);
                     var us = _cache.Get<UsersResponse>(ComandsLib.GetAllUsers.ToString());
                     SaveInJson(us);
@@ -192,21 +196,28 @@ public partial class MainWindow : Window
 
     private async void Get_Btn_Click(object sender, RoutedEventArgs e)
     {
+        //var 1
         /*        var requestToReceive = await _clientCore.SendRequestAsync("test");
                 string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
                 var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);*/
+        //var 2
 
-        var requestToReceive = await _clientCore.SendRequestAsync("test");
-        if(requestToReceive.Success)
-        {
-            string jsonToReceive = Encoding.UTF8.GetString(requestToReceive.Data);
-            var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
-        }
-        else
-        {
-            MessageBox.Show($"{requestToReceive.ErrorMessage},");
-        }
+        /*        var requestToReceive = (RequestResult<GetBookResponse>)await _clientCore.SendRequestAsync("test", ComandsLib.GetAllBooks);
+                var books = requestToReceive.Value;
 
+                var requestToReceive2 = (RequestResult<UsersResponse>)await _clientCore.SendRequestAsync("test", ComandsLib.GetAllBooks);
+                var users = requestToReceive2.Value;*/
+
+
+        var requestToreceive = (RequestResult<RequestResponseBase>)await _clientCore.SendRequestAsync("Test", ComandsLib.GetAllBooks);
+        if (requestToreceive.Value is GetBookResponse bookResponse)
+        {
+            List<Book> books = bookResponse.Books!;
+            foreach (var book in books)
+            {
+                MessageBox.Show(book.Genre);
+            }
+        }
     }
 
     private void Btn_Connect_Click(object sender, RoutedEventArgs e)
