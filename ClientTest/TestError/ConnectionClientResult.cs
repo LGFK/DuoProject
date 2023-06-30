@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientTest;
+namespace ClientTest.TestError;
 public record class ConnectionClientResult
 {
     private ConnectionClientResult(string? message)

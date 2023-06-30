@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace ClientTest;
+namespace ClientTest.TestError;
 [Serializable]
 internal class OtherErrorsDuringConnection : Exception
 {
