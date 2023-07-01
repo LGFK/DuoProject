@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClientTest\ClientTest.csproj" />
     <ProjectReference Include="..\ComandLibrary\ComandLibrary.csproj" />
     <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
     <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />

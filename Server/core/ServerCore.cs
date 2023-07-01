@@ -138,7 +138,6 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
-            Books = books,
             Command = ComandsLib.GetAllBooks,
             TimesTamp = TimesTamp.GetTimesTamp(),
         };
