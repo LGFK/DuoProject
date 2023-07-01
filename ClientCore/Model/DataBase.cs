@@ -1,14 +1,14 @@
 ﻿using ComandLibrary;
 using CommunicationLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientCore.Model;
 public static class DataBase
 {
+    public static RequestResponseBase Success(RequestResponseBase request) => request;
     public static RequestResponseBase Create(RequestResponseBase request) =>
         request is not null ? request : new RequestResponseBase() { Command = ComandsLib.ERROR };
+
+
 }
+/*public static RequestResult<TValue> Create<TValue>(TValue value) =>
+    value is not null ? Success(value) : Failure<TValue>(Error.NullValue);*/

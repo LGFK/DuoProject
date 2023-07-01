@@ -17,15 +17,17 @@ public struct TimesTamp
     {
         var js = new JsonSerializer();
         js.Formatting = Formatting.Indented;
-        if (File.Exists(_fileTimesTamp))
+        if (!File.Exists(_fileTimesTamp))
         {
-            using (var sr = File.OpenText(_fileTimesTamp!))
-            {
-                return (string)js.Deserialize(sr, typeof(string))!;
-                //return sr.ReadToEnd();
-            }
+            return "Nope";
+
         }
-        return "Nope";
+
+        using (var sr = File.OpenText(_fileTimesTamp!))
+        {
+            return (string)js.Deserialize(sr, typeof(string))!;
+            //return sr.ReadToEnd();
+        }
     }
 
     internal static void SaveTimesTamp(string? timesTamp)

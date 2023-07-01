@@ -1,29 +1,23 @@
 ﻿using ClientCore.Errors;
 using ClientCore.Helpes;
 using ClientCore.Rusults;
-using ClientTest.Model;
+using ClientCore.Model;
 using ComandLibrary;
 using CommunicationLibrary;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http.Json;
 using System.Net.Sockets;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ClientCore.Core;
-public class ClientCore
+public class ClientsCore
 {
     private IPEndPoint _endpoint;
     private ClientCache _cache;
     private const int MaxConnectionAttempts = 3;
     private const int ConnectionRetryDekayMilliseconds = 7000;
 
-    public ClientCore()
+    public ClientsCore()
     {
         _cache = new ClientCache();
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
@@ -32,6 +26,7 @@ public class ClientCore
     public async Task<RequestResult> SendRequestAsync(string? message, ComandsLib comandsLib)
     {
         int attemps = 0;
+        List<Error> errors = new List<Error>();
         while (attemps < MaxConnectionAttempts)
         {
             try
@@ -44,27 +39,30 @@ public class ClientCore
                     await SendRequest(networkSteem, comandsLib);
 
                     var requestToReceive = await ReceiveResponse(networkSteem);
-                    var res = (RequestResult<RequestResponseBase>)DeserializationObjectFromServer(requestToReceive);
+                    var res = DeserializationObjectFromServer(requestToReceive);
                     return RequestResult.Create(res.Value);
                 }
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
                 //Failed to establish connection to the server.
+                errors.Add(Error.InvalidInput);
             }
             catch
             {
                 //An error occureed while sending/receiving the reques.
+                errors.Add(Error.InvalidInput);
             }
 
             attemps++;
 
-            if(attemps > MaxConnectionAttempts)
+            if (attemps > MaxConnectionAttempts)
             {
                 await Task.Delay(ConnectionRetryDekayMilliseconds);
             }
         }
-        return RequestResult.Failure(Error.ConnectionTimeout);
+        errors.Add(Error.ConnectionTimeout);
+        return RequestResult.Failure(errors.ToArray());
     }
 
     private async Task SendRequest(NetworkStream networkSteem, ComandsLib comandsLib)
@@ -102,7 +100,7 @@ public class ClientCore
 
     private RequestResult<RequestResponseBase> DeserializationObjectFromServer(byte[] requestToReceive)
     {
-        if(requestToReceive is null)
+        if (requestToReceive is null)
         {
             return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
         }
@@ -110,7 +108,7 @@ public class ClientCore
         string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
         var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
 
-        if(comand is null)
+        if (comand is null)
         {
             return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
         }
@@ -121,7 +119,7 @@ public class ClientCore
 
     private RequestResponseBase ChoiseCommand(ComandsLib comandsLib, string? jsonToReceive)
     {
-        if(jsonToReceive is null)
+        if (jsonToReceive is null)
         {
             return new RequestResponseBase() { Command = ComandsLib.ERROR };
         }
@@ -130,10 +128,10 @@ public class ClientCore
         switch (comandsLib)
         {
             case ComandsLib.GetAllBooks:
-                res = DataBooks.AllBooks(jsonToReceive);
+                res = DataBook.Books(jsonToReceive);
                 break;
             case ComandsLib.GetAllUsers:
-                res = DataUsers.Users(jsonToReceive);
+                res = DataUser.Users(jsonToReceive);
                 break;
             case ComandsLib.GetFiveBestBooks:
                 break;
@@ -153,7 +151,7 @@ public class ClientCore
 
     private void SaveInJson(RequestResponseBase books, ComandsLib comandsLib)
     {
-        
+
     }
 }
 
