@@ -1,18 +1,18 @@
 ﻿namespace ClientCore.Helpes;
-internal class ClientCache
+public static class ClientCache
 {
-    private Dictionary<string, object> _cache;
-    public ClientCache()
+    private static Dictionary<string, object> _cache = new Dictionary<string, object>();
+/*    public ClientCache()
     {
         _cache = new Dictionary<string, object>();
-    }
+    }*/
 
-    public bool ContainsKey(string key)
+    public static bool ContainsKey(string key)
     {
         return _cache.ContainsKey(key);
     }
 
-    public T? Get<T>(string key)
+    public static T? Get<T>(string key)
     {
         if (_cache.TryGetValue(key, out var value) && value is T typedValue)
         {
@@ -21,7 +21,7 @@ internal class ClientCache
         return default;
     }
 
-    public void Add<T>(string ket, T value)
+    public static void Add<T>(string ket, T value)
     {
         if (value is not null)
         {
@@ -29,12 +29,12 @@ internal class ClientCache
         }
     }
 
-    public void Remove(string ket)
+    public static void Remove(string ket)
     {
         _cache.Remove(ket);
     }
 
-    public void Clear()
+    public static void Clear()
     {
         _cache.Clear();
     }

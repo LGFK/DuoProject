@@ -1,4 +1,9 @@
-﻿using DuoProjectLibrary.Infrastructure;
+﻿using ClientCore.Core;
+using ClientCore.Helpes;
+using ClientCore.Rusults;
+using ComandLibrary;
+using CommunicationLibrary;
+using DuoProjectLibrary.Infrastructure;
 using DuoProjectLibrary.MVVM.Model;
 using ModelsLibrary;
 using System;
@@ -42,16 +47,38 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private void AllBooks(object? param)
         {
             var allBooksPageViewModel = new AllBooksPageViewModel();
-            
             CurrentPage = allBooksPageViewModel;
-            
         }
 
         public MainWindowViewModel()
         {
+            _=LoadData();
             CurrentPage = new GreetingPageViewModel();
             
         }
+           
+        private async Task LoadData()
+        {
+            ClientsCore clientsCore = new ClientsCore();
+            var res = await clientsCore.SendRequestAsync("TEST", ComandsLib.GetAllBooks);
+
+            if (res.IsFailure)
+            {
+                return;
+            }
+
+            var resultREsponseBase = (RequestResult<RequestResponseBase>)res;
+
+            if(resultREsponseBase.Value is GetBookResponse books)
+            {
+                if(books.Command == ComandsLib.ERROR)
+                {
+                    return;
+                }
+
+                ClientCache.Add(ComandsLib.GetAllBooks.ToString(), books);
+            }
             
+        }
     }
 }
