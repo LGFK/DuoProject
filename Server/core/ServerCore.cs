@@ -4,7 +4,6 @@ using ModelsLibrary;
 using Newtonsoft.Json;
 using Server.DbContextsShop;
 using Server.Helper;
-using Server.Services;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -50,7 +49,7 @@ internal class ServerCore
 
         var res = await GetFromClient(networkStream);
         var clientRequest = JsonConvert.DeserializeObject<ClientRequest>(res);
-        
+
         ChoiseCommand(networkStream, clientRequest);
     }
 
@@ -60,7 +59,7 @@ internal class ServerCore
         {
             return;
         }
-        if(clientRequest.TimesTamp == TimesTamp.GetTimesTamp())
+        if (clientRequest.TimesTamp == TimesTamp.GetTimesTamp())
         {
             SendDateIsCurrent(networkStream);
         }
@@ -104,7 +103,7 @@ internal class ServerCore
         {
             return;
         }
-        if(clientRequest.Message == null)
+        if (clientRequest.Message == null)
         {
             return;
         }
@@ -138,6 +137,7 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
+            Books = books,
             Command = ComandsLib.GetAllBooks,
             TimesTamp = TimesTamp.GetTimesTamp(),
         };

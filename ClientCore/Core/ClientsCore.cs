@@ -13,13 +13,13 @@ namespace ClientCore.Core;
 public class ClientsCore
 {
     private IPEndPoint _endpoint;
-    private ClientCache _cache;
+    //private ClientCache _cache;
     private const int MaxConnectionAttempts = 3;
     private const int ConnectionRetryDekayMilliseconds = 7000;
 
     public ClientsCore()
     {
-        _cache = new ClientCache();
+       // _cache = new ClientCache();
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
     }
 
@@ -40,7 +40,7 @@ public class ClientsCore
 
                     var requestToReceive = await ReceiveResponse(networkSteem);
                     var res = DeserializationObjectFromServer(requestToReceive);
-                    return RequestResult.Create(res.Value);
+                    return RequestResult.Create(res);
                 }
             }
             catch (SocketException)
@@ -98,11 +98,11 @@ public class ClientsCore
         return responseBytes;
     }
 
-    private RequestResult<RequestResponseBase> DeserializationObjectFromServer(byte[] requestToReceive)
+    private RequestResponseBase DeserializationObjectFromServer(byte[] requestToReceive)
     {
         if (requestToReceive is null)
         {
-            return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
+            return new RequestResponseBase() { Command = ComandsLib.ERROR };
         }
 
         string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
@@ -110,11 +110,11 @@ public class ClientsCore
 
         if (comand is null)
         {
-            return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
+            return new RequestResponseBase() { Command = ComandsLib.ERROR };
         }
 
         RequestResponseBase resultChoise = ChoiseCommand(comand.Command, jsonToReceive);
-        return RequestResult.Create(resultChoise);
+        return resultChoise;
     }
 
     private RequestResponseBase ChoiseCommand(ComandsLib comandsLib, string? jsonToReceive)
@@ -140,11 +140,11 @@ public class ClientsCore
             case ComandsLib.ApiWeather:
                 break;
             case ComandsLib.ERROR:
-                break;
+                return new RequestResponseBase() { Command = ComandsLib.ERROR };
             default:
                 break;
         }
-        _cache.Add(comandsLib.ToString(), res);
+        //_cache.Add(comandsLib.ToString(), res);
         SaveInJson(res, comandsLib);
         return res;
     }
