@@ -4,7 +4,6 @@ using ModelsLibrary;
 using Newtonsoft.Json;
 using Server.DbContextsShop;
 using Server.Helper;
-using Server.Services;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -26,6 +25,7 @@ internal class ServerCore
         _dbBook = new DbBook(DbOptions.GetOptions());
         _dbUser = new DbUser(DbOptions.GetOptions());
     }
+
     public void StartServer()
     {
         _listener.Start();
@@ -49,37 +49,37 @@ internal class ServerCore
 
         var res = await GetFromClient(networkStream);
         var clientRequest = JsonConvert.DeserializeObject<ClientRequest>(res);
-        
+
         ChoiseCommand(networkStream, clientRequest);
     }
 
     private void ChoiseCommand(NetworkStream networkStream, ClientRequest? clientRequest)
     {
-        if (clientRequest != null && clientRequest.Message != TimesTamp.GetTimesTamp())
+        if (clientRequest == null)
         {
-            switch (clientRequest.Command)
-            {
-                case ComandsLib.GetAllBooks:
-                    AllBooks(networkStream);
-                    break;
-                case ComandsLib.GetAllUsers:
-                    AllUsers(networkStream);
-                    break;
-                case ComandsLib.GetFiveBestBooks:
-                    FiveBestBooks(networkStream, clientRequest);
-                    break;
-                case ComandsLib.ApiWeather:
-                    ApiWeather(networkStream, clientRequest);
-                    break;
-                default:
-                    break;
-            }
+            return;
         }
-        else
+        if (clientRequest.TimesTamp == TimesTamp.GetTimesTamp())
         {
             SendDateIsCurrent(networkStream);
         }
-        
+        switch (clientRequest.Command)
+        {
+            case ComandsLib.GetAllBooks:
+                AllBooks(networkStream);
+                break;
+            case ComandsLib.GetAllUsers:
+                AllUsers(networkStream);
+                break;
+            case ComandsLib.GetFiveBestBooks:
+                FiveBestBooks(networkStream, clientRequest);
+                break;
+            case ComandsLib.ApiWeather:
+                ApiWeather(networkStream, clientRequest);
+                break;
+            default:
+                break;
+        }
     }
 
     private void SendDateIsCurrent(NetworkStream networkStream)
@@ -99,20 +99,25 @@ internal class ServerCore
 
     private void FiveBestBooks(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        if (clientRequest != null && clientRequest.Message != null)
+        if (clientRequest == null)
         {
-            List<Book> books = _dbBook.GetTopFiveGanre(clientRequest.Message);
-
-            var response = new GetBookResponse
-            {
-                Books = books,
-                Command = ComandsLib.GetFiveBestBooks,
-                TimesTamp = TimesTamp.GetTimesTamp(),
-            };
-            JsonResponseWrite(networkStream, response);
+            return;
         }
+        if (clientRequest.Message == null)
+        {
+            return;
+        }
+        List<Book> books = _dbBook.GetTopFiveGanre(clientRequest.Message);
 
+        var response = new GetBookResponse
+        {
+            Books = books,
+            Command = ComandsLib.GetFiveBestBooks,
+            TimesTamp = TimesTamp.GetTimesTamp(),
+        };
+        JsonResponseWrite(networkStream, response);
     }
+
     private void AllUsers(NetworkStream networkStream)
     {
         List<User> users = _dbUser.GetAllUsers();
@@ -125,6 +130,7 @@ internal class ServerCore
         };
         JsonResponseWrite(networkStream, response);
     }
+
     private void AllBooks(NetworkStream networkStream)
     {
         List<Book> books = _dbBook.GetAllBooks();
@@ -133,9 +139,11 @@ internal class ServerCore
         {
             Books = books,
             Command = ComandsLib.GetAllBooks,
+            TimesTamp = TimesTamp.GetTimesTamp(),
         };
         JsonResponseWrite(networkStream, response);
     }
+
     private void JsonResponseWrite(NetworkStream networkStream, RequestResponseBase response)
     {
         var jsonResponse = JsonConvert.SerializeObject(response);
@@ -145,27 +153,9 @@ internal class ServerCore
         networkStream.Write(_buffer, 0, _buffer.Length);
         networkStream.Write(responseBytes, 0, responseBytes.Length);
     }
+
     private async Task<string> GetFromClient(NetworkStream networkStream)
     {
-/*        await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-        int reqSize = BitConverter.ToInt32(_buffer, 0);
-        _buffer = new byte[reqSize];
-        await networkStream.ReadAsync(_buffer, 0, reqSize);
-        return Encoding.UTF8.GetString(_buffer);*/
-
-        /*        int bytesRead= await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-                int reqSize = BitConverter.ToInt32(_buffer, 0);
-
-                _buffer = new byte[reqSize];
-                bytesRead = await networkStream.ReadAsync(_buffer, 0, reqSize);
-
-                while(bytesRead < reqSize)
-                {
-                    int remainingBytes = reqSize - bytesRead;
-                    bytesRead += await networkStream.ReadAsync(_buffer, bytesRead, remainingBytes);
-                }
-                return Encoding.UTF8.GetString(_buffer);*/
-
         await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
         int reqSize = BitConverter.ToInt32(_buffer, 0);
         byte[] requestBuffer = new byte[reqSize];
@@ -173,13 +163,30 @@ internal class ServerCore
         while (bytesRead < reqSize)
         {
             bytesRead += await networkStream.ReadAsync(requestBuffer, bytesRead, reqSize - bytesRead);
-
         }
         return Encoding.UTF8.GetString(requestBuffer);
     }
 }
 
+//Get From client
+/*        await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
+        int reqSize = BitConverter.ToInt32(_buffer, 0);
+        _buffer = new byte[reqSize];
+        await networkStream.ReadAsync(_buffer, 0, reqSize);
+        return Encoding.UTF8.GetString(_buffer);*/
 
+/*        int bytesRead= await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
+        int reqSize = BitConverter.ToInt32(_buffer, 0);
+
+        _buffer = new byte[reqSize];
+        bytesRead = await networkStream.ReadAsync(_buffer, 0, reqSize);
+
+        while(bytesRead < reqSize)
+        {
+            int remainingBytes = reqSize - bytesRead;
+            bytesRead += await networkStream.ReadAsync(_buffer, bytesRead, remainingBytes);
+        }
+        return Encoding.UTF8.GetString(_buffer);*/
 
 /*        //Send MSG
         DbBook db = new DbBook(DbOptions.GetOptions());

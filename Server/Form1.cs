@@ -19,6 +19,7 @@ public partial class Form1 : Form
         InitializeComponent();
         _server= new ServerCore();
         //itin default books
+
         //using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         //{
         //    db.Database.EnsureDeleted();
@@ -43,6 +44,7 @@ public partial class Form1 : Form
         //        db.SaveChanges();
         //    }
         //}
+
     }
     private void button1_Click_1(object sender, EventArgs e)
     {
