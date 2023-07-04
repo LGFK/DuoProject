@@ -18,6 +18,7 @@ namespace DuoProjectLibrary.MVVM.Model
                     _basket = new ObservableCollection<BookInDaBasket>();
                 return _basket;
             }
+            set { _basket = value; }
         }
 
     }
