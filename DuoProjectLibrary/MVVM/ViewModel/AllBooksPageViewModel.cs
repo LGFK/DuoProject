@@ -59,18 +59,39 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private void AddBookInDaCart(object s)
         {
             bool isAdded = false;
+            if(s is Book _bookTmp)
+            {
+                foreach (var book in CartCollection.Basket)
+                {
+
+                    if (book.BookByItself.Name == _bookTmp.Name)
+                    {
+                        isAdded = true;
+                        book.Amount+=1;
+                        break;
+                    }
+                   
+                }
+                if (isAdded == false)
+                {
+                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+                }
+                return;
+            }
             foreach(var book in CartCollection.Basket)
             {
-                if(book.BookByItself.Name == _book.Name)
+                
+                if (book.BookByItself.Name == _book.Name)
                 {
                     isAdded = true;
                     break;
                 }
+                if (isAdded == false)
+                {
+                    CartCollection.Basket.Add(new BookInDaBasket(1, _book));
+                }
             }
-            if(isAdded==false)
-            {
-                CartCollection.Basket.Add(new BookInDaBasket(1, _book));
-            }
+           
             
             
         }
@@ -124,11 +145,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 }
             }*/
             
-/*            Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
-            Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
-            Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
-            Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now }); 
-            Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
+
             Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
             Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
             Books.Add(new Book { Name = "Book1", NameAuthor = "Author1", Cost = 1, Genre = "Ganre1", NumberOfPages = 1, PriceForSale = 1, Publisher = "Publisher1", TimeOfPublication = DateTime.Now });
