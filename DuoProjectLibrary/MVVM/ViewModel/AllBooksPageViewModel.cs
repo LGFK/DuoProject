@@ -91,9 +91,12 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                     CartCollection.Basket.Add(new BookInDaBasket(1, _book));
                 }
             }
-           
-            
-            
+
+            if(isAdded==false)
+            {
+                CartCollection.Basket.Add(new BookInDaBasket(1, _book));
+            }
+
         }
 
         private  void LoadData()

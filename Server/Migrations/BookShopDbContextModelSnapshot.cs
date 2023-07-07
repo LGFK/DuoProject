@@ -34,7 +34,7 @@ namespace Server.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("BookUser");
+                    b.ToTable("BookUser", (string)null);
                 });
 
             modelBuilder.Entity("ModelsLibrary.Book", b =>
@@ -78,7 +78,7 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("ModelsLibrary.User", b =>
@@ -112,7 +112,7 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BookUser", b =>

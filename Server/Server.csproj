@@ -22,6 +22,7 @@
     <ProjectReference Include="..\ComandLibrary\ComandLibrary.csproj" />
     <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
     <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />
+    <ProjectReference Include="..\NetworkSerializationLib\NetworkSerializationLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
