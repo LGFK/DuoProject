@@ -23,8 +23,13 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         public BaseViewModel CurrentPage
         {
             get { return _observablePage; }
-            set { _observablePage = value; 
-                OnPropertyChanged(nameof(CurrentPage)); }
+            set { 
+                if(_observablePage != value)
+                {
+                    _observablePage = value;
+                    OnPropertyChanged(nameof(CurrentPage));
+                }
+                 }
         }
         private ICommand _allBooksButtonClick;
         public ICommand AllBooksButtonClick
@@ -41,7 +46,6 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         {
            
             var cartVM = new CartViewModel();
-            
             CurrentPage = cartVM;
         }
         private void AllBooks(object? param)
