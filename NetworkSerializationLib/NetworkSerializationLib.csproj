@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	 <TargetFramework>net7.0-windows</TargetFramework>
+	<TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComandLibrary\ComandLibrary.csproj" />
     <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
-    <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />
-    <ProjectReference Include="..\NetworkSerializationLib\NetworkSerializationLib.csproj" />
   </ItemGroup>
 
 </Project>
