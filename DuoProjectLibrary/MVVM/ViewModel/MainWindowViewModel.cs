@@ -44,7 +44,6 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         }
         private void Cart(object? param)
         {
-           
             var cartVM = new CartViewModel();
             CurrentPage = cartVM;
         }
@@ -56,7 +55,8 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
         public MainWindowViewModel()
         {
-            _=LoadData();
+            
+             _= LoadData();
             CurrentPage = new GreetingPageViewModel();
             
         }

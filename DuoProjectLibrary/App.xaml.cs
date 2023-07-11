@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DuoProjectLibrary.Infrastructure;
 
 namespace DuoProjectLibrary
 {
@@ -12,6 +13,7 @@ namespace DuoProjectLibrary
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {
+    {  
+
     }
 }

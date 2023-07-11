@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsLibrary", "..\ModelsL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "..\Server\Server.csproj", "{ED9E98DC-949C-40F5-9A5D-A342D76AC5A3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCore", "..\ClientCore\ClientCore.csproj", "{E653B0F6-F848-4E6F-BA58-61EB197383E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSerializationLib", "..\NetworkSerializationLib\NetworkSerializationLib.csproj", "{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{ED9E98DC-949C-40F5-9A5D-A342D76AC5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED9E98DC-949C-40F5-9A5D-A342D76AC5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED9E98DC-949C-40F5-9A5D-A342D76AC5A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E653B0F6-F848-4E6F-BA58-61EB197383E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E653B0F6-F848-4E6F-BA58-61EB197383E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E653B0F6-F848-4E6F-BA58-61EB197383E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E653B0F6-F848-4E6F-BA58-61EB197383E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
