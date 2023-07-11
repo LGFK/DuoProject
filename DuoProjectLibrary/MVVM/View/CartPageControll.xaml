@@ -19,14 +19,13 @@
             <Grid Grid.Row="0" Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="197*"></ColumnDefinition>
-                    <ColumnDefinition Width="487*"></ColumnDefinition>
+                    <ColumnDefinition Width="488*"></ColumnDefinition>
 
-                    <ColumnDefinition Width="26"></ColumnDefinition>
+                    <ColumnDefinition Width="25"></ColumnDefinition>
 
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22">Name</TextBlock>
-                <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"   FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22">Amount</TextBlock>
+
 
                 <Grid Grid.Column="2" Background="red">
 

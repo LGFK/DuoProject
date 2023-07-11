@@ -38,7 +38,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             if(param is BookInDaBasket bidb)
             {
                 BookInDaBasket.Remove(bidb);
-                CartCollection.Basket = BookInDaBasket;
+                CartCollection.Basket.Remove(bidb);
             }
         }
         public ObservableCollection<BookInDaBasket> BookInDaBasket

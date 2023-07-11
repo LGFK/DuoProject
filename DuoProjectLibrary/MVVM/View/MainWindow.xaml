@@ -7,7 +7,7 @@
        
         xmlns:viewModel="clr-namespace:DuoProjectLibrary.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" ClipToBounds="False" AllowsTransparency="True" Background="Transparent" MinHeight="450" MinWidth="800" Height="450" Width="800" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" ClipToBounds="False" AllowsTransparency="True" Background="Transparent" MinHeight="600" MinWidth="1000" Height="600" Width="1000" WindowStyle="None" WindowStartupLocation="CenterScreen">
 
     
     <Window.DataContext>

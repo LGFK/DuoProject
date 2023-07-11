@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/Themes/Font.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/Themes/ListBoxStyle.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/Themes/BorderStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Themes/EditingTextBoxStyle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
