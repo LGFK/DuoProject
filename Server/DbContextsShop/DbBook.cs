@@ -22,9 +22,10 @@ public class DbBook
     {
         return _dbContext.Books.OrderByDescending(b => b.Cost).ToList();
     }
-    public List<Book> GetTopFiveGanre(string? ganre)
+    public List<Book> GetTopFiveGenre(string? genre)
     {
-        return _dbContext.Books.Where(b => b.Genre == ganre).OrderByDescending(b => b.Cost).Take(5).ToList();
+        // return _dbContext.Books.Where(b => b.Genre == b.Genre).OrderByDescending(b => b.Cost).Take(5).ToList();
+        return new List<Book>() { };
     }
     public void AddNewBook(Book book)
     {

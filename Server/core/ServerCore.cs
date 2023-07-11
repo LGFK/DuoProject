@@ -112,7 +112,7 @@ internal class ServerCore
             return;
         }
 
-        List<Book> books = _dbBook.GetTopFiveGanre(clientRequest.Message);
+        List<Book> books = _dbBook.GetTopFiveGenre(clientRequest.Message);
 
         var response = new GetBookResponse
         {

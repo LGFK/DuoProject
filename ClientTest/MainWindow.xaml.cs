@@ -215,7 +215,7 @@ public partial class MainWindow : Window
             List<Book> books = bookResponse.Books!;
             foreach (var book in books)
             {
-                MessageBox.Show(book.Genre);
+                //MessageBox.Show(book.Genre);
             }
         }
     }

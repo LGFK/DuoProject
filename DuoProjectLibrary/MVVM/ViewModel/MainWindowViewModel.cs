@@ -71,9 +71,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 return;
             }
 
-            var resultREsponseBase = (RequestResult<RequestResponseBase>)res;
+            var resultResponseBase = (RequestResult<RequestResponseBase>)res;
 
-            if(resultREsponseBase.Value is GetBookResponse books)
+            if(resultResponseBase.Value is GetBookResponse books)
             {
                 if(books.Command == ComandsLib.ERROR)
                 {

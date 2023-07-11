@@ -8,11 +8,15 @@ public class BookShopDbContext : DbContext
 {
     public DbSet<Book> Books { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Author> Author { get; set; }
+    public DbSet<CountBooks> CountBooks { get; set; }
     public BookShopDbContext(DbContextOptions<BookShopDbContext> options) : base(options)
     {
+
     }
 }
-
+//PM> add-migration Initial -StartupProject Server
 //[NotMapped] -- ignore table  якщо не хочемо створювати таблицю в базі 
 // коли використовуєму міграцію не використовуємо /*Database.EnsureDeleted();Database.EnsureCreated();*/
 //add-migration NAME_MIGRATION

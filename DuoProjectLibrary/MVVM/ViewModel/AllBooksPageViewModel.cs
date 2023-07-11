@@ -134,10 +134,17 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
         private  void LoadData()
         {
+
+            //var 0 Cache
+            //var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
+
+            //if (res is null)
+
             //var 0 cahe
              var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
             Books.Add(new BookWithAllFields());
             Books[0].Book = new Book()
+
             {
                 Id = 32324,
                 Name = "Book1",
