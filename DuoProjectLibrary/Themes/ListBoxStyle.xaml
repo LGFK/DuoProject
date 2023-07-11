@@ -37,7 +37,7 @@
         <Setter Property="ItemsControl.ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    
+                   
                     <Border BorderBrush="Aqua" BorderThickness="3 3 0 3" CornerRadius="10 10 0 10">
                        
                         <Grid Height="60">
@@ -47,16 +47,17 @@
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
                                 <ColumnDefinition Width="30*"></ColumnDefinition>
                                 <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Border BorderBrush="Aqua" BorderThickness="0 0 1 0" Grid.Column="0" >
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"   Text="{Binding Name }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"   Text="{Binding Book.Name }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
                                 </TextBlock>
                             </Border>
                             <Border BorderBrush="Aqua" BorderThickness="0 0 0 0" Grid.Column="1">
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Text="{Binding NameAuthor }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Text="{Binding Author }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
@@ -70,21 +71,26 @@
                                 </TextBlock>
                             </Border>
                             <Border BorderThickness="1 0 0 0" BorderBrush="Aqua" Grid.Column="3">
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"    Text="{Binding  Cost }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"    Text="{Binding  Book.Cost }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
                                 </TextBlock>
                        
                             </Border>
-                            <Border BorderBrush="Red"  Grid.Column="4" >
-                                <Button Margin="0 -3 0 0" Height="67" Style="{StaticResource addToCartButtonStyle}" Command="{Binding ElementName = lbAllBooks,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
+                            
+                                <Button Grid.Column="5" Margin="0 -3 0 0" Height="67" Style="{StaticResource addToCartButtonStyle}" Command="{Binding ElementName = lbAllBooks,Path=DataContext.AddToCartCommand}" CommandParameter="{Binding}">
                                     
                                     <Image Width="23" Source="/Img/shopping-cart-button.png" />
 
                                     
                                 </Button>
-                            </Border>
+
+
+                            <Button Grid.Column="4" Margin="0 -3 10 0" Height="40" Width="40" Style="{StaticResource editButtonStyle}" Command="{Binding ElementName = lbAllBooks,Path=DataContext.OpenEditorCommand}" CommandParameter="{Binding}">
+                                <Image Source="/Img/free-icon-settings-4239938.png" Margin="4" />
+                            </Button>
+                            
                             
                         </Grid>
                     </Border>
@@ -122,10 +128,7 @@
                                         <Track x:Name="PART_Track"
                                            Margin="-10 0 0 0 "
                                            IsDirectionReversed="True"
-                                           Panel.ZIndex="1"
-                                           
-                                           
-                                           >
+                                           Panel.ZIndex="1">
                                             
                                             <Track.Thumb>
                                                 <Thumb x:Name="Thumb" Width="40">
@@ -193,7 +196,7 @@
             <Setter.Value>
                 <DataTemplate>
 
-                    <Border BorderBrush="Aqua" BorderThickness="3 3 0 3" CornerRadius="10 10 0 10">
+                    <Border BorderBrush="Aqua" BorderThickness="3 3 3 3" CornerRadius="10 10 0 10">
 
                         <Grid Height="60">
                             <Grid.ColumnDefinitions>
@@ -217,9 +220,8 @@
                                 </TextBlock>
                             </Border>
                             <Border BorderBrush="Red"  Grid.Column="2" >
-                                <Button Margin="0 -3 0 0" Height="67"  Command="{Binding ElementName=lbCart , Path=DataContext.RemoveFromCartCommand }" CommandParameter="{Binding}">
-
-                                  
+                                <Button Width="40" Height="40" Style="{StaticResource removeFromCartButtonStyle}"  Command="{Binding ElementName=lbCart , Path=DataContext.RemoveFromCartCommand }" CommandParameter="{Binding}">
+                                    <Image Source="/Img/free-icon-cross-mark-4225690.png" />
 
 
                                 </Button>

@@ -9,12 +9,17 @@
 
   <ItemGroup>
     <None Remove="Img\books.png" />
-    <None Remove="Img\free-icon-book-5831907.png" />
+    <None Remove="Img\free-icon-cross-mark-4225690.png" />
     <None Remove="Img\free-icon-manuscript-2501234.png" />
+    <None Remove="Img\free-icon-settings-4239938.png" />
     <None Remove="Img\MainScreenBackgoround.jpg" />
     <None Remove="Img\screen.png" />
     <None Remove="Img\shopping-cart-button.png" />
     <None Remove="Img\shopping-cart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,8 +31,9 @@
 
   <ItemGroup>
     <Resource Include="Img\books.png" />
-    <Resource Include="Img\free-icon-book-5831907.png" />
+    <Resource Include="Img\free-icon-cross-mark-4225690.png" />
     <Resource Include="Img\free-icon-manuscript-2501234.png" />
+    <Resource Include="Img\free-icon-settings-4239938.png" />
     <Resource Include="Img\MainScreenBackgoround.jpg" />
     <Resource Include="Img\screen.png" />
     <Resource Include="Img\shopping-cart-button.png" />

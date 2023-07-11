@@ -18,25 +18,21 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="Gray">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="78*"></ColumnDefinition>
-                    <ColumnDefinition Width="102*"></ColumnDefinition>
-                    <ColumnDefinition Width="83*"></ColumnDefinition>
-                    <ColumnDefinition Width="80*"></ColumnDefinition>
-                    <ColumnDefinition Width="24.002"></ColumnDefinition>
+
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"></ColumnDefinition>
 
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22">Name</TextBlock>
-                <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"   FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22" Margin="0,0,6,0">Author</TextBlock>
-                <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center"   FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22" Margin="0,0,1,0">Genre</TextBlock>
-                <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center"   FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22" Margin="0,0,33,0">Price</TextBlock>
-                <Grid Grid.Column="4" Background="red">
+                <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" FontSize="18" Style="{StaticResource ResourceKey=ThreeDTextStyle}" Height="22">BOOKS LIST</TextBlock>
+
+                <Grid Grid.Column="1" Background="red">
 
                 </Grid>
             </Grid>
             <ScrollViewer Grid.Row="1" Style="{StaticResource ResourceKey=CustomScrollViewerStyle}">
 
-                <ListBox x:Name="lbAllBooks"  Style="{StaticResource ResourceKey=LbAllBooksStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ListBox  x:Name="lbAllBooks"  Style="{StaticResource ResourceKey=LbAllBooksStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
                 </ListBox>
             </ScrollViewer>
