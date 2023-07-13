@@ -8,9 +8,11 @@ using Server.DbContextsShop;
 using Server.Helper;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
 namespace Server.core;
+/// <summary>
+/// Цей клас виконує роль центральної логіки серверної частини, обробляючи запити від клієнтів та взаємодіючи з базою даних для отримання необхідної інформації.
+/// </summary>
 internal class ServerCore
 {
     private readonly TcpListener _listener;
@@ -50,7 +52,6 @@ internal class ServerCore
         var networkStream = client.GetStream();
 
         var res = await JsonReceiveResponse.Receive(networkStream);
-        //var res = await GetFromClient(networkStream);
         var clientRequest = JsonConvert.DeserializeObject<ClientRequest>(res);
 
         ChooseCommand(networkStream, clientRequest);
@@ -62,10 +63,12 @@ internal class ServerCore
         {
             return;
         }
+
         if (clientRequest.TimesTamp == TimesTamp.GetTimesTamp())
         {
             SendDateIsCurrent(networkStream);
         }
+
         switch (clientRequest.Command)
         {
             case ComandsLib.GetAllBooks:
@@ -85,14 +88,15 @@ internal class ServerCore
         }
     }
 
-    private void SendDateIsCurrent(NetworkStream networkStream)
+    private async void SendDateIsCurrent(NetworkStream networkStream)
     {
         var response = new ClientRequest
         {
             Command = ComandsLib.Successful,
             Message = "The data is current",
         };
-        //JsonResponseWrite(networkStream, response);
+
+        await JsonResponseWrite.Write(networkStream, response);
     }
 
     private void ApiWeather(NetworkStream networkStream, ClientRequest clientRequest)
@@ -100,15 +104,11 @@ internal class ServerCore
         //_weatherApi = new WeatherApi("./config/appsetings.json");
     }
 
-    private void FiveBestBooks(NetworkStream networkStream, ClientRequest clientRequest)
+    private async void FiveBestBooks(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        if (clientRequest == null)
-        {
-            return;
-        }
-
         if (clientRequest.Message == null)
         {
+            //add write Error masage to client your have Message == null
             return;
         }
 
@@ -121,10 +121,10 @@ internal class ServerCore
             TimesTamp = TimesTamp.GetTimesTamp(),
         };
 
-        //JsonResponseWrite(networkStream, response);
+        await JsonResponseWrite.Write(networkStream, response);
     }
 
-    private void AllUsers(NetworkStream networkStream)
+    private async void AllUsers(NetworkStream networkStream)
     {
         List<User> users = _dbUser.GetAllUsers();
 
@@ -135,7 +135,7 @@ internal class ServerCore
             TimesTamp = TimesTamp.GetTimesTamp(),
         };
 
-        //JsonResponseWrite(networkStream, response);
+        await JsonResponseWrite.Write(networkStream, response);
     }
 
     private async void AllBooks(NetworkStream networkStream)
@@ -144,94 +144,34 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
-            Books = books,
-            Command = ComandsLib.GetAllBooks,
-            TimesTamp = TimesTamp.GetTimesTamp(),
+            Books = books.Select(b => new Book
+            {
+                Id = b.Id,
+                Name = b.Name,
+                NumberOfPages = b.NumberOfPages,
+                TimeOfPublication = b.TimeOfPublication,
+                Cost = b.Cost,
+                PriceForSale = b.PriceForSale,
+                Image = b.Image,
+                CountBooks = new CountBooks
+                {
+                    Count = b.CountBooks?.Count ?? 0,
+                },
+                Publisher = new Publisher
+                {
+                    Id = b.PublisherId,
+                    Name = b.Publisher?.Name ?? string.Empty,
+                },
+                Genre = new Genre
+                {
+                    Id = b.GenreId,
+                    Name = b.Genre?.Name ?? string.Empty,
+                },
+            }).ToList(),
         };
 
-        await JsonResponseWrite.Write(networkStream,response);
-        //JsonResponseWrite(networkStream, response);
+        await JsonResponseWrite.Write(networkStream, response);
     }
 }
 
 
-// до бази додати окрему таблицю count і окрему додати жанр додати чек . паблішер, автор. 
-
-
-
-// створити окрему бібліотеку із записом і читанням і зєднати із клієнтом 
-/*    private void JsonResponseWrite(NetworkStream networkStream, RequestResponseBase response)
-    {
-        var jsonResponse = JsonConvert.SerializeObject(response);
-        var responseBytes = Encoding.UTF8.GetBytes(jsonResponse);
-        _buffer = BitConverter.GetBytes(responseBytes.Length);
-
-        networkStream.Write(_buffer, 0, _buffer.Length);
-        networkStream.Write(responseBytes, 0, responseBytes.Length);
-    }*/
-
-/*    private async Task<string> GetFromClient(NetworkStream networkStream)
-    {
-        await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-        int reqSize = BitConverter.ToInt32(_buffer, 0);
-        byte[] requestBuffer = new byte[reqSize];
-        int bytesRead = 0;
-
-        while (bytesRead < reqSize)
-        {
-            bytesRead += await networkStream.ReadAsync(requestBuffer, bytesRead, reqSize - bytesRead);
-        }
-
-        return Encoding.UTF8.GetString(requestBuffer);
-    }*/
-//Get From client
-/*        await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-        int reqSize = BitConverter.ToInt32(_buffer, 0);
-        _buffer = new byte[reqSize];
-        await networkStream.ReadAsync(_buffer, 0, reqSize);
-        return Encoding.UTF8.GetString(_buffer);*/
-
-/*        int bytesRead= await networkStream.ReadAsync(_buffer, 0, _buffer.Length);
-        int reqSize = BitConverter.ToInt32(_buffer, 0);
-
-        _buffer = new byte[reqSize];
-        bytesRead = await networkStream.ReadAsync(_buffer, 0, reqSize);
-
-        while(bytesRead < reqSize)
-        {
-            int remainingBytes = reqSize - bytesRead;
-            bytesRead += await networkStream.ReadAsync(_buffer, bytesRead, remainingBytes);
-        }
-        return Encoding.UTF8.GetString(_buffer);*/
-
-/*        //Send MSG
-        DbBook db = new DbBook(DbOptions.GetOptions());
-        List<Book> ress = db.GetAllBooks();
-
-        //var networkStream = client.GetStream();
-        var jsonToSend = JsonConvert.SerializeObject(res);
-        var responseToSend = Encoding.UTF8.GetBytes(jsonToSend);
-        _buffer = BitConverter.GetBytes(responseToSend.Length);
-
-        networkStream.Write(_buffer, 0, _buffer.Length);
-        networkStream.Write(responseToSend, 0, responseToSend.Length);
-
-        client.Dispose();*/
-
-/*if (clientRequest.Command == ComandsLib.GetAllBooks)
-           {
-               DbBook db = new DbBook(DbOptions.GetOptions());
-               List<Book> books = db.GetAllBooks();
-
-               var response = new GetBookResponse
-               {
-                   Books = books,
-                   Command = ComandsLib.Successful,
-               };
-               var jsonResponse = JsonConvert.SerializeObject(response);
-               var responseBytes = Encoding.UTF8.GetBytes(jsonResponse);
-               _buffer = BitConverter.GetBytes(responseBytes.Length);
-
-               networkStream.Write(_buffer, 0, _buffer.Length);
-               networkStream.Write(responseBytes, 0, responseBytes.Length);
-           }*/

@@ -10,23 +10,22 @@ public class DbUser
     {
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
     }
-    ~DbUser()
-    {
-        _dbContext.Dispose();
-    }
-    public List<User> GetAllUsers()
-    {
 
-        return _dbContext.Users.ToList();
-    }
-    public List<User> GetIsActiveUsers()
-    {
-        return _dbContext.Users.Where(u => u.IsActive == true).ToList();
-    }
-    public List<User> GetFiveUsers()
-    {
-        return _dbContext.Users.ToList();
-    }
+    ~DbUser()=>
+        _dbContext.Dispose();
+
+    public List<User> GetAllUsers()=>
+        _dbContext.Users.ToList();
+    
+    public List<User> GetIsActiveUsers()=>
+         _dbContext.Users
+        .Where(u => u.IsActive == true)
+        .ToList();
+
+    public List<User> GetFiveUsers()=> 
+        _dbContext.Users
+        .ToList();
+
     public void AddNewUser(User user)
     {
         var isChek = _dbContext.Users.FirstOrDefault(user);

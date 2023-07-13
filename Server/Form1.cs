@@ -22,12 +22,12 @@ public partial class Form1 : Form
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-            db.Database.EnsureDeleted();
+            //db.Database.EnsureDeleted();
             if (db.Database.EnsureCreated())
             {
                 //default create
                 db.Books.AddRange(
-                new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now }
+                new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now }
                 //new Book { Name = "Book2", NameAuthor = "Author2", Cost = 2, Genre = "Ganre2", NumberOfPages = 2, PriceForSale = 2, Publisher = "Publisher2", TimeOfPublication = DateTime.Now },
                 //new Book { Name = "Book3", NameAuthor = "Author3", Cost = 3, Genre = "Ganre3", NumberOfPages = 3, PriceForSale = 3, Publisher = "Publisher3", TimeOfPublication = DateTime.Now },
                 //new Book { Name = "Book4", NameAuthor = "Author4", Cost = 4, Genre = "Ganre4", NumberOfPages = 4, PriceForSale = 4, Publisher = "Publisher4", TimeOfPublication = DateTime.Now },

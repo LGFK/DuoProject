@@ -5,16 +5,25 @@ using Server.Context;
 namespace Server.Helper;
 public struct DbOptions
 {
-    static public DbContextOptions<BookShopDbContext> GetOptions()
-    {
-        var config = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("./config/appsetings.json")
-                           .Build();
-
-        var options = new DbContextOptionsBuilder<BookShopDbContext>()
-                            .UseSqlServer(config.GetConnectionString("MainConnectionString"))
-                            .Options;
-        return options;
-    }
+    private const string _path = "./config/appsetings.json";
+    private const string _connectionName = "MainConnectionString";
+    static public DbContextOptions<BookShopDbContext> GetOptions() =>
+             new DbContextOptionsBuilder<BookShopDbContext>()
+            .UseSqlServer(new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile(_path)
+            .Build()
+            .GetConnectionString(_connectionName))
+            .Options;
 }
+
+
+/*var config = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile(_path)
+                   .Build();
+
+var options = new DbContextOptionsBuilder<BookShopDbContext>()
+                    .UseSqlServer(config.GetConnectionString(_connectionName))
+                    .Options;
+        return options;*/

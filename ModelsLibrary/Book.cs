@@ -14,6 +14,9 @@ public class Book
     public int PublisherId { get; set; }
     public Publisher? Publisher { get; set; }
 
+    public int AuthorId { get; set; }
+    public Author? Author { get; set; }
+
     public CountBooks? CountBooks { get; set; }
 
     public int NumberOfPages { get; set; }

@@ -64,10 +64,11 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private async Task LoadData()
         {
             ClientsCore clientsCore = new ClientsCore();
-            var res = await clientsCore.SendRequestAsync("TEST", ComandsLib.GetAllBooks);
+            var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
 
             if (res.IsFailure)
             {
+                System.Windows.MessageBox.Show($"{res.Errors}");
                 return;
             }
 
@@ -81,8 +82,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 }
 
                 ClientCache.Add(ComandsLib.GetAllBooks.ToString(), books);
-            }
-            
+            }            
         }
     }
 }
