@@ -2,15 +2,9 @@
 public static class ClientCache
 {
     private static Dictionary<string, object> _cache = new Dictionary<string, object>();
-/*    public ClientCache()
-    {
-        _cache = new Dictionary<string, object>();
-    }*/
 
-    public static bool ContainsKey(string key)
-    {
-        return _cache.ContainsKey(key);
-    }
+    public static bool ContainsKey(string key)=>
+        _cache.ContainsKey(key);
 
     public static T? Get<T>(string key)
     {
@@ -29,13 +23,9 @@ public static class ClientCache
         }
     }
 
-    public static void Remove(string ket)
-    {
+    public static void Remove(string ket)=>
         _cache.Remove(ket);
-    }
 
-    public static void Clear()
-    {
+    public static void Clear()=>
         _cache.Clear();
-    }
 }

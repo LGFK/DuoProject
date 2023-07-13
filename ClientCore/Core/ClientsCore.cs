@@ -22,7 +22,7 @@ public class ClientsCore
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
     }
 
-    public async Task<RequestResult> SendRequestAsync(string? message, ComandsLib comandsLib)
+    public async Task<RequestResult> SendRequestAsync(ComandsLib comandsLib, string? message = null)
     {
         int attempts = 0;
         List<Error> errors = new List<Error>();
@@ -56,7 +56,7 @@ public class ClientsCore
 
             attempts++;
 
-            if (attempts > MaxConnectionAttempts)
+            if (attempts >= MaxConnectionAttempts)
             {
                 await Task.Delay(ConnectionRetryDekaMilliseconds);
             }

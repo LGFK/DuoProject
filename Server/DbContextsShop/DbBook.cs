@@ -10,23 +10,32 @@ public class DbBook
     {
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
     }
-    ~DbBook()
-    {
+
+    ~DbBook()=>
         _dbContext.Dispose();
-    }
-    public List<Book> GetAllBooks()
-    {
-        return _dbContext.Books.ToList();
-    }
-    public List<Book> GetMaxPriceBooks()
-    {
-        return _dbContext.Books.OrderByDescending(b => b.Cost).ToList();
-    }
-    public List<Book> GetTopFiveGenre(string? genre)
-    {
-        // return _dbContext.Books.Where(b => b.Genre == b.Genre).OrderByDescending(b => b.Cost).Take(5).ToList();
-        return new List<Book>() { };
-    }
+    
+    public List<Book> GetAllBooks() =>
+         _dbContext.Books
+            .Include(b => b.Publisher)
+            .Include(b => b.Genre)
+            .Include(b => b.Author)
+            .ToList();
+
+    public List<Book> GetMaxPriceBooks() =>
+        _dbContext.Books
+        .OrderByDescending(b => b.Cost)
+        .ToList();
+
+    public List<Book> GetTopFiveGenre(string? genre)=>
+        _dbContext.Books
+            .Include(b => b.Genre)
+            .Include(b => b.Publisher)
+            .Include(b => b.CountBooks)
+            .Where(b => b.Genre.Name == genre)
+            .OrderByDescending(b => b.Cost)
+            .Take(5)
+            .ToList();
+    
     public void AddNewBook(Book book)
     {
         var isCheck = _dbContext.Books.FirstOrDefault(book);

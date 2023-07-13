@@ -13,6 +13,7 @@ public struct TimesTamp
             js.Serialize(sw, $"{DateTime.UtcNow}");
         }
     }
+
     static public string GetTimesTamp()
     {
         var js = new JsonSerializer();
