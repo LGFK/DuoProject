@@ -4,8 +4,10 @@ using ClientTest.TestError;
 using ClientTest.TestResult;
 using ComandLibrary;
 using CommunicationLibrary;
+using ModelsLibrary;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -25,6 +27,61 @@ internal class ClientCore
         _cache = new ClientCache();
         LoadingTmp();
     }
+
+    public async Task<RequestResult<NetworkStream>> Connected()
+    {
+        int attempts = 0;
+        while (attempts <= MaxConnectionAttempts)
+        {
+            try
+            {
+                var client = new TcpClient();
+                await client.ConnectAsync(_endPoint);
+                var networkStream = client.GetStream();
+                return RequestResult.Success(networkStream);
+            }
+            catch (Exception)
+            {
+
+                return (RequestResult<NetworkStream>)RequestResult.Failure(Error.NullValue);
+            }
+        }
+        return (RequestResult<NetworkStream>)RequestResult.Failure(Error.NullValue);
+    }
+
+    public async Task<RequestResult<RequestResponseBase>> SendResultAsync(ComandsLib comands, NetworkStream networkStream, string message)
+    {
+        //await SendRequest(networkStream, comands);
+        await EditBook(networkStream, new Book());
+        var requestToReceive = await ReceiveResponse(networkStream);
+        var res = DeserilizeObjectFromServer(requestToReceive);
+        return RequestResult.Success(res.Value);
+    }
+
+    private async Task SendRequest(NetworkStream networkStream, ComandsLib command,Book book)
+    {
+        var jsonBook = JsonConvert.SerializeObject(book);
+
+        var response = new ClientRequest
+        {
+            TimesTamp = TimesTamp.GetTimesTamp(),
+            Command = command,
+            Message = jsonBook,
+        };
+        var jsonResponse = JsonConvert.SerializeObject(response);
+        var responseBytes = Encoding.UTF8.GetBytes(jsonResponse);
+        var requestSizeBytes = BitConverter.GetBytes(responseBytes.Length);
+
+        await networkStream.WriteAsync(requestSizeBytes, 0, requestSizeBytes.Length);
+        await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
+    }
+
+    public async Task<RequestResult>EditBook(NetworkStream networkStream, Book book)
+    {
+        await SendRequest(networkStream, ComandsLib.EditBook, new Book() { Name = "Good books !222", Author = new Author() { Name = "awdawdawadwadw"} });
+        return RequestResult.Success();
+    }
+
     public async Task<RequestResult> SendRequestAsync(string? message, ComandsLib comand)
     {
         int attempts = 0;
@@ -91,18 +148,18 @@ internal class ClientCore
         }
         return responseBytes;
     }
-    private RequestResult DeserilizeObjectFromServer(byte[] requestToReceive)
+    private RequestResult<RequestResponseBase> DeserilizeObjectFromServer(byte[] requestToReceive)
     {
         if (requestToReceive is null)
         {
-            return RequestResult.Failure(Error.NullValue);
+            return (RequestResult< RequestResponseBase>)RequestResult.Failure(Error.NullValue);
         }
 
         string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
         var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
         if (comand is null)
         {
-            return RequestResult.Failure(Error.NullValue);
+            return (RequestResult< RequestResponseBase>) RequestResult.Failure(Error.NullValue);
         }
 
         RequestResponseBase resultChoise = ChoiseCommand(comand.Command, jsonToReceive);
