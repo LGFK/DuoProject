@@ -4,6 +4,7 @@ using ClientCore.Model;
 using ClientCore.Rusults;
 using ComandLibrary;
 using CommunicationLibrary;
+using ModelsLibrary;
 using NetworkSerializationLib;
 using Newtonsoft.Json;
 using System.Net;
@@ -20,6 +21,58 @@ public class ClientsCore
     public ClientsCore()
     {
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
+    }
+
+    public async Task<RequestResult<NetworkStream>> Connected()
+    {
+        int attemps = 0;
+        List<Error> errors = new List<Error>();
+        while (attemps <= MaxConnectionAttempts)
+        {
+            try
+            {
+                var client = new TcpClient();
+                await client.ConnectAsync(_endpoint);
+                var networkStream = client.GetStream();
+                return RequestResult.Create(networkStream);
+            }
+            catch (SocketException)
+            {
+                //need chage error message
+                errors.Add(Error.InvalidInput);//Failed to establish connection to the server.
+            }
+            catch 
+            {
+                errors.Add(Error.InvalidInput);//An error occureed while sending/receiving the reques.
+            }
+        }
+        attemps++;
+
+        if(attemps >= MaxConnectionAttempts)
+        {
+            await Task.Delay(ConnectionRetryDekaMilliseconds);
+        }
+        errors.Add(Error.ConnectionTimeout);
+        return (RequestResult<NetworkStream>)RequestResult.Failure(errors.ToArray());
+    }
+
+    public async Task<RequestResult<RequestResponseBase>> SendResultAsync(ComandsLib comands, NetworkStream network, string? message = null)
+    {
+        if(ComandsLib.EditBook == comands)
+        {
+            return (RequestResult<RequestResponseBase>) RequestResult.Failure(Error.InvalidInput);
+        }
+
+        await SendRequest(network, comands);
+        var requestToReceive = await JsonReceiveResponse.Receive(network);
+        var resultDeserilize = DeserializationObjectFromServer(requestToReceive);
+        return RequestResult.Create(resultDeserilize.Value);
+    }
+
+    public async Task<RequestResult> EditBook(NetworkStream network, Book book)
+    {
+        await SendRequest(network,ComandsLib.EditBook,book);//need add mb server chek return Error or null
+        return RequestResult.Success();
     }
 
     public async Task<RequestResult> SendRequestAsync(ComandsLib comandsLib, string? message = null)
@@ -77,6 +130,19 @@ public class ClientsCore
          await JsonResponseWrite.Write(networkSteem, response);
     }
 
+    private async Task SendRequest(NetworkStream networkSteem, ComandsLib comandsLib, Book book)
+    {
+        var jsonEditBook = JsonConvert.SerializeObject(book);
+        var response = new ClientRequest
+        {
+            TimesTamp = TimesTamp.GetTimesTamp(),
+            Command = comandsLib,
+            Message = jsonEditBook,
+        };
+
+        await JsonResponseWrite.Write(networkSteem, response);
+    }
+
     private RequestResult<RequestResponseBase> DeserializationObjectFromServer(string requestToReceive)
     {
         if (requestToReceive is null)
@@ -116,10 +182,6 @@ public class ClientsCore
                 break;
             case ComandsLib.GetFiveBestBooks:
                 break;
-            case ComandsLib.Successful:
-                break;
-            case ComandsLib.ApiWeather:
-                break;
             case ComandsLib.ERROR:
                 return new RequestResponseBase() { Command = ComandsLib.ERROR };
             default:
@@ -127,10 +189,5 @@ public class ClientsCore
         }
         //SaveInJson(res, commandsLib);
         return res;
-    }
-
-    private void SaveInJson(RequestResponseBase books, ComandsLib commandsLib)
-    {
-
     }
 }

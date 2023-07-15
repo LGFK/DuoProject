@@ -209,15 +209,37 @@ public partial class MainWindow : Window
                 var users = requestToReceive2.Value;*/
 
 
-        var requestToreceive = (RequestResult<RequestResponseBase>)await _clientCore.SendRequestAsync("Test", ComandsLib.GetAllBooks);
-        if (requestToreceive.Value is GetBookResponse bookResponse)
+
+        var networkStreamResult = await _clientCore.Connected();
+        if (networkStreamResult.IsSuccess)
         {
-            List<Book> books = bookResponse.Books!;
-            foreach (var book in books)
+
+            using var networkStream = networkStreamResult.Value;
+            var req = await  _clientCore.SendResultAsync(ComandsLib.EditBook, networkStream, "TEST");
+
+            var b = req.Value;
+
+            if(b is GetBookResponse books)
             {
-                //MessageBox.Show(book.Genre);
+
+                foreach (var book in books.Books!)
+                {
+
+                }
             }
+
         }
+
+        //variant 2
+        /*        var requestToreceive = (RequestResult<RequestResponseBase>)await _clientCore.SendRequestAsync("Test", ComandsLib.GetAllBooks);
+                if (requestToreceive.Value is GetBookResponse bookResponse)
+                {
+                    List<Book> books = bookResponse.Books!;
+                    foreach (var book in books)
+                    {
+                        //MessageBox.Show(book.Genre);
+                    }
+                }*/
     }
 
     private void Btn_Connect_Click(object sender, RoutedEventArgs e)

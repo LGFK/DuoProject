@@ -18,7 +18,6 @@ internal class ServerCore
     private readonly TcpListener _listener;
     private string? _port = "1448";
     private bool _isStart;
-    private byte[] _buffer = new byte[4];
     private readonly DbBook _dbBook;
     private readonly DbUser _dbUser;
     //private WeatherApi _weatherApi;
@@ -83,6 +82,9 @@ internal class ServerCore
             case ComandsLib.ApiWeather:
                 ApiWeather(networkStream, clientRequest);
                 break;
+            case ComandsLib.EditBook:
+                EditBook(networkStream, clientRequest);
+                break;
             default:
                 break;
         }
@@ -108,7 +110,7 @@ internal class ServerCore
     {
         if (clientRequest.Message == null)
         {
-            //add write Error masage to client your have Message == null
+            await JsonResponseWrite.Write(networkStream, response: new GetBookResponse() { Command = ComandsLib.ERROR });
             return;
         }
 
@@ -116,10 +118,38 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
+            Books = books.Select(b => new Book
+            {
+                Id = b.Id,
+                Name = b.Name,
+                NumberOfPages = b.NumberOfPages,
+                TimeOfPublication = b.TimeOfPublication,
+                Cost = b.Cost,
+                PriceForSale = b.PriceForSale,
+                Image = b.Image,
+                CountBooks = new CountBooks
+                {
+                    Count = b.CountBooks?.Count ?? 0,
+                },
+                Publisher = new Publisher
+                {
+                    Id = b.PublisherId,
+                    Name = b.Publisher?.Name ?? string.Empty,
+                },
+                Genre = new Genre
+                {
+                    Id = b.GenreId,
+                    Name = b.Genre?.Name ?? string.Empty,
+                },
+
+            }).ToList(),
+        };
+/*        var response = new GetBookResponse
+        {
             Books = books,
             Command = ComandsLib.GetFiveBestBooks,
             TimesTamp = TimesTamp.GetTimesTamp(),
-        };
+        };*/
 
         await JsonResponseWrite.Write(networkStream, response);
     }
@@ -172,6 +202,21 @@ internal class ServerCore
 
         await JsonResponseWrite.Write(networkStream, response);
     }
+
+    private void EditBook(NetworkStream networkStream, ClientRequest clientRequest)
+    {
+        if (clientRequest == null)
+        {
+            return;
+        }
+
+        if (clientRequest.Message == null)
+        {
+            return;
+        }
+        var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message);
+        
+        //need check null book
+        _dbBook.EditBoks(book.Id, book);
+    }
 }
-
-
