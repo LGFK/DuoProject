@@ -28,7 +28,7 @@ public class DbUser
 
     public void AddNewUser(User user)
     {
-        var isChek = _dbContext.Users.FirstOrDefault(user);
+        var isChek = _dbContext.Users.FirstOrDefault(u => u.Id == user.Id);
         if (isChek != null)
         {
             _dbContext.Users.Add(user);
@@ -37,7 +37,7 @@ public class DbUser
     }
     public void RemoveUser(User user)
     {
-        var item = _dbContext.Users.FirstOrDefault(user);
+        var item = _dbContext.Users.Find(user.Id);
         if (item != null)
         {
             item.IsActive = false;
@@ -47,7 +47,7 @@ public class DbUser
     }
     public void EditUsers(int id, User user)
     {
-        var us = _dbContext.Users.FirstOrDefault(u => u.Id == id);
+        var us = _dbContext.Users.Find(id);
         if (us != null)
         {
             us = user;
