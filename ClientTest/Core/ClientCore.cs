@@ -19,12 +19,10 @@ internal class ClientCore
 {
     //private byte[] _buffer = new byte[4];
     private IPEndPoint _endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
-    private ClientCache _cache;
     private const int MaxConnectionAttempts = 3;
     private const int ConnectionRetryDekayMilliseconds = 7000;
     public ClientCore()
     {
-        _cache = new ClientCache();
         LoadingTmp();
     }
 
@@ -176,17 +174,17 @@ internal class ClientCore
         {
             case ComandsLib.GetAllBooks:
                 var books = DataBooks.AllBooks(jsonToReceive);
-                _cache.Add(comands.ToString(), books);
+                
                 SaveInJson(books, comands);
                 return books;
             case ComandsLib.GetAllUsers:
                 var users = DataUsers.Users(jsonToReceive);
-                _cache.Add(comands.ToString(), users);
+                
                 SaveInJson(users, comands);
                 return users;
             case ComandsLib.GetFiveBestBooks:
                 var bestbooks = DataBooks.AllBooks(jsonToReceive);
-                _cache.Add(comands.ToString(), bestbooks);
+               
                 SaveInJson(bestbooks, comands);
                 break;
             case ComandsLib.Successful:
@@ -210,13 +208,7 @@ internal class ClientCore
     }
     public void LoadingTmp()
     {
-        var us = LoadingJsnFile(ComandsLib.GetAllUsers);
 
-        if (us is not null
-            && !_cache.ContainsKey(ComandsLib.GetAllUsers.ToString()))
-        {
-            _cache.Add(ComandsLib.GetAllUsers.ToString(), us);
-        }
     }
     private RequestResponseBase LoadingJsnFile(ComandsLib comands)
     {

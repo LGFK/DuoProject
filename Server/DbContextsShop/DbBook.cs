@@ -38,7 +38,7 @@ public class DbBook
     
     public void AddNewBook(Book book)
     {
-        var isCheck = _dbContext.Books.FirstOrDefault(book);
+        var isCheck = _dbContext.Books.FirstOrDefault(b => b.Id == book.Id);
         if (isCheck != null)
         {
             _dbContext.Books.Add(book);
@@ -47,7 +47,7 @@ public class DbBook
     }
     public void RemoveBook(Book book)
     {
-        var item = _dbContext.Books.FirstOrDefault(book);
+        var item = _dbContext.Books.Find(book.Id);
         if (item != null)
         {
             _dbContext.Books.Remove(item);
@@ -56,7 +56,7 @@ public class DbBook
     }
     public void EditBoks(int id, Book book)
     {
-        var bk = _dbContext.Books.FirstOrDefault(b => b.Id == id);
+        var bk = _dbContext.Books.Find(id);
         if (bk != null)
         {
             bk = book;
