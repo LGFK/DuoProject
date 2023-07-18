@@ -50,28 +50,28 @@
                                 <ColumnDefinition Width="4*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Border BorderBrush="Aqua" BorderThickness="0 0 1 0" Grid.Column="0" >
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"   Text="{Binding Book.Name }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"   Text="{Binding Name }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
                                 </TextBlock>
                             </Border>
                             <Border BorderBrush="Aqua" BorderThickness="0 0 0 0" Grid.Column="1">
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Text="{Binding Book.Author.Name }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Text="{Binding Author.Name }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
                                 </TextBlock>
                             </Border>
                             <Border  Grid.Column="2" BorderBrush="Aqua" BorderThickness="1 0 0 0" >
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" Text="{Binding Book.Genre.Name }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle }" TextAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" Text="{Binding Genre.Name }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
                                 </TextBlock>
                             </Border>
                             <Border BorderThickness="1 0 0 0" BorderBrush="Aqua" Grid.Column="3">
-                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"    Text="{Binding  Book.Cost }">
+                                <TextBlock FontSize="16" Style="{StaticResource ResourceKey=ThreeDTextStyle}" TextAlignment="Center" VerticalAlignment="Center"    Text="{Binding  Cost }">
                                     <TextBlock.Effect>
                                         <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
                                     </TextBlock.Effect>
