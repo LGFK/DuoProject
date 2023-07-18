@@ -30,21 +30,21 @@
             </Border>
            
             <Border Background="Gray" Style="{StaticResource BorderTemplate}" Margin="2" Grid.ColumnSpan ="2" >
-            <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" TextAlignment="Center" Style="{StaticResource ThreeDTextStyle}" Text="{Binding BookWithAllFields.Book.Id}" Margin="0 5 0 0"></TextBlock>
+            <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" TextAlignment="Center" Style="{StaticResource ThreeDTextStyle}" Text="{Binding Book.Id}" Margin="0 5 0 0"></TextBlock>
             </Border>
             <TextBlock Style="{StaticResource ThreeDTextStyle}" FontSize="20" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right">Title:</TextBlock>
             <TextBlock Style="{StaticResource ThreeDTextStyle}" FontSize="20" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right">Author:</TextBlock>
             <TextBlock Style="{StaticResource ThreeDTextStyle}" FontSize="20" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Right">Genre:</TextBlock>
             <TextBlock Style="{StaticResource ThreeDTextStyle}" FontSize="20" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right">Amount:</TextBlock>
             
-            <TextBox Text="{Binding BookWithAllFields.Book.Name}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="1" Margin="5"></TextBox>
-            <TextBox Text="{Binding BookWithAllFields.Author}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="2" Margin="5"></TextBox>
-            <TextBox Text="{Binding BookWithAllFields.Genre}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="3" Margin="5"></TextBox>
-            <TextBox Text="{Binding BookWithAllFields.Amount}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="4" Margin="5"></TextBox>
+            <TextBox Text="{Binding Book.Name}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="1" Margin="5"></TextBox>
+            <TextBox Text="{Binding Book.Author.Name}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="2" Margin="5"></TextBox>
+            <TextBox Text="{Binding Book.Genre.Name}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="3" Margin="5"></TextBox>
+            <TextBox Text="{Binding Book.CountBooks.Count}" Width="290" Style="{StaticResource ResourceKey=ediditingTextBoxStyle}"  Grid.Column="1" Grid.Row="4" Margin="5"></TextBox>
             
             <DockPanel LastChildFill="False" Grid.Row="7" Grid.ColumnSpan="2" Margin="5" >
                 <Button Width="100" DockPanel.Dock="Left" Style="{StaticResource Button1}" FontSize="9" Click="Button_Click">CLOSE</Button>
-                <Button Width="100" DockPanel.Dock="Right" Style="{StaticResource Button1}" FontSize="9">ACCEPT</Button>
+            <Button Width="100" DockPanel.Dock="Right" Style="{StaticResource Button1}" Command="{Binding ApplyChangesCommand}" FontSize="9">ACCEPT</Button>
             </DockPanel>
             
          

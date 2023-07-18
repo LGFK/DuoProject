@@ -19,7 +19,7 @@
                 <RowDefinition Height="0.5*"></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Margin="54 40 54 0" TextAlignment="Center" Grid.Row="0" Style="{StaticResource ResourceKey=ThreeDTextStyle}" FontSize="40">WELCOME!</TextBlock>
-            <TextBlock Margin="0 30 0 0" TextAlignment="Center" Grid.Row="1" Style="{StaticResource ResourceKey=ThreeDTextStyle}">This is our vision on how Library<LineBreak></LineBreak> application would work</TextBlock>
+            <TextBlock Margin="0 30 0 0" TextAlignment="Center" Grid.Row="1" Style="{StaticResource ResourceKey=ThreeDTextStyle}">This is our vision on how books shop<LineBreak></LineBreak> application would work</TextBlock>
             <TextBlock Margin="0 0 100 0" TextAlignment="Right" Grid.Row="2" Style="{StaticResource ResourceKey=ThreeDTextStyle}">By I and R</TextBlock>
         </Grid>
 
