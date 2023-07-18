@@ -21,8 +21,8 @@ namespace DuoProjectLibrary.MVVM.ViewModel
     {
         readonly private IModalWindowService service;
         
-        BookWithAllFields? _book;
-        public BookWithAllFields Book
+        Book? _book;
+        public Book Book
         {
             get { return _book; }
             set { _book = value; 
@@ -74,9 +74,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         }
         private void OpenEditWMethod(object param)
         {
-            if(param is BookWithAllFields bookWithAllFields)
+            if(param is Book book)
             {
-                var _editVM = new EditingWindowViewModel(bookWithAllFields);
+                var _editVM = new EditingWindowViewModel(book);
                 service.ShowModalWindow(_editVM);
             }
            
@@ -91,15 +91,15 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private void AddBookInDaCart(object s)
         {
             bool isAdded = false;
-            if (s is BookWithAllFields _bookTmp)
+            if (s is Book _bookTmp)
             {
                 foreach (var book in CartCollection.Basket)
                 {
 
-                    if (book.BookByItself.Name == _bookTmp.Book.Name)
+                    if (book.BookByItself.Name == _bookTmp.Name)
                     {
                         isAdded = true;
-                        if(book.Amount<_bookTmp.Amount)
+                        if(book.Amount<_bookTmp.CountBooks.Count)
                         book.Amount+=1;
                         break;
                     }
@@ -107,27 +107,27 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 }
                 if (isAdded == false)
                 {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp.Book));
+                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
                 }
                 return;
             }
             foreach(var book in CartCollection.Basket)
             {
                 
-                if (book.BookByItself.Name == _book.Book.Name)
+                if (book.BookByItself.Name == _book.Name)
                 {
                     isAdded = true;
                     break;
                 }
                 if (isAdded == false)
                 {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _book.Book));
+                    CartCollection.Basket.Add(new BookInDaBasket(1, _book));
                 }
             }
 
             if(isAdded==false)
             {
-                CartCollection.Basket.Add(new BookInDaBasket(1, _book.Book));
+                CartCollection.Basket.Add(new BookInDaBasket(1, _book));
             }
 
         }
