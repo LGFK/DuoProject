@@ -60,8 +60,37 @@ public class DbBook
         var bk = _dbContext.Books.Find(id);
         if (bk != null)
         {
-            bk = book;
+            bk.Name = book.Name;
+            bk.NumberOfPages = book.NumberOfPages;
+            bk.Cost = book.Cost;
+            bk.PriceForSale = book.PriceForSale;
+            bk.Image = book.Image;
+            bk.CountBooks = new CountBooks() { Count = book.CountBooks.Count };
+            bk.Publisher = new Publisher() { Name = book.Publisher.Name };
+            bk.Genre = new Genre() { Name = book.Genre.Name };
             _dbContext.SaveChanges();
         }
     }
 }
+/*Id = b.Id,
+                Name = b.Name,
+                NumberOfPages = b.NumberOfPages,
+                TimeOfPublication = b.TimeOfPublication,
+                Cost = b.Cost,
+                PriceForSale = b.PriceForSale,
+                Image = b.Image,
+                CountBooks = new CountBooks
+                {
+                    
+                    Count = b.CountBooks?.Count ?? 0,
+                },
+                Publisher = new Publisher
+                {
+                    Id = b.PublisherId,
+                    Name = b.Publisher?.Name ?? string.Empty,
+                },
+                Genre = new Genre
+                {
+                    Id = b.GenreId,
+                    Name = b.Genre?.Name ?? string.Empty,
+                },*/
