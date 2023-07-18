@@ -1,4 +1,5 @@
-﻿using DuoProjectLibrary.Infrastructure;
+﻿using ClientCore.Core;
+using DuoProjectLibrary.Infrastructure;
 using DuoProjectLibrary.MVVM.Model;
 using ModelsLibrary;
 using System;
@@ -53,10 +54,13 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         {
             get => applyChanges ??(applyChanges=new RelayCommand(ApplyChangesMethod)); 
         }
-        private void ApplyChangesMethod(object p)
+        private async void ApplyChangesMethod(object p)
         {
+            ClientsCore clientsCore = new ClientsCore();
+            var networkStream = await clientsCore.Connected();
+            _=clientsCore.EditBook(networkStream.Value, book);
             //client.EditBook(book)
-            MessageBox.Show("Test");
+            MessageBox.Show("GG");
         }
 
 

@@ -198,6 +198,11 @@ internal class ServerCore
                     Id = b.GenreId,
                     Name = b.Genre?.Name ?? string.Empty,
                 },
+                Author = new Author
+                {
+                    Id = b.AuthorId,
+                    Name = b?.Author?.Name ?? string.Empty,
+                }
             }).ToList(),
         };
 
