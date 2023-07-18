@@ -185,6 +185,7 @@ internal class ServerCore
                 Image = b.Image,
                 CountBooks = new CountBooks
                 {
+                    
                     Count = b.CountBooks?.Count ?? 0,
                 },
                 Publisher = new Publisher

@@ -27,11 +27,11 @@ public partial class Form1 : Form
             {
                 //default create
                 db.Books.AddRange(
-                new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now }
-                //new Book { Name = "Book2", NameAuthor = "Author2", Cost = 2, Genre = "Ganre2", NumberOfPages = 2, PriceForSale = 2, Publisher = "Publisher2", TimeOfPublication = DateTime.Now },
-                //new Book { Name = "Book3", NameAuthor = "Author3", Cost = 3, Genre = "Ganre3", NumberOfPages = 3, PriceForSale = 3, Publisher = "Publisher3", TimeOfPublication = DateTime.Now },
-                //new Book { Name = "Book4", NameAuthor = "Author4", Cost = 4, Genre = "Ganre4", NumberOfPages = 4, PriceForSale = 4, Publisher = "Publisher4", TimeOfPublication = DateTime.Now },
-                //new Book { Name = "Book5", NameAuthor = "Author5", Cost = 5, Genre = "Ganre5", NumberOfPages = 5, PriceForSale = 5, Publisher = "Publisher5", TimeOfPublication = DateTime.Now }
+                new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now ,CountBooks = new CountBooks() {Count = 100 }},
+                new Book { Name = "Book1223", Cost = 1, Genre = new Genre() { Name = "Genre123123" }, Author = new Author() { Name = "124" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher123123qe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre323424" }, Author = new Author() { Name = "rrrwqr" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "3qweqwe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } }
                 );
                 db.SaveChanges();
 

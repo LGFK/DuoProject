@@ -19,6 +19,7 @@ public class DbBook
             .Include(b => b.Publisher)
             .Include(b => b.Genre)
             .Include(b => b.Author)
+            .Include(b =>b.CountBooks)
             .ToList();
 
     public List<Book> GetMaxPriceBooks() =>
