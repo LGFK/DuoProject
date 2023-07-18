@@ -21,8 +21,8 @@ namespace DuoProjectLibrary.MVVM.ViewModel
     {
         readonly private IModalWindowService service;
         
-        BookWithAllFields? _book;
-        public BookWithAllFields Book
+        Book? _book;
+        public Book Book
         {
             get { return _book; }
             set { _book = value; 
@@ -44,24 +44,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             }
             catch (Exception ex)
             {
-/*                _books = new ObservableCollection<BookWithAllFields>();
-                Books.Add(new BookWithAllFields());
-                Books[0].Book = new Book()
-                {
-                    Id = 32324,
-                    Name = "Book1",
-                    NameAuthor = "Author1",
-                    Cost = 1,
-                    Genre = "Ganre1",
-                    NumberOfPages = 1,
-                    PriceForSale = 1,
-                    Publisher = "Publisher1",
-                    TimeOfPublication = DateTime.Now
-                };
-                Books[0].Genre = "genre1";
-                Books[0].Author = "Author1";
-                Books[0].Amount = 20;
-                service = ApplicationState.ModalWindowService;*/
+                System.Windows.MessageBox.Show(ex.Message);
             }
            
             
@@ -74,9 +57,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         }
         private void OpenEditWMethod(object param)
         {
-            if(param is BookWithAllFields bookWithAllFields)
+            if(param is Book book)
             {
-                var _editVM = new EditingWindowViewModel(bookWithAllFields);
+                var _editVM = new EditingWindowViewModel(book);
                 service.ShowModalWindow(_editVM);
             }
            
@@ -91,44 +74,29 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private void AddBookInDaCart(object s)
         {
             bool isAdded = false;
-            if (s is BookWithAllFields _bookTmp)
+            if (s is Book _bookTmp)
             {
                 foreach (var book in CartCollection.Basket)
                 {
 
-                    if (book.BookByItself.Name == _bookTmp.Book.Name)
+                    if (book.BookByItself.Name == _bookTmp.Name)
                     {
                         isAdded = true;
-                        if(book.Amount<_bookTmp.Amount)
-                        book.Amount+=1;
+                        if(book.Amount<_bookTmp.CountBooks.Count)
+                        {
+                            book.Amount += 1;
+                        }    
                         break;
                     }
                    
                 }
                 if (isAdded == false)
                 {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp.Book));
+                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
                 }
                 return;
             }
-            foreach(var book in CartCollection.Basket)
-            {
-                
-                if (book.BookByItself.Name == _book.Book.Name)
-                {
-                    isAdded = true;
-                    break;
-                }
-                if (isAdded == false)
-                {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _book.Book));
-                }
-            }
-
-            if(isAdded==false)
-            {
-                CartCollection.Basket.Add(new BookInDaBasket(1, _book.Book));
-            }
+           
 
         }
 
@@ -151,6 +119,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             {
                 Books.Add(book);
             }
+
         }
     }
 }
