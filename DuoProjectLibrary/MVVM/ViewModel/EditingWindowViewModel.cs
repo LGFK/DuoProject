@@ -1,5 +1,6 @@
 ﻿using DuoProjectLibrary.Infrastructure;
 using DuoProjectLibrary.MVVM.Model;
+using ModelsLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
     public class EditingWindowViewModel:BaseViewModel
     {
         
-        BookWithAllFields book;
+        Book book;
 
-        public BookWithAllFields BookWithAllFields
+        public Book BookWithAllFields
         {
             get => book;
             set
@@ -26,7 +27,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             }
         }
 
-        public EditingWindowViewModel(BookWithAllFields book)
+        public EditingWindowViewModel(Book book)
         {
             this.book = book;
         }
