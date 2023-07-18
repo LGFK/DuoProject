@@ -14,6 +14,13 @@ namespace DuoProjectLibrary.MVVM.ViewModel
     public class CartViewModel : BaseViewModel
     {
         ObservableCollection<BookInDaBasket> _bookInDaBasket;
+        int totalPrice;
+
+        public int TotalPrice
+        {
+            get { return totalPrice; }
+            set { totalPrice = value; OnPropertyChanged(); }
+        }
 
         BookInDaBasket _bookSelected;
         public BookInDaBasket BookSelected
@@ -39,6 +46,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             {
                 BookInDaBasket.Remove(bidb);
                 CartCollection.Basket.Remove(bidb);
+                totalPrice -= bidb.BookByItself.Cost;
             }
         }
         public ObservableCollection<BookInDaBasket> BookInDaBasket
@@ -50,6 +58,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         public CartViewModel()
         {
             BookInDaBasket = CartCollection.Basket;
+            totalPrice = BookInDaBasket.Sum(x => x.BookByItself.Cost*x.Amount);
+            
+
         }
         
        

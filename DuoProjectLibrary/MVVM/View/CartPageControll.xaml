@@ -11,25 +11,38 @@
         <viewModel:CartViewModel></viewModel:CartViewModel>
     </UserControl.DataContext>
     <Grid Margin="20">
+
         <Grid Margin="25">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="197*"></ColumnDefinition>
                     <ColumnDefinition Width="488*"></ColumnDefinition>
-
                     <ColumnDefinition Width="25"></ColumnDefinition>
-
                 </Grid.ColumnDefinitions>
-
 
 
                 <Grid Grid.Column="2" Background="red">
 
                 </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Background="Gray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="334*"></ColumnDefinition>
+                    <ColumnDefinition Width="241*" ></ColumnDefinition>
+                    <ColumnDefinition Width="135.034"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="2" Style="{StaticResource checkoutBttnStyle}">
+                    <TextBlock FontSize="20"  Style="{StaticResource ThreeDTextStyle}">Checkout</TextBlock>
+                </Button>
+                <TextBlock Grid.Column="0" FontSize="20"  Style="{StaticResource ThreeDTextStyle}" Margin="230,3,0,0">Total Price :</TextBlock>
+                <TextBlock Grid.Column="1" FontSize="20"  Style="{StaticResource ThreeDTextStyle}" Text="{Binding TotalPrice}" Grid.ColumnSpan="2" Margin="0 3 0 0" />
+
+
             </Grid>
             <ScrollViewer Grid.Row="1" Style="{StaticResource ResourceKey=CustomScrollViewerStyle}">
 
