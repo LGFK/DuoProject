@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace DuoProjectLibrary.MVVM.ViewModel
@@ -46,7 +47,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             {
                 BookInDaBasket.Remove(bidb);
                 CartCollection.Basket.Remove(bidb);
-                totalPrice -= bidb.BookByItself.Cost;
+                TotalPrice -= bidb.BookByItself.Cost*bidb.Amount;
             }
         }
         public ObservableCollection<BookInDaBasket> BookInDaBasket
@@ -59,11 +60,32 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         {
             BookInDaBasket = CartCollection.Basket;
             totalPrice = BookInDaBasket.Sum(x => x.BookByItself.Cost*x.Amount);
-            
-
         }
-        
-       
+
+        ICommand _sell;
+        public ICommand SellCommand
+        {
+            get => _sell ?? (_sell = new RelayCommand(SellMethod));
+        }
+
+        void SellMethod(object? param) 
+        { 
+            try
+            {
+                if(CartCollection.Basket.Count>0) 
+                { 
+                    for(int i = 0;i < CartCollection.Basket.Count;i++)
+                    {
+                        CartCollection.Basket[i].BookByItself.CountBooks.Count -= CartCollection.Basket[i].Amount;
+                        //тут должен быть метод обращения к серверу для изменения записи с этой книгой CartCollection.Basket[i].BookByItself - это сама книга собственно в которой уже уменьшен count выше
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+        }
         
     }
 }

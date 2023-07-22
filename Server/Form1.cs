@@ -23,17 +23,17 @@ public partial class Form1 : Form
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
             //db.Database.EnsureDeleted();
-            if (db.Database.EnsureCreated())
-            {
-                //default create
-                db.Books.AddRange(
-                new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now ,CountBooks = new CountBooks() {Count = 100 }},
-                new Book { Name = "Book1223", Cost = 1, Genre = new Genre() { Name = "Genre123123" }, Author = new Author() { Name = "124" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher123123qe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-                new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre323424" }, Author = new Author() { Name = "rrrwqr" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "3qweqwe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } }
-                );
-                db.SaveChanges();
+            //if (db.Database.EnsureCreated())
+            //{
+            //    //default create
+            //    db.Books.AddRange(
+            //    new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now ,CountBooks = new CountBooks() {Count = 100 }},
+            //    new Book { Name = "Book1223", Cost = 1, Genre = new Genre() { Name = "Genre123123" }, Author = new Author() { Name = "124" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher123123qe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
+            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre323424" }, Author = new Author() { Name = "rrrwqr" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "3qweqwe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } }
+            //    );
+            //    db.SaveChanges();
 
                 //db.Users.AddRange(
                 //    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
@@ -42,7 +42,7 @@ public partial class Form1 : Form
                 //    new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
                 //    new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
                 //db.SaveChanges();
-            }
+            
         }
 
     }

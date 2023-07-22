@@ -31,6 +31,19 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 }
                  }
         }
+        ICommand addNewBookButtonClick;
+        public ICommand AddNewBookCommand
+        {
+            get => addNewBookButtonClick ?? (addNewBookButtonClick = new RelayCommand(AddNewBookButtonClickMethod));
+
+        }
+
+        void AddNewBookButtonClickMethod(object param)
+        {
+            var newBookViewModel = new NewBookViewModel();
+            CurrentPage = newBookViewModel;
+        }
+
         private ICommand _allBooksButtonClick;
         public ICommand AllBooksButtonClick
         {
