@@ -6,5 +6,5 @@ public class Genre
     public int Id { get; set; }
     [Column(TypeName = "nvarchar(50)")]
     public string Name { get; set; } = null!;
-    public Book? Book { get; set; }
+    public List<Book>? Book { get; set; }
 }
