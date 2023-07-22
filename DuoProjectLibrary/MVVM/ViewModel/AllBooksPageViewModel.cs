@@ -74,28 +74,45 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private void AddBookInDaCart(object s)
         {
             bool isAdded = false;
-            if (s is Book _bookTmp)
+            try
             {
-                foreach (var book in CartCollection.Basket)
-                {
+                if (s is Book _bookTmp)
 
-                    if (book.BookByItself.Name == _bookTmp.Name)
-                    {
-                        isAdded = true;
-                        if(book.Amount<_bookTmp.CountBooks.Count)
-                        {
-                            book.Amount += 1;
-                        }    
-                        break;
-                    }
-                   
-                }
-                if (isAdded == false)
                 {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+                    if (_bookTmp.CountBooks.Count > 0)
+                    {
+                        foreach (var book in CartCollection.Basket)
+                        {
+
+                            if (book.BookByItself.Name == _bookTmp.Name)
+                            {
+                                isAdded = true;
+                                if (book.Amount < _bookTmp.CountBooks.Count)
+                                {
+                                    book.Amount += 1;
+                                }
+                                break;
+                            }
+
+                        }
+                        if (isAdded == false)
+                        {
+                            CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Out Of Stock");
+                    }
+
                 }
-                return;
             }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            
            
 
         }
@@ -103,22 +120,26 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         private  void LoadData()
         {
             var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
-
-            if (res is null)
+            try
             {
+                if (res is null)
+                {
 
-                return;
-            }
+                    return;
+                }
 
-            if (res.Books is null)
-            {
-                return;
-            }
+                if (res.Books is null)
+                {
+                    return;
+                }
 
-            foreach (var book in res.Books)
-            {
-                Books.Add(book);
+                foreach (var book in res.Books)
+                {
+                    Books.Add(book);
+                }
             }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message);}
+           
 
         }
     }

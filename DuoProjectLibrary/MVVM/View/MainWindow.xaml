@@ -23,7 +23,9 @@
         <DataTemplate DataType="{x:Type viewModel:CartViewModel}">
             <local:CartPageControll></local:CartPageControll>
         </DataTemplate>
-                      
+        <DataTemplate DataType="{x:Type viewModel:NewBookViewModel}">
+            <local:AddNewBookControll></local:AddNewBookControll>
+        </DataTemplate>
     </Window.Resources>
     
     <Border  BorderThickness="3" Background="Aqua" Style="{StaticResource BorderTemplate}" Margin="0">
@@ -69,7 +71,7 @@
                     <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="1" Command="{Binding CartBttnClick}">
                         <Image  Source="/Img/shopping-cart.png" Stretch="Fill" Width="70" Height="80" Margin="0 0 10 0"/>
                     </Button>
-                    <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="2">And Another One</Button>
+                    <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="2" Command="{Binding AddNewBookCommand}">And Another One</Button>
 
                 </Grid>
 
