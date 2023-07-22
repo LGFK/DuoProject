@@ -55,9 +55,14 @@ public class DbBook
             _dbContext.SaveChanges();
         }
     }
-    public void EditBoks(int id, Book book)
+    public void EditBoks(Book book)
     {
-        var bk = _dbContext.Books.Find(id);
+        // перевіряти на менший регістр і більший 
+        var bk = _dbContext.Books
+            .Include(b=>b.Genre)
+            .Include(b=>b.Publisher)
+            .Include(b=> b.CountBooks)
+            .FirstOrDefault(b => b.Id == book.Id);
         if (bk != null)
         {
             bk.Name = book.Name;
@@ -65,9 +70,26 @@ public class DbBook
             bk.Cost = book.Cost;
             bk.PriceForSale = book.PriceForSale;
             bk.Image = book.Image;
-            bk.CountBooks = new CountBooks() { Count = book.CountBooks.Count };
-            bk.Publisher = new Publisher() { Name = book.Publisher.Name };
-            bk.Genre = new Genre() { Name = book.Genre.Name };
+            
+            if(bk.CountBooks !=null)
+            {
+                bk.CountBooks.Count = book.CountBooks.Count;
+            }
+            
+            if(book.Genre is not null && book.Genre.Id !=0)
+            {
+                var exGenre = _dbContext.Genres.Find(book.Genre.Id);
+                if(exGenre is not null)
+                {
+                    bk.Genre= exGenre;
+                }
+                else
+                {
+                    //add new 
+                }
+            }
+
+
             _dbContext.SaveChanges();
         }
     }

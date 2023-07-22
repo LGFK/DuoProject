@@ -22,18 +22,81 @@ public partial class Form1 : Form
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-            //db.Database.EnsureDeleted();
-            //if (db.Database.EnsureCreated())
-            //{
-            //    //default create
-            //    db.Books.AddRange(
-            //    new Book { Name = "Book1", Cost = 1,Genre = new Genre() { Name = "Genre" },Author = new Author() { Name = "Authorr1"}, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name ="Publisher"}, TimeOfPublication = DateTime.Now ,CountBooks = new CountBooks() {Count = 100 }},
-            //    new Book { Name = "Book1223", Cost = 1, Genre = new Genre() { Name = "Genre123123" }, Author = new Author() { Name = "124" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre" }, Author = new Author() { Name = "Authorr1" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "Publisher123123qe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } },
-            //    new Book { Name = "Book1", Cost = 1, Genre = new Genre() { Name = "Genre323424" }, Author = new Author() { Name = "rrrwqr" }, NumberOfPages = 1, PriceForSale = 1, Publisher = new Publisher() { Name = "3qweqwe" }, TimeOfPublication = DateTime.Now, CountBooks = new CountBooks() { Count = 100 } }
-            //    );
-            //    db.SaveChanges();
+            
+
+
+            if (db.Database.EnsureCreated())
+            {
+                var author1 = new Author { Name = "Àâòîð 1" };
+                var author2 = new Author { Name = "Àâòîð 2" };
+                var genre1 = new Genre { Name = "Æàíð 1" };
+                var genre2 = new Genre { Name = "Æàíð 2" };
+                var publisher1 = new Publisher { Name = "Ïàáë³øåð1" };
+                var publisher2 = new Publisher { Name = "Ïàáë³øåð2" };
+                //default create
+                db.Books.AddRange(
+                new Book
+                {
+                    Name = "Book1", Cost = 1,
+                    Genre = genre1,
+                    Author = author1,
+                    NumberOfPages = 1, PriceForSale = 1,
+                    Publisher = publisher1,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 100 }},
+                
+                new Book
+                {
+                    Name = "Book2", Cost = 13,
+                    Genre = genre1,
+                    Author = author1,
+                    NumberOfPages = 1, PriceForSale = 1,
+                    Publisher = publisher1,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 6 }},
+               
+                new Book
+                {
+                    Name = "Book3", Cost = 11,
+                    Genre = genre2,
+                    Author = author2,
+                    NumberOfPages = 123, PriceForSale = 11,
+                    Publisher = publisher2,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 4 }},
+                
+                new Book
+                {
+                    Name = "Book4", Cost = 12,
+                    Genre = genre2,
+                    Author = author2,
+                    NumberOfPages = 1234, PriceForSale = 134,
+                    Publisher = publisher2,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 12 }},
+                
+                new Book
+                {
+                    Name = "Book5", Cost = 14,
+                    Genre = genre2,
+                    Author = author2,
+                    NumberOfPages = 1244, PriceForSale = 1424,
+                    Publisher = publisher1,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 2 }},
+                
+                new Book
+                {
+                    Name = "Book6", Cost = 15,
+                    Genre = genre2,
+                    Author = author1,
+                    NumberOfPages = 241, PriceForSale = 451,
+                    Publisher = publisher1,
+                    TimeOfPublication = DateTime.Now ,
+                    CountBooks = new CountBooks() {Count = 45 }}
+                );
+                db.SaveChanges();
+
 
                 //db.Users.AddRange(
                 //    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },

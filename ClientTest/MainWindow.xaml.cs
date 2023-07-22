@@ -274,6 +274,11 @@ public partial class MainWindow : Window
 
         client.Close();
     }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
 
 /*                    if (books!=null && books.Books != null)
