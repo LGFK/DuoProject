@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComandLibrary", "..\ComandL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCore", "..\ClientCore\ClientCore.csproj", "{1BDA749C-3A88-4762-9D45-B143A5FB6418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSerializationLib", "..\NetworkSerializationLib\NetworkSerializationLib.csproj", "{5E25B175-6A42-494D-B8B5-41A5A0FB3655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSerializationLib", "..\NetworkSerializationLib\NetworkSerializationLib.csproj", "{5E25B175-6A42-494D-B8B5-41A5A0FB3655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

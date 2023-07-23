@@ -59,7 +59,6 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             ClientsCore clientsCore = new ClientsCore();
             var networkStream = await clientsCore.Connected();
             _=clientsCore.EditBook(networkStream.Value, book);
-            //client.EditBook(book)
             MessageBox.Show("GG");
         }
 

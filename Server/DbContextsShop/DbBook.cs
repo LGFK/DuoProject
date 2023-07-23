@@ -11,15 +11,15 @@ public class DbBook
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
     }
 
-    ~DbBook()=>
+    ~DbBook() =>
         _dbContext.Dispose();
-    
+
     public List<Book> GetAllBooks() =>
          _dbContext.Books
             .Include(b => b.Publisher)
             .Include(b => b.Genre)
             .Include(b => b.Author)
-            .Include(b =>b.CountBooks)
+            .Include(b => b.CountBooks)
             .ToList();
 
     public List<Book> GetMaxPriceBooks() =>
@@ -27,16 +27,18 @@ public class DbBook
         .OrderByDescending(b => b.Cost)
         .ToList();
 
-    public List<Book> GetTopFiveGenre(string? genre)=>
+#pragma warning disable CS8602 
+    public List<Book> GetTopFiveGenre(string? genre) =>
         _dbContext.Books
             .Include(b => b.Genre)
             .Include(b => b.Publisher)
             .Include(b => b.CountBooks)
-            .Where(b => b.Genre.Name == genre)
+            .Where(b =>  b.Genre.Name == genre)
             .OrderByDescending(b => b.Cost)
             .Take(5)
             .ToList();
-    
+#pragma warning restore CS8602 
+
     public void AddNewBook(Book book)
     {
         var isCheck = _dbContext.Books.FirstOrDefault(b => b.Id == book.Id);
@@ -57,62 +59,79 @@ public class DbBook
     }
     public void EditBoks(Book book)
     {
-        // перевіряти на менший регістр і більший 
         var bk = _dbContext.Books
-            .Include(b=>b.Genre)
-            .Include(b=>b.Publisher)
-            .Include(b=> b.CountBooks)
+            .Include(b => b.Genre)
+            .Include(b => b.Publisher)
+            .Include(b => b.CountBooks)
             .FirstOrDefault(b => b.Id == book.Id);
-        if (bk != null)
+
+        if(bk is null)
         {
-            bk.Name = book.Name;
-            bk.NumberOfPages = book.NumberOfPages;
-            bk.Cost = book.Cost;
-            bk.PriceForSale = book.PriceForSale;
-            bk.Image = book.Image;
-            
-            if(bk.CountBooks !=null)
-            {
-                bk.CountBooks.Count = book.CountBooks.Count;
-            }
-            
-            if(book.Genre is not null && book.Genre.Id !=0)
-            {
-                var exGenre = _dbContext.Genres.Find(book.Genre.Id);
-                if(exGenre is not null)
-                {
-                    bk.Genre= exGenre;
-                }
-                else
-                {
-                    //add new 
-                }
-            }
-
-
-            _dbContext.SaveChanges();
+            return;
         }
+
+        if(BookValidator(book))
+        {
+            return;
+        }
+#pragma warning disable CS8602
+        bk.Name = book.Name;
+        bk.NumberOfPages = book.NumberOfPages;
+        bk.Cost = book.Cost;
+        bk.PriceForSale = book.PriceForSale;
+        bk.Image = book.Image;
+        bk.CountBooks.Count = book.CountBooks.Count;
+
+
+        var exGenre = _dbContext.Genres.Find(book?.Genre?.Id);
+        if (exGenre is null)
+        {
+            exGenre = new Genre { Id = book.Genre.Id, Name = book.Genre.Name };
+            _dbContext.Genres.Add(exGenre);
+        }
+        bk.Genre = exGenre;
+
+        var exAuthor = _dbContext.Author.Find(book?.Author?.Id);
+        if (exAuthor is null)
+        {
+            exAuthor = new Author { Id = book.Author.Id, Name = book.Author.Name };
+            _dbContext.Author.Add(exAuthor);
+        }
+        bk.Author = exAuthor;
+
+        var exPublisher = _dbContext.Publisher.Find(book?.Publisher?.Id);
+        if (exPublisher is null)
+        {
+            exPublisher = new Publisher { Id = book.Publisher.Id, Name = book.Publisher.Name };
+            _dbContext.Publisher.Add(exPublisher);
+        }
+        bk.Publisher = exPublisher;
+
+        _dbContext.SaveChanges();
+#pragma warning restore CS8602
     }
+
+    private bool BookValidator(Book? book)
+    {
+        if (book is null)
+        {
+            return false;
+        }
+
+        if (book.Name is null)
+        {
+            return false;
+        }
+
+        if (book.Genre?.Name is null
+            || book.Publisher?.Name is null
+            || book.Author?.Name is null
+            || book.CountBooks is null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 }
-/*Id = b.Id,
-                Name = b.Name,
-                NumberOfPages = b.NumberOfPages,
-                TimeOfPublication = b.TimeOfPublication,
-                Cost = b.Cost,
-                PriceForSale = b.PriceForSale,
-                Image = b.Image,
-                CountBooks = new CountBooks
-                {
-                    
-                    Count = b.CountBooks?.Count ?? 0,
-                },
-                Publisher = new Publisher
-                {
-                    Id = b.PublisherId,
-                    Name = b.Publisher?.Name ?? string.Empty,
-                },
-                Genre = new Genre
-                {
-                    Id = b.GenreId,
-                    Name = b.Genre?.Name ?? string.Empty,
-                },*/

@@ -15,111 +15,109 @@ using ComandLibrary;
 using ClientCore.Helpes;
 using System.Threading;
 
-namespace DuoProjectLibrary.MVVM.ViewModel
+namespace DuoProjectLibrary.MVVM.ViewModel;
+
+internal class AllBooksPageViewModel : BaseViewModel
 {
-    internal class AllBooksPageViewModel : BaseViewModel
+    readonly private IModalWindowService service;
+    
+    Book? _book;
+    public Book Book
     {
-        readonly private IModalWindowService service;
+        get { return _book; }
+        set { _book = value; 
+         OnPropertyChanged(); }
+    }
+    ObservableCollection<Book> _books;
+    public ObservableCollection<Book> Books
+    {
+        get { return _books; }
+        set { _books = value; }
+    }
+    public AllBooksPageViewModel()
+    {
+        try
+        {
+            _books = new ObservableCollection<Book>();
+            LoadData();
+            service = ApplicationState.ModalWindowService;
+        }
+        catch (Exception ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message);
+        }
+       
         
-        Book? _book;
-        public Book Book
-        {
-            get { return _book; }
-            set { _book = value; 
-             OnPropertyChanged(); }
-        }
-        ObservableCollection<Book> _books;
-        public ObservableCollection<Book> Books
-        {
-            get { return _books; }
-            set { _books = value; }
-        }
-        public AllBooksPageViewModel()
-        {
-            try
-            {
-                _books = new ObservableCollection<Book>();
-                LoadData();
-                service = ApplicationState.ModalWindowService;
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
-           
-            
-        }
-        ICommand _openEditor;
+    }
+    ICommand _openEditor;
 
-        public ICommand OpenEditorCommand 
+    public ICommand OpenEditorCommand 
+    {
+        get => _openEditor ?? (_openEditor = new RelayCommand(OpenEditWMethod));
+    }
+    private void OpenEditWMethod(object param)
+    {
+        if(param is Book book)
         {
-            get => _openEditor ?? (_openEditor = new RelayCommand(OpenEditWMethod));
+            var _editVM = new EditingWindowViewModel(book);
+            service.ShowModalWindow(_editVM);
         }
-        private void OpenEditWMethod(object param)
-        {
-            if(param is Book book)
-            {
-                var _editVM = new EditingWindowViewModel(book);
-                service.ShowModalWindow(_editVM);
-            }
-           
-        }
+       
+    }
 
-        ICommand _addToCartCmd;
+    ICommand _addToCartCmd;
 
-        public ICommand AddToCartCommand
+    public ICommand AddToCartCommand
+    {
+        get=>_addToCartCmd ?? (_addToCartCmd = new RelayCommand(AddBookInDaCart)); 
+    }
+    private void AddBookInDaCart(object s)
+    {
+        bool isAdded = false;
+        if (s is Book _bookTmp)
         {
-            get=>_addToCartCmd ?? (_addToCartCmd = new RelayCommand(AddBookInDaCart)); 
-        }
-        private void AddBookInDaCart(object s)
-        {
-            bool isAdded = false;
-            if (s is Book _bookTmp)
+            foreach (var book in CartCollection.Basket)
             {
-                foreach (var book in CartCollection.Basket)
+
+                if (book.BookByItself.Name == _bookTmp.Name)
                 {
-
-                    if (book.BookByItself.Name == _bookTmp.Name)
+                    isAdded = true;
+                    if(book.Amount<_bookTmp.CountBooks.Count)
                     {
-                        isAdded = true;
-                        if(book.Amount<_bookTmp.CountBooks.Count)
-                        {
-                            book.Amount += 1;
-                        }    
-                        break;
-                    }
-                   
+                        book.Amount += 1;
+                    }    
+                    break;
                 }
-                if (isAdded == false)
-                {
-                    CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
-                }
-                return;
+               
             }
-           
-
+            if (isAdded == false)
+            {
+                CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+            }
+            return;
         }
+       
 
-        private  void LoadData()
+    }
+
+    private  void LoadData()
+    {
+        var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
+
+        if (res is null)
         {
-            var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
-
-            if (res is null)
-            {
-
-                return;
-            }
-
-            if (res.Books is null)
-            {
-                return;
-            }
-
-            foreach (var book in res.Books)
-            {
-                Books.Add(book);
-            }
-
+            return;
         }
+
+        if (res.Books is null)
+        {
+            return;
+        }
+
+        foreach (var book in res.Books)
+        {
+            Books.Add(book);
+        }
+
     }
 }

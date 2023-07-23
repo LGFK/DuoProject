@@ -221,8 +221,11 @@ internal class ServerCore
             return;
         }
         var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message);
-        
-        //need check null book
+
+        if(book is null)
+        {
+            return;
+        }
         _dbBook.EditBoks(book);
     }
 }

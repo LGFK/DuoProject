@@ -78,6 +78,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             {
                 if(books.Command == ComandsLib.ERROR)
                 {
+                    System.Windows.MessageBox.Show($"Error:{res.Errors}");
                     return;
                 }
 
