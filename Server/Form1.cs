@@ -17,12 +17,12 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        _server= new ServerCore();
+        _server = new ServerCore();
         //itin default books
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-            
+
 
 
             if (db.Database.EnsureCreated())
@@ -42,9 +42,9 @@ public partial class Form1 : Form
                     Author = author1,
                     NumberOfPages = 1, PriceForSale = 1,
                     Publisher = publisher1,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 100 }},
-                
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 100 } },
+
                 new Book
                 {
                     Name = "Book2", Cost = 13,
@@ -52,9 +52,9 @@ public partial class Form1 : Form
                     Author = author1,
                     NumberOfPages = 1, PriceForSale = 1,
                     Publisher = publisher1,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 6 }},
-               
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 6 } },
+
                 new Book
                 {
                     Name = "Book3", Cost = 11,
@@ -62,9 +62,9 @@ public partial class Form1 : Form
                     Author = author2,
                     NumberOfPages = 123, PriceForSale = 11,
                     Publisher = publisher2,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 4 }},
-                
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 4 } },
+
                 new Book
                 {
                     Name = "Book4", Cost = 12,
@@ -72,9 +72,9 @@ public partial class Form1 : Form
                     Author = author2,
                     NumberOfPages = 1234, PriceForSale = 134,
                     Publisher = publisher2,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 12 }},
-                
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 12 } },
+
                 new Book
                 {
                     Name = "Book5", Cost = 14,
@@ -82,9 +82,9 @@ public partial class Form1 : Form
                     Author = author2,
                     NumberOfPages = 1244, PriceForSale = 1424,
                     Publisher = publisher1,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 2 }},
-                
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 2 } },
+
                 new Book
                 {
                     Name = "Book6", Cost = 15,
@@ -92,8 +92,8 @@ public partial class Form1 : Form
                     Author = author1,
                     NumberOfPages = 241, PriceForSale = 451,
                     Publisher = publisher1,
-                    TimeOfPublication = DateTime.Now ,
-                    CountBooks = new CountBooks() {Count = 45 }}
+                    TimeOfPublication = DateTime.Now,
+                    CountBooks = new CountBooks() { Count = 45 } }
                 );
                 db.SaveChanges();
 
@@ -105,15 +105,16 @@ public partial class Form1 : Form
                 //    new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
                 //    new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
                 //db.SaveChanges();
-            
+
+            }
+
+        }
+         void button1_Click_1(object sender, EventArgs e)
+        {
+            _server.StartServer();
         }
 
     }
-    private void button1_Click_1(object sender, EventArgs e)
-    {
-        _server.StartServer();
-    }
-
 }
 
 //how get Book/ how get image from List book /

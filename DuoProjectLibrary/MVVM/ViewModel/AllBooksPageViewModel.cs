@@ -1,32 +1,28 @@
-﻿using DuoProjectLibrary.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModelsLibrary;
-using DuoProjectLibrary.MVVM.Model;
-using System.Windows.Input;
-using ClientCore.Core;
-using ClientCore.Rusults;
-using CommunicationLibrary;
+﻿using ClientCore.Helpes;
 using ComandLibrary;
-using ClientCore.Helpes;
-using System.Threading;
+using CommunicationLibrary;
+using DuoProjectLibrary.Infrastructure;
+using DuoProjectLibrary.MVVM.Model;
+using ModelsLibrary;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace DuoProjectLibrary.MVVM.ViewModel;
 
 internal class AllBooksPageViewModel : BaseViewModel
 {
     readonly private IModalWindowService service;
-    
+
     Book? _book;
     public Book Book
     {
         get { return _book; }
-        set { _book = value; 
-         OnPropertyChanged(); }
+        set
+        {
+            _book = value;
+            OnPropertyChanged();
+        }
     }
     ObservableCollection<Book> _books;
     public ObservableCollection<Book> Books
@@ -46,105 +42,98 @@ internal class AllBooksPageViewModel : BaseViewModel
         {
             System.Windows.MessageBox.Show(ex.Message);
         }
-       
-        
+
+
     }
     ICommand _openEditor;
 
-    public ICommand OpenEditorCommand 
+    public ICommand OpenEditorCommand
     {
         get => _openEditor ?? (_openEditor = new RelayCommand(OpenEditWMethod));
     }
     private void OpenEditWMethod(object param)
     {
-        if(param is Book book)
+        if (param is Book book)
         {
             var _editVM = new EditingWindowViewModel(book);
             service.ShowModalWindow(_editVM);
         }
-       
+
     }
 
     ICommand _addToCartCmd;
 
     public ICommand AddToCartCommand
     {
-        get=>_addToCartCmd ?? (_addToCartCmd = new RelayCommand(AddBookInDaCart)); 
+        get => _addToCartCmd ?? (_addToCartCmd = new RelayCommand(AddBookInDaCart));
     }
     private void AddBookInDaCart(object s)
     {
         bool isAdded = false;
-        if (s is Book _bookTmp)
+
+        try
         {
-            try
-            {
-                if (s is Book _bookTmp)
+            if (s is Book _bookTmp)
 
+            {
+                if (_bookTmp.CountBooks.Count > 0)
                 {
-                    if (_bookTmp.CountBooks.Count > 0)
+                    foreach (var book in CartCollection.Basket)
                     {
-                        foreach (var book in CartCollection.Basket)
-                        {
 
-                            if (book.BookByItself.Name == _bookTmp.Name)
+                        if (book.BookByItself.Name == _bookTmp.Name)
+                        {
+                            isAdded = true;
+                            if (book.Amount < _bookTmp.CountBooks.Count)
                             {
-                                isAdded = true;
-                                if (book.Amount < _bookTmp.CountBooks.Count)
-                                {
-                                    book.Amount += 1;
-                                }
-                                break;
+                                book.Amount += 1;
                             }
+                            break;
+                        }
 
-                        }
-                        if (isAdded == false)
-                        {
-                            CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
-                        }
-                        return;
                     }
-                    else
+                    if (isAdded == false)
                     {
-                        System.Windows.MessageBox.Show("Out Of Stock");
+                        CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
                     }
-
+                    return;
                 }
-            }
-            catch(Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
+                else
+                {
+                    System.Windows.MessageBox.Show("Out Of Stock");
+                }
+
             }
         }
-       
+        catch (Exception ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message);
+        }
+
+
     }
 
-        private  void LoadData()
+    private void LoadData()
+    {
+        var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
+        try
         {
-            var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
-            try
+            if (res is null)
             {
-                if (res is null)
-                {
 
-                    return;
-                }
-
-                if (res.Books is null)
-                {
-                    return;
-                }
-
-                foreach (var book in res.Books)
-                {
-                    Books.Add(book);
-                }
+                return;
             }
-            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message);}
 
-        foreach (var book in res.Books)
-        {
-            Books.Add(book);
+            if (res.Books is null)
+            {
+                return;
+            }
+
+            foreach (var book in res.Books)
+            {
+                Books.Add(book);
+            }
         }
-
+        catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
     }
 }
