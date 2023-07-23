@@ -22,15 +22,17 @@ public partial class Form1 : Form
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-            //db.Database.EnsureDeleted();
+            
+
+
             if (db.Database.EnsureCreated())
             {
-                var author1 = new Author { Name = "Àâòîğ 1" };
-                var author2 = new Author { Name = "Àâòîğ 2" };
-                var genre1 = new Genre { Name = "Æàíğ 1" };
-                var genre2 = new Genre { Name = "Æàíğ 2" };
-                var publisher1 = new Publisher { Name = "Ïàáë³øåğ1" };
-                var publisher2 = new Publisher { Name = "Ïàáë³øåğ2" };
+                var author1 = new Author { Name = "Ã€Ã¢Ã²Ã®Ã° 1" };
+                var author2 = new Author { Name = "Ã€Ã¢Ã²Ã®Ã° 2" };
+                var genre1 = new Genre { Name = "Ã†Ã Ã­Ã° 1" };
+                var genre2 = new Genre { Name = "Ã†Ã Ã­Ã° 2" };
+                var publisher1 = new Publisher { Name = "ÃÃ Ã¡Ã«Â³Ã¸Ã¥Ã°1" };
+                var publisher2 = new Publisher { Name = "ÃÃ Ã¡Ã«Â³Ã¸Ã¥Ã°2" };
                 //default create
                 db.Books.AddRange(
                 new Book
@@ -95,6 +97,7 @@ public partial class Form1 : Form
                 );
                 db.SaveChanges();
 
+
                 //db.Users.AddRange(
                 //    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
                 //    new User { Name = "Name2", Email = "asdf@gmail.com", Password = "56789", RegisterTime = DateTime.Now, Books = new List<Book>() },
@@ -102,7 +105,7 @@ public partial class Form1 : Form
                 //    new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
                 //    new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
                 //db.SaveChanges();
-            }
+            
         }
 
     }

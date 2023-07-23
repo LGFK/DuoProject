@@ -76,43 +76,70 @@ internal class AllBooksPageViewModel : BaseViewModel
         bool isAdded = false;
         if (s is Book _bookTmp)
         {
-            foreach (var book in CartCollection.Basket)
+            try
             {
+                if (s is Book _bookTmp)
 
-                if (book.BookByItself.Name == _bookTmp.Name)
                 {
-                    isAdded = true;
-                    if(book.Amount<_bookTmp.CountBooks.Count)
+                    if (_bookTmp.CountBooks.Count > 0)
                     {
-                        book.Amount += 1;
-                    }    
-                    break;
+                        foreach (var book in CartCollection.Basket)
+                        {
+
+                            if (book.BookByItself.Name == _bookTmp.Name)
+                            {
+                                isAdded = true;
+                                if (book.Amount < _bookTmp.CountBooks.Count)
+                                {
+                                    book.Amount += 1;
+                                }
+                                break;
+                            }
+
+                        }
+                        if (isAdded == false)
+                        {
+                            CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Out Of Stock");
+                    }
+
                 }
-               
             }
-            if (isAdded == false)
+            catch(Exception ex)
             {
-                CartCollection.Basket.Add(new BookInDaBasket(1, _bookTmp));
+                System.Windows.MessageBox.Show(ex.Message);
             }
-            return;
         }
        
-
     }
 
-    private  void LoadData()
-    {
-        var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
-
-        if (res is null)
+        private  void LoadData()
         {
-            return;
-        }
+            var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
+            try
+            {
+                if (res is null)
+                {
 
-        if (res.Books is null)
-        {
-            return;
-        }
+                    return;
+                }
+
+                if (res.Books is null)
+                {
+                    return;
+                }
+
+                foreach (var book in res.Books)
+                {
+                    Books.Add(book);
+                }
+            }
+            catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message);}
 
         foreach (var book in res.Books)
         {
