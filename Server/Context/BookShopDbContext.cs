@@ -10,6 +10,7 @@ public class BookShopDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<Author> Author { get; set; }
+    public DbSet<Publisher> Publisher { get; set; }
     public DbSet<CountBooks> CountBooks { get; set; }
     public BookShopDbContext(DbContextOptions<BookShopDbContext> options) : base(options)
     {
