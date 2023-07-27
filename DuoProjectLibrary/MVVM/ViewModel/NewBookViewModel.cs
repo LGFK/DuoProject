@@ -1,73 +1,83 @@
-﻿using ClientCore.Core;
-using DuoProjectLibrary.Infrastructure;
+﻿using DuoProjectLibrary.Infrastructure;
 using ModelsLibrary;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DuoProjectLibrary.MVVM.ViewModel;
-
-public class NewBookViewModel : BaseViewModel
+namespace DuoProjectLibrary.MVVM.ViewModel
 {
-    int price;
-    public int Price
+    public class NewBookViewModel : BaseViewModel
     {
-        get => price; set
+        string title;
+        public string Title
         {
-            price = value; OnPropertyChanged();
+            get { return title; }
+            set { title = value; OnPropertyChanged(); }
         }
-    }
-    int primeCost;
-    public int PrimeCost
-    {
-        get => primeCost;
-        set
+        int price;
+        public int Price
         {
-            primeCost = value; OnPropertyChanged();
+            get => price; set
+            {
+                price = value; OnPropertyChanged();
+            }
         }
-    }
-    string author;
-    public string Author
-    {
-        get { return author; }
-        set { author = value; OnPropertyChanged(); }
+        int primeCost;
+        public int PrimeCost
+        {
+            get => primeCost;
+            set
+            {
+                primeCost = value; OnPropertyChanged();
+            }
+        }
+        string author;
+        public string Author
+        {
+            get { return author; }
+            set { author = value; OnPropertyChanged(); }
 
-    }
+        }
 
         string genre;
         public string Genre
         { get { return genre; } set { genre = value; OnPropertyChanged(); } }
 
-    string publisher;
-    public string Publisher
-    {
-        get { return publisher; }
-        set { publisher = value; OnPropertyChanged(); }
 
-    }
+        string publisher;
+        public string Publisher
+        {
+            get { return publisher; }
+            set { publisher = value; OnPropertyChanged(); }
 
-    string publicationDate;
-    public string PublicationDate
-    {
-        get { return publicationDate; }
-        set { publicationDate = value; OnPropertyChanged(); }
-    }
-    int numberOfPages;
+        }
 
-    public int NumberOfPages
-    {
-        get { return numberOfPages; }
-        set { numberOfPages = value; OnPropertyChanged(); }
-    }
+        string publicationDate;
+        public string PublicationDate
+        {
+            get { return publicationDate; }
+            set { publicationDate = value; OnPropertyChanged(); }
+        }
+        int numberOfPages;
 
-    ICommand _addBttn;
-    public ICommand AddBttn
-    {
-        get { return _addBttn ?? (_addBttn = new RelayCommand(AddBttnClickMethod)); }
-    }
-    async void AddBttnClickMethod(object param)
-    {
-        ClientsCore clientsCore = new ClientsCore();
+        public int NumberOfPages
+        {
+            get { return numberOfPages; }
+            set { numberOfPages = value; OnPropertyChanged(); }
+        }
+
+        ICommand _addBttn;
+        public ICommand AddBttn
+        {
+            get { return _addBttn ?? (_addBttn = new RelayCommand(AddBttnClickMethod)); }
+        }
+        void AddBttnClickMethod(object param)
+        {
             try
             {
                 var bookToAdd = new Book();
@@ -82,9 +92,8 @@ public class NewBookViewModel : BaseViewModel
                 bookToAdd.PriceForSale = this.PrimeCost;
                 bookToAdd.TimeOfPublication = StringToDate(publicationDate);
 
-            var network = await clientsCore.Connected();
-            _ = clientsCore.AddBook(network.Value, bookToAdd);
-            CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
+                //тут должен быть метод добавления этой книги в бд.
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
             catch (Exception ex)
@@ -92,22 +101,16 @@ public class NewBookViewModel : BaseViewModel
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
-
-    }
-    public DateTime StringToDate(string dateStr)
-    {
-        try
-        {
-            int day = Int32.Parse(dateStr.Split(":")[2]);
-            int month = Int32.Parse(dateStr.Split(":")[1]);
-            int year = Int32.Parse(dateStr.Split(":")[0]);
-            Months m = (Months)month;
-            string dateToParse = $"{m} {day}, {year}";
-            return DateTime.Parse(dateToParse);
         }
-        catch (FormatException ex)
+
+
+
+        public NewBookViewModel()
         {
 
+        }
+        public DateTime StringToDate(string dateStr)
+        {
             try
             {
                 if (dateStr.Split(":").Count() < 3)
@@ -123,12 +126,12 @@ public class NewBookViewModel : BaseViewModel
                 return DateTime.Parse(dateToParse);
 
             }
-            catch (FormatException )
+            catch (FormatException ex)
             {
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("there's something wrong with your input");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
-            catch (Exception )
+            catch (Exception ex)
             {
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
@@ -136,6 +139,8 @@ public class NewBookViewModel : BaseViewModel
             }
             throw new Exception("something went wrong");
 
+
         }
     }
+
 }
