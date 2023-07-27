@@ -115,28 +115,32 @@ internal class AllBooksPageViewModel : BaseViewModel
 
     private async void LoadData()
     {
-        ClientsCore clientsCore = new ClientsCore();
-        var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
 
-        if (res.IsFailure)
+        try
         {
-            System.Windows.MessageBox.Show($"{res.Errors}");
-            return;
-        }
+            ClientsCore clientsCore = new ClientsCore();
+            var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
 
-        var resultResponseBase = (RequestResult<RequestResponseBase>)res;
-
-        if (resultResponseBase.Value is GetBookResponse books)
-        {
-            if (books.Command == ComandsLib.ERROR)
+            if (res.IsFailure)
             {
-                System.Windows.MessageBox.Show($"Error:{res.Errors}");
+                System.Windows.MessageBox.Show($"{res.Errors}");
                 return;
             }
 
-            foreach (var book in books.Books)
+            var resultResponseBase = (RequestResult<RequestResponseBase>)res;
+
+            if (resultResponseBase.Value is GetBookResponse books)
             {
-                Books.Add(book);
+                if (books.Command == ComandsLib.ERROR)
+                {
+                    System.Windows.MessageBox.Show($"Error:{res.Errors}");
+                    return;
+                }
+
+                foreach (var book in books.Books)
+                {
+                    Books.Add(book);
+                }
             }
         }
         catch (Exception ex) 

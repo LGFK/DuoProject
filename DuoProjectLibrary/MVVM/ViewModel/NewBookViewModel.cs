@@ -10,8 +10,7 @@ public class NewBookViewModel : BaseViewModel
 {
     public class NewBookViewModel : BaseViewModel
     {
-        get { return title; }
-        set { title = value; OnPropertyChanged(); }
+      
     }
     int price;
     public int Price
@@ -71,6 +70,7 @@ public class NewBookViewModel : BaseViewModel
     }
     async void AddBttnClickMethod(object param)
     {
+        ClientsCore clientsCore = new ClientsCore();
             try
             {
                 var bookToAdd = new Book();
@@ -85,8 +85,10 @@ public class NewBookViewModel : BaseViewModel
                 bookToAdd.PriceForSale = this.PrimeCost;
                 bookToAdd.TimeOfPublication = StringToDate(publicationDate);
 
-                //тут должен быть метод добавления этой книги в бд.
-                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
+            //тут должен быть метод добавления этой книги в бд.
+            var network = await clientsCore.Connected();
+            _ = clientsCore.AddBook(network.Value, bookToAdd);
+            CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
             catch (Exception ex)
@@ -94,16 +96,6 @@ public class NewBookViewModel : BaseViewModel
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
-        }
-    
-        
-
-        _= clientsCore.AddBook(network.Value, bookToAdd);
-
-    }
-
-    public NewBookViewModel()
-    {
 
     }
     public DateTime StringToDate(string dateStr)
