@@ -1,12 +1,8 @@
-﻿using DuoProjectLibrary.Infrastructure;
+﻿using ClientCore.Core;
+using DuoProjectLibrary.Infrastructure;
 using ModelsLibrary;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DuoProjectLibrary.MVVM.ViewModel
@@ -76,7 +72,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         {
             get { return _addBttn ?? (_addBttn = new RelayCommand(AddBttnClickMethod)); }
         }
-        void AddBttnClickMethod(object param)
+        async void AddBttnClickMethod(object param)
         {
             try
             {
@@ -92,7 +88,9 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 bookToAdd.PriceForSale = this.PrimeCost;
                 bookToAdd.TimeOfPublication = StringToDate(publicationDate);
 
-                //тут должен быть метод добавления этой книги в бд.
+                ClientsCore clientsCore = new ClientsCore();
+                var net = await clientsCore.Connected();
+                _ = clientsCore.AddBook(net.Value, bookToAdd);
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
@@ -102,8 +100,6 @@ namespace DuoProjectLibrary.MVVM.ViewModel
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
         }
-
-
 
         public NewBookViewModel()
         {
