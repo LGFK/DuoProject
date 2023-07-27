@@ -2,16 +2,13 @@
 using DuoProjectLibrary.Infrastructure;
 using ModelsLibrary;
 using System;
+using System.Linq;
 using System.Windows.Input;
 
 namespace DuoProjectLibrary.MVVM.ViewModel;
 
 public class NewBookViewModel : BaseViewModel
 {
-    public class NewBookViewModel : BaseViewModel
-    {
-      
-    }
     int price;
     public int Price
     {
@@ -85,7 +82,6 @@ public class NewBookViewModel : BaseViewModel
                 bookToAdd.PriceForSale = this.PrimeCost;
                 bookToAdd.TimeOfPublication = StringToDate(publicationDate);
 
-            //тут должен быть метод добавления этой книги в бд.
             var network = await clientsCore.Connected();
             _ = clientsCore.AddBook(network.Value, bookToAdd);
             CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
@@ -114,7 +110,7 @@ public class NewBookViewModel : BaseViewModel
 
             try
             {
-                if(dateStr.Split(":").Count()<3)
+                if (dateStr.Split(":").Count() < 3)
                 {
                     throw new FormatException();
                 }
@@ -125,19 +121,21 @@ public class NewBookViewModel : BaseViewModel
                 string dateToParse = $"{m} {day}, {year}";
 
                 return DateTime.Parse(dateToParse);
-                
+
             }
-            catch(FormatException ex)
+            catch (FormatException )
             {
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("there's something wrong with your input");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
-            catch (Exception ex) {
+            catch (Exception )
+            {
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
-                
+
             }
             throw new Exception("something went wrong");
 
+        }
     }
 }
