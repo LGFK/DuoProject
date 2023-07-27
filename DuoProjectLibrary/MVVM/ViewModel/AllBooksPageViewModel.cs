@@ -1,4 +1,6 @@
-﻿using ClientCore.Helpes;
+﻿using ClientCore.Core;
+using ClientCore.Helpes;
+using ClientCore.Rusults;
 using ComandLibrary;
 using CommunicationLibrary;
 using DuoProjectLibrary.Infrastructure;
@@ -109,27 +111,30 @@ internal class AllBooksPageViewModel : BaseViewModel
         {
             System.Windows.MessageBox.Show(ex.Message);
         }
-
-
     }
 
-    private void LoadData()
+    private async void LoadData()
     {
-        var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
-        try
+        ClientsCore clientsCore = new ClientsCore();
+        var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
+
+        if (res.IsFailure)
         {
-            if (res is null)
-            {
+            System.Windows.MessageBox.Show($"{res.Errors}");
+            return;
+        }
 
+        var resultResponseBase = (RequestResult<RequestResponseBase>)res;
+
+        if (resultResponseBase.Value is GetBookResponse books)
+        {
+            if (books.Command == ComandsLib.ERROR)
+            {
+                System.Windows.MessageBox.Show($"Error:{res.Errors}");
                 return;
             }
 
-            if (res.Books is null)
-            {
-                return;
-            }
-
-            foreach (var book in res.Books)
+            foreach (var book in books.Books)
             {
                 Books.Add(book);
             }
@@ -140,5 +145,33 @@ internal class AllBooksPageViewModel : BaseViewModel
             CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
             ApplicationState.ModalWindowService.ShowModalWindow(vM); 
         }
+
     }
 }
+
+/* var res = ClientCache.Get<GetBookResponse>(ComandsLib.GetAllBooks.ToString());
+ //
+ ClientsCore core = new ClientsCore();
+ var net = await core.Connected();
+ var books = await core.SendResultAsync(ComandsLib.GetAllBooks,net.Value);
+ var com = (GetBookResponse)books.Value;
+ //if()
+ try
+ {
+     if (res is null)
+     {
+
+         return;
+     }
+
+     if (res.Books is null)
+     {
+         return;
+     }
+
+     foreach (var book in res.Books)
+     {
+         Books.Add(book);
+     }
+ }
+ catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }*/

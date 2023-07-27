@@ -1,13 +1,7 @@
 using ModelsLibrary;
-using Newtonsoft.Json;
 using Server.Context;
 using Server.core;
-using Server.DbContextsShop;
 using Server.Helper;
-using Server.models;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 
 namespace Server;
 
@@ -22,9 +16,6 @@ public partial class Form1 : Form
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-
-
-
             if (db.Database.EnsureCreated())
             {
                 var author1 = new Author { Name = "Àâòîð 1" };
@@ -114,21 +105,16 @@ public partial class Form1 : Form
                 }
                 );
                 db.SaveChanges();
-
-
-                //db.Users.AddRange(
-                //    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name2", Email = "asdf@gmail.com", Password = "56789", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name3", Email = "zxcvb@gmail.com", Password = "rffvv ", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
-                //db.SaveChanges();
-
             }
 
         }
-        
 
+    }
+
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        _server.StartServer();
     }
 
     private void button1_Click(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿namespace ComandLibrary;
 public enum ComandsLib
 {
+    AddBook,
     GetAllBooks,
     GetAllUsers,
     GetFiveBestBooks,

@@ -70,7 +70,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         public MainWindowViewModel()
         {
             
-             _= LoadData();
+             //_= LoadData();
             CurrentPage = new GreetingPageViewModel();
             
         }

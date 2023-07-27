@@ -1,83 +1,76 @@
-﻿using DuoProjectLibrary.Infrastructure;
+﻿using ClientCore.Core;
+using DuoProjectLibrary.Infrastructure;
 using ModelsLibrary;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DuoProjectLibrary.MVVM.ViewModel
+namespace DuoProjectLibrary.MVVM.ViewModel;
+
+public class NewBookViewModel : BaseViewModel
 {
     public class NewBookViewModel : BaseViewModel
     {
-        string title;
-        public string Title
+        get { return title; }
+        set { title = value; OnPropertyChanged(); }
+    }
+    int price;
+    public int Price
+    {
+        get => price; set
         {
-            get { return title; }
-            set { title = value; OnPropertyChanged(); }
+            price = value; OnPropertyChanged();
         }
-        int price;
-        public int Price
+    }
+    int primeCost;
+    public int PrimeCost
+    {
+        get => primeCost;
+        set
         {
-            get => price; set
-            {
-                price = value; OnPropertyChanged();
-            }
+            primeCost = value; OnPropertyChanged();
         }
-        int primeCost;
-        public int PrimeCost
-        {
-            get => primeCost;
-            set
-            {
-                primeCost = value; OnPropertyChanged();
-            }
-        }
-        string author;
-        public string Author
-        {
-            get { return author; }
-            set { author = value; OnPropertyChanged(); }
+    }
+    string author;
+    public string Author
+    {
+        get { return author; }
+        set { author = value; OnPropertyChanged(); }
 
-        }
+    }
 
         string genre;
         public string Genre
         { get { return genre; } set { genre = value; OnPropertyChanged(); } }
 
+    string publisher;
+    public string Publisher
+    {
+        get { return publisher; }
+        set { publisher = value; OnPropertyChanged(); }
 
-        string publisher;
-        public string Publisher
-        {
-            get { return publisher; }
-            set { publisher = value; OnPropertyChanged(); }
+    }
 
-        }
+    string publicationDate;
+    public string PublicationDate
+    {
+        get { return publicationDate; }
+        set { publicationDate = value; OnPropertyChanged(); }
+    }
+    int numberOfPages;
 
-        string publicationDate;
-        public string PublicationDate
-        {
-            get { return publicationDate; }
-            set { publicationDate = value; OnPropertyChanged(); }
-        }
-        int numberOfPages;
+    public int NumberOfPages
+    {
+        get { return numberOfPages; }
+        set { numberOfPages = value; OnPropertyChanged(); }
+    }
 
-        public int NumberOfPages
-        {
-            get { return numberOfPages; }
-            set { numberOfPages = value; OnPropertyChanged(); }
-        }
-
-        ICommand _addBttn;
-        public ICommand AddBttn
-        {
-            get { return _addBttn ?? (_addBttn = new RelayCommand(AddBttnClickMethod)); }
-        }
-        void AddBttnClickMethod(object param)
-        {
+    ICommand _addBttn;
+    public ICommand AddBttn
+    {
+        get { return _addBttn ?? (_addBttn = new RelayCommand(AddBttnClickMethod)); }
+    }
+    async void AddBttnClickMethod(object param)
+    {
             try
             {
                 var bookToAdd = new Book();
@@ -105,12 +98,28 @@ namespace DuoProjectLibrary.MVVM.ViewModel
     
         
 
-        public NewBookViewModel()
+        _= clientsCore.AddBook(network.Value, bookToAdd);
+
+    }
+
+    public NewBookViewModel()
+    {
+
+    }
+    public DateTime StringToDate(string dateStr)
+    {
+        try
         {
-            
+            int day = Int32.Parse(dateStr.Split(":")[2]);
+            int month = Int32.Parse(dateStr.Split(":")[1]);
+            int year = Int32.Parse(dateStr.Split(":")[0]);
+            Months m = (Months)month;
+            string dateToParse = $"{m} {day}, {year}";
+            return DateTime.Parse(dateToParse);
         }
-        public DateTime StringToDate(string dateStr)
+        catch (FormatException ex)
         {
+
             try
             {
                 if(dateStr.Split(":").Count()<3)
@@ -138,8 +147,5 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             }
             throw new Exception("something went wrong");
 
-
-        }
     }
-
 }
