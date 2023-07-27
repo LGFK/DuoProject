@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientCore", "..\ClientCore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSerializationLib", "..\NetworkSerializationLib\NetworkSerializationLib.csproj", "{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBoxWithPlaceholder", "..\TextBoxWithPlaceholder\TextBoxWithPlaceholder.csproj", "{A0CA13F1-82CE-44B1-B5E7-8F64F67DDEF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0D6AD71-D416-4FE8-B290-CBF413E58E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0CA13F1-82CE-44B1-B5E7-8F64F67DDEF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CA13F1-82CE-44B1-B5E7-8F64F67DDEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CA13F1-82CE-44B1-B5E7-8F64F67DDEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CA13F1-82CE-44B1-B5E7-8F64F67DDEF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
