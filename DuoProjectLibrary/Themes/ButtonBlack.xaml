@@ -165,6 +165,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    
     <!--Add To Cart Button-->
     <Style x:Key="addToCartButtonStyle" TargetType="Button">
         <Setter Property="Background">
@@ -194,6 +196,8 @@
 
     </Style>
     
+    
+    
     <!--EditBttnStyle-->
     <Style x:Key="editButtonStyle" TargetType="Button">
         <Setter Property="Background">
@@ -222,6 +226,9 @@
         </Setter>
 
     </Style>
+    
+    
+    
     <!--RemoveFromCareBttnStyle-->
     <Style x:Key="removeFromCartButtonStyle" TargetType="Button">
         <Setter Property="Background">
@@ -250,6 +257,8 @@
         </Setter>
 
     </Style>
+    
+    
     
     <!--Checkout Bttn Style-->
     <Style x:Key="checkoutBttnStyle" TargetType="Button">

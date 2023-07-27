@@ -9,6 +9,6 @@ namespace DuoProjectLibrary.Infrastructure
 {
     public interface IModalWindowService
     {
-        public void ShowModalWindow(EditingWindowViewModel viewModel);
+        public void ShowModalWindow(BaseViewModel viewModel);
     }
 }

@@ -11,6 +11,7 @@
     <None Remove="Img\books.png" />
     <None Remove="Img\free-icon-cross-mark-4225690.png" />
     <None Remove="Img\free-icon-manuscript-2501234.png" />
+    <None Remove="Img\free-icon-plus-4604818.png" />
     <None Remove="Img\free-icon-settings-4239938.png" />
     <None Remove="Img\MainScreenBackgoround.jpg" />
     <None Remove="Img\screen.png" />
@@ -27,12 +28,14 @@
     <ProjectReference Include="..\ComandLibrary\ComandLibrary.csproj" />
     <ProjectReference Include="..\CommunicationLibrary\CommunicationLibrary.csproj" />
     <ProjectReference Include="..\ModelsLibrary\ModelsLibrary.csproj" />
+    <ProjectReference Include="..\TextBoxWithPlaceholder\TextBoxWithPlaceholder.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Img\books.png" />
     <Resource Include="Img\free-icon-cross-mark-4225690.png" />
     <Resource Include="Img\free-icon-manuscript-2501234.png" />
+    <Resource Include="Img\free-icon-plus-4604818.png" />
     <Resource Include="Img\free-icon-settings-4239938.png" />
     <Resource Include="Img\MainScreenBackgoround.jpg" />
     <Resource Include="Img\screen.png" />

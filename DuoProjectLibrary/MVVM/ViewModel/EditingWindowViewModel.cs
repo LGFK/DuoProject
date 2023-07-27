@@ -52,14 +52,24 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
         public ICommand ApplyChangesCommand
         {
-            get => applyChanges ??(applyChanges=new RelayCommand(ApplyChangesMethod)); 
+            get => applyChanges ??(applyChanges=new RelayCommand(ApplyChangesMethod));
         }
         private async void ApplyChangesMethod(object p)
         {
-            ClientsCore clientsCore = new ClientsCore();
-            var networkStream = await clientsCore.Connected();
-            _=clientsCore.EditBook(networkStream.Value, book);
-            MessageBox.Show("GG");
+            try
+            {
+                ClientsCore clientsCore = new ClientsCore();
+                var networkStream = await clientsCore.Connected();
+                _ = clientsCore.EditBook(networkStream.Value, book);
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Successfuly Updated");
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+            }
+            
         }
 
 

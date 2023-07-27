@@ -71,7 +71,9 @@
                     <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="1" Command="{Binding CartBttnClick}">
                         <Image  Source="/Img/shopping-cart.png" Stretch="Fill" Width="70" Height="80" Margin="0 0 10 0"/>
                     </Button>
-                    <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="2" Command="{Binding AddNewBookCommand}">And Another One</Button>
+                    <Button Style="{StaticResource ResourceKey=Button1}" Grid.Row="2" Command="{Binding AddNewBookCommand}">
+                        <Image Source="/Img/free-icon-plus-4604818.png" Width="70" Height="80" />
+                    </Button>
 
                 </Grid>
 

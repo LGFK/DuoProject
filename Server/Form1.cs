@@ -37,63 +37,81 @@ public partial class Form1 : Form
                 db.Books.AddRange(
                 new Book
                 {
-                    Name = "Book1", Cost = 1,
+                    Name = "Book1",
+                    Cost = 1,
                     Genre = genre1,
                     Author = author1,
-                    NumberOfPages = 1, PriceForSale = 1,
+                    NumberOfPages = 1,
+                    PriceForSale = 1,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 100 } },
+                    CountBooks = new CountBooks() { Count = 100 }
+                },
 
                 new Book
                 {
-                    Name = "Book2", Cost = 13,
+                    Name = "Book2",
+                    Cost = 13,
                     Genre = genre1,
                     Author = author1,
-                    NumberOfPages = 1, PriceForSale = 1,
+                    NumberOfPages = 1,
+                    PriceForSale = 1,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 6 } },
+                    CountBooks = new CountBooks() { Count = 6 }
+                },
 
                 new Book
                 {
-                    Name = "Book3", Cost = 11,
+                    Name = "Book3",
+                    Cost = 11,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 123, PriceForSale = 11,
+                    NumberOfPages = 123,
+                    PriceForSale = 11,
                     Publisher = publisher2,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 4 } },
+                    CountBooks = new CountBooks() { Count = 4 }
+                },
 
                 new Book
                 {
-                    Name = "Book4", Cost = 12,
+                    Name = "Book4",
+                    Cost = 12,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 1234, PriceForSale = 134,
+                    NumberOfPages = 1234,
+                    PriceForSale = 134,
                     Publisher = publisher2,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 12 } },
+                    CountBooks = new CountBooks() { Count = 12 }
+                },
 
                 new Book
                 {
-                    Name = "Book5", Cost = 14,
+                    Name = "Book5",
+                    Cost = 14,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 1244, PriceForSale = 1424,
+                    NumberOfPages = 1244,
+                    PriceForSale = 1424,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 2 } },
+                    CountBooks = new CountBooks() { Count = 2 }
+                },
 
                 new Book
                 {
-                    Name = "Book6", Cost = 15,
+                    Name = "Book6",
+                    Cost = 15,
                     Genre = genre2,
                     Author = author1,
-                    NumberOfPages = 241, PriceForSale = 451,
+                    NumberOfPages = 241,
+                    PriceForSale = 451,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 45 } }
+                    CountBooks = new CountBooks() { Count = 45 }
+                }
                 );
                 db.SaveChanges();
 
@@ -109,11 +127,13 @@ public partial class Form1 : Form
             }
 
         }
-         void button1_Click_1(object sender, EventArgs e)
-        {
-            _server.StartServer();
-        }
+        
 
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        _server.StartServer();
     }
 }
 
