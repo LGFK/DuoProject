@@ -5,7 +5,7 @@ using Server.Context;
 namespace Server.DbContextsShop;
 public class DbBook
 {
-    private BookShopDbContext _dbContext;
+    private readonly BookShopDbContext _dbContext;
     public DbBook(DbContextOptions options)
     {
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
@@ -33,7 +33,7 @@ public class DbBook
             .Include(b => b.Genre)
             .Include(b => b.Publisher)
             .Include(b => b.CountBooks)
-            .Where(b =>  b.Genre.Name == genre)
+            .Where(b => b.Genre.Name == genre)
             .OrderByDescending(b => b.Cost)
             .Take(5)
             .ToList();
@@ -65,12 +65,8 @@ public class DbBook
             .Include(b => b.CountBooks)
             .FirstOrDefault(b => b.Id == book.Id);
 
-        if(bk is null)
-        {
-            return;
-        }
-
-        if(BookValidator(book))
+        if (bk is null
+            || !BookValidator(book))
         {
             return;
         }
@@ -82,27 +78,26 @@ public class DbBook
         bk.Image = book.Image;
         bk.CountBooks.Count = book.CountBooks.Count;
 
-
-        var exGenre = _dbContext.Genres.Find(book?.Genre?.Id);
+        var exGenre = _dbContext.Genres.FirstOrDefault(g => g.Name == book.Genre.Name);
         if (exGenre is null)
         {
-            exGenre = new Genre { Id = book.Genre.Id, Name = book.Genre.Name };
+            exGenre = new Genre { Name = book.Genre.Name, Book = book.Genre.Book };
             _dbContext.Genres.Add(exGenre);
         }
         bk.Genre = exGenre;
 
-        var exAuthor = _dbContext.Author.Find(book?.Author?.Id);
+        var exAuthor = _dbContext.Author.FirstOrDefault(a => a.Name == book.Author.Name);
         if (exAuthor is null)
         {
-            exAuthor = new Author { Id = book.Author.Id, Name = book.Author.Name };
+            exAuthor = new Author { Name = book.Author.Name };
             _dbContext.Author.Add(exAuthor);
         }
         bk.Author = exAuthor;
 
-        var exPublisher = _dbContext.Publisher.Find(book?.Publisher?.Id);
+        var exPublisher = _dbContext.Publisher.FirstOrDefault(p=>p.Name == book.Publisher.Name);
         if (exPublisher is null)
         {
-            exPublisher = new Publisher { Id = book.Publisher.Id, Name = book.Publisher.Name };
+            exPublisher = new Publisher { Name = book.Publisher.Name };
             _dbContext.Publisher.Add(exPublisher);
         }
         bk.Publisher = exPublisher;

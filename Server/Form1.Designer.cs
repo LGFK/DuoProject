@@ -28,51 +28,50 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.SuspendLayout();
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(247, 199);
-            this.listBox1.TabIndex = 0;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(533, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "StartServer";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 15;
-            this.listBox2.Location = new System.Drawing.Point(280, 12);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(247, 199);
-            this.listBox2.TabIndex = 2;
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 229);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.listBox1);
-            this.Name = "Form1";
-            this.Text = "Server";
-            this.ResumeLayout(false);
-
+        listBox1 = new ListBox();
+        button1 = new Button();
+        listBox2 = new ListBox();
+        SuspendLayout();
+        // 
+        // listBox1
+        // 
+        listBox1.FormattingEnabled = true;
+        listBox1.ItemHeight = 15;
+        listBox1.Location = new Point(12, 12);
+        listBox1.Name = "listBox1";
+        listBox1.Size = new Size(247, 199);
+        listBox1.TabIndex = 0;
+        // 
+        // button1
+        // 
+        button1.Location = new Point(533, 12);
+        button1.Name = "button1";
+        button1.Size = new Size(75, 23);
+        button1.TabIndex = 1;
+        button1.Text = "StartServer";
+        button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
+        // 
+        // listBox2
+        // 
+        listBox2.FormattingEnabled = true;
+        listBox2.ItemHeight = 15;
+        listBox2.Location = new Point(280, 12);
+        listBox2.Name = "listBox2";
+        listBox2.Size = new Size(247, 199);
+        listBox2.TabIndex = 2;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(615, 229);
+        Controls.Add(listBox2);
+        Controls.Add(button1);
+        Controls.Add(listBox1);
+        Name = "Form1";
+        Text = "Server";
+        ResumeLayout(false);
     }
 
     #endregion

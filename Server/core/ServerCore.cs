@@ -82,6 +82,9 @@ internal class ServerCore
             case ComandsLib.ApiWeather:
                 ApiWeather(networkStream, clientRequest);
                 break;
+            case ComandsLib.AddBook:
+                AddBook(networkStream, clientRequest);
+                break;    
             case ComandsLib.EditBook:
                 EditBook(networkStream, clientRequest);
                 break;
@@ -92,10 +95,10 @@ internal class ServerCore
 
     private async void SendDateIsCurrent(NetworkStream networkStream)
     {
-        var response = new ClientRequest
+        var response = new GetBookResponse
         {
             Command = ComandsLib.Successful,
-            Message = "The data is current",
+            TimesTamp = TimesTamp.GetTimesTamp(),
         };
 
         await JsonResponseWrite.Write(networkStream, response);
@@ -118,6 +121,8 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
+            Command = ComandsLib.GetFiveBestBooks,
+            TimesTamp = TimesTamp.GetTimesTamp(),
             Books = books.Select(b => new Book
             {
                 Id = b.Id,
@@ -141,7 +146,7 @@ internal class ServerCore
                     Id = b.GenreId,
                     Name = b.Genre?.Name ?? string.Empty,
                 },
-
+                
             }).ToList(),
         };
 /*        var response = new GetBookResponse
@@ -174,6 +179,8 @@ internal class ServerCore
 
         var response = new GetBookResponse
         {
+            Command = ComandsLib.GetAllBooks,
+            TimesTamp = TimesTamp.GetTimesTamp(),
             Books = books.Select(b => new Book
             {
                 Id = b.Id,
@@ -211,21 +218,48 @@ internal class ServerCore
 
     private void EditBook(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        if (clientRequest == null)
+        if (!ValidatorClient(clientRequest))
         {
             return;
         }
 
-        if (clientRequest.Message == null)
-        {
-            return;
-        }
-        var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message);
+        var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message!);
 
         if(book is null)
         {
             return;
         }
         _dbBook.EditBoks(book);
+    }
+
+    private void AddBook(NetworkStream networkStream, ClientRequest clientRequest)
+    {
+        if (!ValidatorClient(clientRequest))
+        {
+            return;
+        }
+
+        var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message!);
+
+        if(book is null)
+        {
+            return;
+        }
+
+        _dbBook.AddNewBook(book);
+    }
+
+    private static bool ValidatorClient(ClientRequest clientRequest)
+    {
+        if (clientRequest == null)
+        {
+            return false;
+        }
+
+        if (clientRequest.Message == null)
+        {
+            return false;
+        }
+        return true;
     }
 }

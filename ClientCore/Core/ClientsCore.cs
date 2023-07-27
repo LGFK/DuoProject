@@ -23,7 +23,7 @@ public class ClientsCore
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
     }
 
-    public async Task<RequestResult> SendRequestAsync(ComandsLib comandsLib, string? message = null)
+    public async Task<RequestResult> SendRequestAsync(ComandsLib commandsLib, string? message = null)
     {
         int attempts = 0;
         List<Error> errors = new List<Error>();
@@ -36,7 +36,7 @@ public class ClientsCore
                     await client.ConnectAsync(_endpoint);
 
                     var networkSteam = client.GetStream();
-                    await SendRequest(networkSteam, comandsLib);
+                    await SendRequest(networkSteam, commandsLib);
 
                     var requestToReceive = await JsonReceiveResponse.Receive(networkSteam);
                     var res = DeserializationObjectFromServer(requestToReceive);
@@ -67,9 +67,9 @@ public class ClientsCore
     }
     public async Task<RequestResult<NetworkStream>> Connected()//1
     {
-        int attemps = 0;
+        int attempts = 0;
         List<Error> errors = new List<Error>();
-        while (attemps <= MaxConnectionAttempts)
+        while (attempts <= MaxConnectionAttempts)
         {
             try
             {
@@ -88,9 +88,9 @@ public class ClientsCore
                 errors.Add(Error.InvalidInput);//An error occureed while sending/receiving the reques.
             }
         }
-        attemps++;
+        attempts++;
 
-        if (attemps >= MaxConnectionAttempts)
+        if (attempts >= MaxConnectionAttempts)
         {
             await Task.Delay(ConnectionRetryDekaMilliseconds);
         }
@@ -99,17 +99,17 @@ public class ClientsCore
         return (RequestResult<NetworkStream>)RequestResult.Failure(errors.ToArray());
     }
 
-    public async Task<RequestResult<RequestResponseBase>> SendResultAsync(ComandsLib comands, NetworkStream network, string? message = null)//2
+    public async Task<RequestResult<RequestResponseBase>> SendResultAsync(ComandsLib commands, NetworkStream network, string? message = null)//2
     {
-        if (ComandsLib.EditBook == comands)
+        if (ComandsLib.EditBook == commands)
         {
             return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.InvalidInput);
         }
 
-        await SendRequest(network, comands);
+        await SendRequest(network, commands);
         var requestToReceive = await JsonReceiveResponse.Receive(network);
-        var resultDeserilize = DeserializationObjectFromServer(requestToReceive);
-        return RequestResult.Create(resultDeserilize.Value);
+        var resultDesterilize = DeserializationObjectFromServer(requestToReceive);
+        return RequestResult.Create(resultDesterilize.Value);
     }
 
     public async Task<RequestResult> EditBook(NetworkStream network, Book book)//or 2
@@ -118,29 +118,42 @@ public class ClientsCore
         return RequestResult.Success();
     }
 
-    private async Task SendRequest(NetworkStream networkSteem, ComandsLib comandsLib)
+    private async Task SendRequest(NetworkStream networkStem, ComandsLib commandsLib)
     {
         var response = new ClientRequest
         {
             TimesTamp = TimesTamp.GetTimesTamp(),
-            Command = comandsLib,
+            Command = commandsLib,
             Message = string.Empty,
         };
 
-        await JsonResponseWrite.Write(networkSteem, response);
+        await JsonResponseWrite.Write(networkStem, response);
     }
 
-    private async Task SendRequestEditBook(NetworkStream networkSteem, ComandsLib comandsLib, Book book)
+    private async Task SendRequestEditBook(NetworkStream networkStream, ComandsLib commandsLib, Book book)
     {
         var jsonEditBook = JsonConvert.SerializeObject(book);
         var response = new ClientRequest
         {
             TimesTamp = TimesTamp.GetTimesTamp(),
-            Command = comandsLib,
+            Command = commandsLib,
             Message = jsonEditBook,
         };
 
-        await JsonResponseWrite.Write(networkSteem, response);
+        await JsonResponseWrite.Write(networkStream, response);
+    }
+
+    public async Task AddBook(NetworkStream networkStream, Book book )
+    {
+        var jsonAddBook = JsonConvert.SerializeObject(book);
+        var response = new ClientRequest
+        {
+            TimesTamp = TimesTamp.GetTimesTamp(),
+            Command = ComandsLib.AddBook,
+            Message = jsonAddBook,
+        };
+
+        await JsonResponseWrite.Write(networkStream, response);
     }
 
     public RequestResult<RequestResponseBase> DeserializationObjectFromServer(string requestToReceive)

@@ -1,13 +1,7 @@
 using ModelsLibrary;
-using Newtonsoft.Json;
 using Server.Context;
 using Server.core;
-using Server.DbContextsShop;
 using Server.Helper;
-using Server.models;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 
 namespace Server;
 
@@ -22,9 +16,6 @@ public partial class Form1 : Form
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
-
-
-
             if (db.Database.EnsureCreated())
             {
                 var author1 = new Author { Name = "Àâòîð 1" };
@@ -37,83 +28,91 @@ public partial class Form1 : Form
                 db.Books.AddRange(
                 new Book
                 {
-                    Name = "Book1", Cost = 1,
+                    Name = "Book1",
+                    Cost = 1,
                     Genre = genre1,
                     Author = author1,
-                    NumberOfPages = 1, PriceForSale = 1,
+                    NumberOfPages = 1,
+                    PriceForSale = 1,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 100 } },
+                    CountBooks = new CountBooks() { Count = 100 }
+                },
 
                 new Book
                 {
-                    Name = "Book2", Cost = 13,
+                    Name = "Book2",
+                    Cost = 13,
                     Genre = genre1,
                     Author = author1,
-                    NumberOfPages = 1, PriceForSale = 1,
+                    NumberOfPages = 1,
+                    PriceForSale = 1,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 6 } },
+                    CountBooks = new CountBooks() { Count = 6 }
+                },
 
                 new Book
                 {
-                    Name = "Book3", Cost = 11,
+                    Name = "Book3",
+                    Cost = 11,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 123, PriceForSale = 11,
+                    NumberOfPages = 123,
+                    PriceForSale = 11,
                     Publisher = publisher2,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 4 } },
+                    CountBooks = new CountBooks() { Count = 4 }
+                },
 
                 new Book
                 {
-                    Name = "Book4", Cost = 12,
+                    Name = "Book4",
+                    Cost = 12,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 1234, PriceForSale = 134,
+                    NumberOfPages = 1234,
+                    PriceForSale = 134,
                     Publisher = publisher2,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 12 } },
+                    CountBooks = new CountBooks() { Count = 12 }
+                },
 
                 new Book
                 {
-                    Name = "Book5", Cost = 14,
+                    Name = "Book5",
+                    Cost = 14,
                     Genre = genre2,
                     Author = author2,
-                    NumberOfPages = 1244, PriceForSale = 1424,
+                    NumberOfPages = 1244,
+                    PriceForSale = 1424,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 2 } },
+                    CountBooks = new CountBooks() { Count = 2 }
+                },
 
                 new Book
                 {
-                    Name = "Book6", Cost = 15,
+                    Name = "Book6",
+                    Cost = 15,
                     Genre = genre2,
                     Author = author1,
-                    NumberOfPages = 241, PriceForSale = 451,
+                    NumberOfPages = 241,
+                    PriceForSale = 451,
                     Publisher = publisher1,
                     TimeOfPublication = DateTime.Now,
-                    CountBooks = new CountBooks() { Count = 45 } }
+                    CountBooks = new CountBooks() { Count = 45 }
+                }
                 );
                 db.SaveChanges();
-
-
-                //db.Users.AddRange(
-                //    new User { Name = "Name1", Email = "qwert@gmail.com", Password = "12345", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name2", Email = "asdf@gmail.com", Password = "56789", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name3", Email = "zxcvb@gmail.com", Password = "rffvv ", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name4", Email = "yhjuk@gmail.com", Password = "dfghj", RegisterTime = DateTime.Now, Books = new List<Book>() },
-                //    new User { Name = "Name5", Email = "ikm@gmail.com", Password = "olmju", RegisterTime = DateTime.Now, Books = new List<Book>() });
-                //db.SaveChanges();
-
             }
 
         }
-         void button1_Click_1(object sender, EventArgs e)
-        {
-            _server.StartServer();
-        }
+    }
 
+    private void button1_Click(object sender, EventArgs e)
+    {
+        _server.StartServer();
     }
 }
 
