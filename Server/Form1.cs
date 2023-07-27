@@ -108,6 +108,13 @@ public partial class Form1 : Form
             }
 
         }
+
+    }
+
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        _server.StartServer();
     }
 
     private void button1_Click(object sender, EventArgs e)

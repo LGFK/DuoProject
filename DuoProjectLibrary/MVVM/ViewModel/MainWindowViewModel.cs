@@ -23,13 +23,14 @@ namespace DuoProjectLibrary.MVVM.ViewModel
         public BaseViewModel CurrentPage
         {
             get { return _observablePage; }
-            set { 
+            set 
+            { 
                 if(_observablePage != value)
                 {
                     _observablePage = value;
                     OnPropertyChanged(nameof(CurrentPage));
                 }
-                 }
+            }
         }
         ICommand addNewBookButtonClick;
         public ICommand AddNewBookCommand
@@ -81,7 +82,8 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
             if (res.IsFailure)
             {
-                System.Windows.MessageBox.Show($"{res.Errors}");
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel($"Error:{res.Errors}");
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
                 return;
             }
 
@@ -91,7 +93,8 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             {
                 if(books.Command == ComandsLib.ERROR)
                 {
-                    System.Windows.MessageBox.Show($"Error:{res.Errors}");
+                    CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel($"Error:{res.Errors}");
+                    ApplicationState.ModalWindowService.ShowModalWindow(vM); 
                     return;
                 }
 

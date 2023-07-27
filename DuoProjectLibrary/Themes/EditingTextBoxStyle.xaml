@@ -20,31 +20,6 @@
 
     </Style>
     
-    <!--TB WITH PLACEHOLDER STYLE-->
-    <Style x:Key="ediditingTextBoxStyleWP" TargetType="TextBox">
-
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border Background="White" Height="30" BorderBrush="Aqua" BorderThickness="4" CornerRadius="5">
-                        <ScrollViewer x:Name="PART_ContentHost" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        
-        <Setter Property="FontFamily" Value="Roboto"></Setter>
-        <Setter Property="FontSize" Value="15"></Setter>
-        <Setter Property="FontWeight" Value="DemiBold"></Setter>
-        <Setter Property="Padding" Value="0 3 0 0"></Setter>
-        <Setter Property="Text" Value="YYYY:MM:DD"></Setter>
-        <Style.Triggers>
-            <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter Property="Text" Value="{Binding PublicationDate}"/>
-                <Setter Property="Foreground" Value="Black"/>
-            </Trigger>
-        </Style.Triggers>
-
-    </Style>
+   
+   
 </ResourceDictionary>

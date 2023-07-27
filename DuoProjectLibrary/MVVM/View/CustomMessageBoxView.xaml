@@ -1,0 +1,33 @@
+﻿<Window x:Class="DuoProjectLibrary.MVVM.View.CustomMessageBoxView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DuoProjectLibrary.MVVM.View"
+        mc:Ignorable="d"
+        Title="CustomMessageBoxView" WindowStartupLocation="CenterScreen"  Height="200" Width="300" AllowsTransparency="True" WindowStyle="None" Background="Transparent">
+    <Grid >
+        <Border Margin="0" Style="{StaticResource BorderTemplate}" Background="DarkGray">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown" Style="{StaticResource BorderTemplate}" Margin="0" BorderThickness="0 0 0 3" CornerRadius="6 6  0 0"  Background="Gray">
+                    <StackPanel x:Name="panelControlBar" Margin="0" Grid.Row="0"   Orientation="Horizontal" FlowDirection="RightToLeft">
+                        <Button Click="Button_Click" Height="20" Width="20" Style="{StaticResource close}">X</Button>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Padding="20">
+                    <TextBlock FontSize="20" Style="{StaticResource ThreeDTextStyle}" Text="{Binding Message}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Button Click="Button_Click"  Grid.Row="2" Style="{StaticResource Button1}" Margin="3" Width="80" Height="30" >
+                    <TextBlock Style="{StaticResource ThreeDTextStyle}" FontSize="15">OK.</TextBlock>
+                </Button>
+                
+            </Grid>
+        </Border>
+        
+    </Grid>
+</Window>

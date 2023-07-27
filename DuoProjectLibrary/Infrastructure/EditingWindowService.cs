@@ -10,13 +10,26 @@ namespace DuoProjectLibrary.Infrastructure
 {
     public class EditingWindowService:IModalWindowService
     {
-        public void ShowModalWindow(EditingWindowViewModel viewModel)
+        public void ShowModalWindow(BaseViewModel viewModel)
         {
-            var window = new EditingWindow()
+            if (viewModel is EditingWindowViewModel eWVM)
             {
-                DataContext = viewModel
-            };
-            window.ShowDialog();
+                var window = new EditingWindow()
+                {
+                    DataContext = eWVM
+                };
+                window.ShowDialog();
+            }
+            else if(viewModel is CustomMessageBoxViewModel cMBVM)
+            {
+                var window = new CustomMessageBoxView()
+                {
+                    DataContext = cMBVM
+                };
+                window.ShowDialog();
+            }
+            
+            
         }
     }
 }

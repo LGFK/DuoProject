@@ -8,8 +8,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel;
 
 public class NewBookViewModel : BaseViewModel
 {
-    string title;
-    public string Title
+    public class NewBookViewModel : BaseViewModel
     {
         get { return title; }
         set { title = value; OnPropertyChanged(); }
@@ -39,10 +38,9 @@ public class NewBookViewModel : BaseViewModel
 
     }
 
-    string genre;
-    public string Genre
-    { get { return genre; } set { genre = value; OnPropertyChanged(); } }
-
+        string genre;
+        public string Genre
+        { get { return genre; } set { genre = value; OnPropertyChanged(); } }
 
     string publisher;
     public string Publisher
@@ -73,25 +71,32 @@ public class NewBookViewModel : BaseViewModel
     }
     async void AddBttnClickMethod(object param)
     {
-        var bookToAdd = new Book();
-        bookToAdd.Cost = Price;
-        bookToAdd.Author = new Author();
-        bookToAdd.Author.Name = this.Author;
-        bookToAdd.NumberOfPages = NumberOfPages;
-        bookToAdd.Publisher = new ModelsLibrary.Publisher();
-        bookToAdd.Publisher.Name = this.Publisher;
-        bookToAdd.Genre = new ModelsLibrary.Genre();
-        bookToAdd.Genre.Name = this.Genre;
-        bookToAdd.PriceForSale = this.PrimeCost;
-        bookToAdd.TimeOfPublication = StringToDate(publicationDate);
+            try
+            {
+                var bookToAdd = new Book();
+                bookToAdd.Cost = Price;
+                bookToAdd.Author = new Author();
+                bookToAdd.Author.Name = this.Author;
+                bookToAdd.NumberOfPages = NumberOfPages;
+                bookToAdd.Publisher = new ModelsLibrary.Publisher();
+                bookToAdd.Publisher.Name = this.Publisher;
+                bookToAdd.Genre = new ModelsLibrary.Genre();
+                bookToAdd.Genre.Name = this.Genre;
+                bookToAdd.PriceForSale = this.PrimeCost;
+                bookToAdd.TimeOfPublication = StringToDate(publicationDate);
 
-        ClientsCore clientsCore = new ClientsCore();
-        var network = await clientsCore.Connected();
-
-        if(!network.IsSuccess)
-        {
-            return;
+                //тут должен быть метод добавления этой книги в бд.
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+            }
         }
+    
+        
 
         _= clientsCore.AddBook(network.Value, bookToAdd);
 
@@ -114,11 +119,33 @@ public class NewBookViewModel : BaseViewModel
         }
         catch (FormatException ex)
         {
-            System.Windows.MessageBox.Show("there's something wrong with your input");
-        }
-        catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); }
-        throw new Exception("something went wrong");
 
+            try
+            {
+                if(dateStr.Split(":").Count()<3)
+                {
+                    throw new FormatException();
+                }
+                int day = Int32.Parse(dateStr.Split(":")[2]);
+                int month = Int32.Parse(dateStr.Split(":")[1]);
+                int year = Int32.Parse(dateStr.Split(":")[0]);
+                Months m = (Months)month;
+                string dateToParse = $"{m} {day}, {year}";
+
+                return DateTime.Parse(dateToParse);
+                
+            }
+            catch(FormatException ex)
+            {
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("there's something wrong with your input");
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+            }
+            catch (Exception ex) {
+                CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
+                ApplicationState.ModalWindowService.ShowModalWindow(vM);
+                
+            }
+            throw new Exception("something went wrong");
 
     }
 }

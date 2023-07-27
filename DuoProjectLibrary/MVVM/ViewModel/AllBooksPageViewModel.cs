@@ -139,6 +139,13 @@ internal class AllBooksPageViewModel : BaseViewModel
                 Books.Add(book);
             }
         }
+        catch (Exception ex) 
+        
+        {
+            CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel(ex.Message);
+            ApplicationState.ModalWindowService.ShowModalWindow(vM); 
+        }
+
     }
 }
 
