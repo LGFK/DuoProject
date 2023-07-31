@@ -11,8 +11,8 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+        button2.Enabled = false;
         _server = new ServerCore();
-        //itin default books
 
         using (var db = new BookShopDbContext(DbOptions.GetOptions()))
         {
@@ -115,6 +115,15 @@ public partial class Form1 : Form
     private void button1_Click(object sender, EventArgs e)
     {
         _server.StartServer();
+        button1.Enabled = false;
+        button2.Enabled = true;
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+        _server.StopServer();
+        button2.Enabled = false;
+        button1 .Enabled = true;
     }
 }
 

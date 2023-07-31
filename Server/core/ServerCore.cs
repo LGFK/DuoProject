@@ -37,6 +37,12 @@ internal class ServerCore
         _ = WaitForConnectionAsync();
     }
 
+    public void StopServer()
+    {
+        _isStart = false;
+        _listener.Stop();
+    }
+
     private async Task WaitForConnectionAsync()
     {
         while (_isStart)
@@ -61,11 +67,6 @@ internal class ServerCore
         if (clientRequest == null)
         {
             return;
-        }
-
-        if (clientRequest.TimesTamp == TimesTamp.GetTimesTamp())
-        {
-            SendDateIsCurrent(networkStream);
         }
 
         switch (clientRequest.Command)
@@ -93,17 +94,6 @@ internal class ServerCore
         }
     }
 
-    private async void SendDateIsCurrent(NetworkStream networkStream)
-    {
-        var response = new GetBookResponse
-        {
-            Command = ComandsLib.Successful,
-            TimesTamp = TimesTamp.GetTimesTamp(),
-        };
-
-        await JsonResponseWrite.Write(networkStream, response);
-    }
-
     private void ApiWeather(NetworkStream networkStream, ClientRequest clientRequest)
     {
         //_weatherApi = new WeatherApi("./config/appsetings.json");
@@ -119,42 +109,7 @@ internal class ServerCore
 
         List<Book> books = _dbBook.GetTopFiveGenre(clientRequest.Message);
 
-        var response = new GetBookResponse
-        {
-            Command = ComandsLib.GetFiveBestBooks,
-            TimesTamp = TimesTamp.GetTimesTamp(),
-            Books = books.Select(b => new Book
-            {
-                Id = b.Id,
-                Name = b.Name,
-                NumberOfPages = b.NumberOfPages,
-                TimeOfPublication = b.TimeOfPublication,
-                Cost = b.Cost,
-                PriceForSale = b.PriceForSale,
-                Image = b.Image,
-                CountBooks = new CountBooks
-                {
-                    Count = b.CountBooks?.Count ?? 0,
-                },
-                Publisher = new Publisher
-                {
-                    Id = b.PublisherId,
-                    Name = b.Publisher?.Name ?? string.Empty,
-                },
-                Genre = new Genre
-                {
-                    Id = b.GenreId,
-                    Name = b.Genre?.Name ?? string.Empty,
-                },
-                
-            }).ToList(),
-        };
-/*        var response = new GetBookResponse
-        {
-            Books = books,
-            Command = ComandsLib.GetFiveBestBooks,
-            TimesTamp = TimesTamp.GetTimesTamp(),
-        };*/
+        var response = BookLogic.FiveBestBooks(books);
 
         await JsonResponseWrite.Write(networkStream, response);
     }
@@ -176,52 +131,16 @@ internal class ServerCore
     private async void AllBooks(NetworkStream networkStream)
     {
         List<Book> books = _dbBook.GetAllBooks();
-
-        var response = new GetBookResponse
-        {
-            Command = ComandsLib.GetAllBooks,
-            TimesTamp = TimesTamp.GetTimesTamp(),
-            Books = books.Select(b => new Book
-            {
-                Id = b.Id,
-                Name = b.Name,
-                NumberOfPages = b.NumberOfPages,
-                TimeOfPublication = b.TimeOfPublication,
-                Cost = b.Cost,
-                PriceForSale = b.PriceForSale,
-                Image = b.Image,
-                CountBooks = new CountBooks
-                {
-                    
-                    Count = b.CountBooks?.Count ?? 0,
-                },
-                Publisher = new Publisher
-                {
-                    Id = b.PublisherId,
-                    Name = b.Publisher?.Name ?? string.Empty,
-                },
-                Genre = new Genre
-                {
-                    Id = b.GenreId,
-                    Name = b.Genre?.Name ?? string.Empty,
-                },
-                Author = new Author
-                {
-                    Id = b.AuthorId,
-                    Name = b?.Author?.Name ?? string.Empty,
-                }
-            }).ToList(),
-        };
-
+        var response = BookLogic.AllBooks(books);
         await JsonResponseWrite.Write(networkStream, response);
     }
 
     private void EditBook(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        if (!ValidatorClient(clientRequest))
+/*        if (!ValidatorClient(clientRequest))
         {
             return;
-        }
+        }*/
 
         var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message!);
 
@@ -234,12 +153,7 @@ internal class ServerCore
 
     private void AddBook(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        if (!ValidatorClient(clientRequest))
-        {
-            return;
-        }
-
-        var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message!);
+        var book = BookLogic.AddBook(clientRequest);
 
         if(book is null)
         {
@@ -248,18 +162,15 @@ internal class ServerCore
 
         _dbBook.AddNewBook(book);
     }
-
-    private static bool ValidatorClient(ClientRequest clientRequest)
-    {
-        if (clientRequest == null)
-        {
-            return false;
-        }
-
-        if (clientRequest.Message == null)
-        {
-            return false;
-        }
-        return true;
-    }
 }
+
+/*    private async void SendDateIsCurrent(NetworkStream networkStream)
+    {
+        var response = new GetBookResponse
+        {
+            Command = ComandsLib.Successful,
+            TimesTamp = TimesTamp.GetTimesTamp(),
+        };
+
+        await JsonResponseWrite.Write(networkStream, response);
+    }*/

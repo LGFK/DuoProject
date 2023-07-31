@@ -23,48 +23,6 @@ public class ClientsCore
         _endpoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1448);
     }
 
-    public async Task<RequestResult> SendRequestAsync(ComandsLib commandsLib, string? message = null)
-    {
-        int attempts = 0;
-        List<Error> errors = new List<Error>();
-        while (attempts < MaxConnectionAttempts)
-        {
-            try
-            {
-                using (var client = new TcpClient())
-                {
-                    await client.ConnectAsync(_endpoint);
-
-                    var networkSteam = client.GetStream();
-                    await SendRequest(networkSteam, commandsLib);
-
-                    var requestToReceive = await JsonReceiveResponse.Receive(networkSteam);
-                    var res = DeserializationObjectFromServer(requestToReceive);
-
-                    return RequestResult.Create(res.Value);
-                }
-            }
-            catch (SocketException)
-            {
-                //Failed to establish connection to the server.
-                errors.Add(Error.InvalidInput);
-            }
-            catch
-            {
-                //An error occureed while sending/receiving the reques.
-                errors.Add(Error.InvalidInput);
-            }
-
-            attempts++;
-
-            if (attempts >= MaxConnectionAttempts)
-            {
-                await Task.Delay(ConnectionRetryDekaMilliseconds);
-            }
-        }
-        errors.Add(Error.ConnectionTimeout);
-        return RequestResult.Failure(errors.ToArray());
-    }
     public async Task<RequestResult<NetworkStream>> Connected()//1
     {
         int attempts = 0;
@@ -204,3 +162,46 @@ public class ClientsCore
         return res;
     }
 }
+
+/*public async Task<RequestResult> SendRequestAsync(ComandsLib commandsLib, string? message = null)
+{
+    int attempts = 0;
+    List<Error> errors = new List<Error>();
+    while (attempts < MaxConnectionAttempts)
+    {
+        try
+        {
+            using (var client = new TcpClient())
+            {
+                await client.ConnectAsync(_endpoint);
+
+                var networkSteam = client.GetStream();
+                await SendRequest(networkSteam, commandsLib);
+
+                var requestToReceive = await JsonReceiveResponse.Receive(networkSteam);
+                var res = DeserializationObjectFromServer(requestToReceive);
+
+                return RequestResult.Create(res.Value);
+            }
+        }
+        catch (SocketException)
+        {
+            //Failed to establish connection to the server.
+            errors.Add(Error.InvalidInput);
+        }
+        catch
+        {
+            //An error occureed while sending/receiving the reques.
+            errors.Add(Error.InvalidInput);
+        }
+
+        attempts++;
+
+        if (attempts >= MaxConnectionAttempts)
+        {
+            await Task.Delay(ConnectionRetryDekaMilliseconds);
+        }
+    }
+    errors.Add(Error.ConnectionTimeout);
+    return RequestResult.Failure(errors.ToArray());
+}*/

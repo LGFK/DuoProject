@@ -119,7 +119,8 @@ internal class AllBooksPageViewModel : BaseViewModel
         try
         {
             ClientsCore clientsCore = new ClientsCore();
-            var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
+            var net = await clientsCore.Connected();
+            var res = await clientsCore.SendResultAsync( ComandsLib.GetAllBooks, net.Value);
 
             if (res.IsFailure)
             {
