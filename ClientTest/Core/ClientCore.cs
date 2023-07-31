@@ -7,7 +7,6 @@ using CommunicationLibrary;
 using ModelsLibrary;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -56,7 +55,7 @@ internal class ClientCore
         return RequestResult.Success(res.Value);
     }
 
-    private async Task SendRequest(NetworkStream networkStream, ComandsLib command,Book book)
+    private async Task SendRequest(NetworkStream networkStream, ComandsLib command, Book book)
     {
         var jsonBook = JsonConvert.SerializeObject(book);
 
@@ -74,9 +73,9 @@ internal class ClientCore
         await networkStream.WriteAsync(responseBytes, 0, responseBytes.Length);
     }
 
-    public async Task<RequestResult>EditBook(NetworkStream networkStream, Book book)
+    public async Task<RequestResult> EditBook(NetworkStream networkStream, Book book)
     {
-        await SendRequest(networkStream, ComandsLib.EditBook, new Book() { Name = "Good books !222", Author = new Author() { Name = "awdawdawadwadw"} });
+        await SendRequest(networkStream, ComandsLib.EditBook, new Book() { Name = "Good books !222", Author = new Author() { Name = "awdawdawadwadw" } });
         return RequestResult.Success();
     }
 
@@ -150,14 +149,14 @@ internal class ClientCore
     {
         if (requestToReceive is null)
         {
-            return (RequestResult< RequestResponseBase>)RequestResult.Failure(Error.NullValue);
+            return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
         }
 
         string jsonToReceive = Encoding.UTF8.GetString(requestToReceive);
         var comand = JsonConvert.DeserializeObject<RequestResponseBase>(jsonToReceive);
         if (comand is null)
         {
-            return (RequestResult< RequestResponseBase>) RequestResult.Failure(Error.NullValue);
+            return (RequestResult<RequestResponseBase>)RequestResult.Failure(Error.NullValue);
         }
 
         RequestResponseBase resultChoise = ChoiseCommand(comand.Command, jsonToReceive);
@@ -174,17 +173,17 @@ internal class ClientCore
         {
             case ComandsLib.GetAllBooks:
                 var books = DataBooks.AllBooks(jsonToReceive);
-                
+
                 SaveInJson(books, comands);
                 return books;
             case ComandsLib.GetAllUsers:
                 var users = DataUsers.Users(jsonToReceive);
-                
+
                 SaveInJson(users, comands);
                 return users;
             case ComandsLib.GetFiveBestBooks:
                 var bestbooks = DataBooks.AllBooks(jsonToReceive);
-               
+
                 SaveInJson(bestbooks, comands);
                 break;
             case ComandsLib.Successful:

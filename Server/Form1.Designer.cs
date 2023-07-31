@@ -28,55 +28,43 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        listBox1 = new ListBox();
         button1 = new Button();
-        listBox2 = new ListBox();
+        button2 = new Button();
         SuspendLayout();
-        // 
-        // listBox1
-        // 
-        listBox1.FormattingEnabled = true;
-        listBox1.ItemHeight = 15;
-        listBox1.Location = new Point(12, 12);
-        listBox1.Name = "listBox1";
-        listBox1.Size = new Size(247, 199);
-        listBox1.TabIndex = 0;
         // 
         // button1
         // 
-        button1.Location = new Point(533, 12);
+        button1.Location = new Point(215, 69);
         button1.Name = "button1";
-        button1.Size = new Size(75, 23);
+        button1.Size = new Size(171, 73);
         button1.TabIndex = 1;
         button1.Text = "StartServer";
         button1.UseVisualStyleBackColor = true;
         button1.Click += button1_Click;
         // 
-        // listBox2
+        // button2
         // 
-        listBox2.FormattingEnabled = true;
-        listBox2.ItemHeight = 15;
-        listBox2.Location = new Point(280, 12);
-        listBox2.Name = "listBox2";
-        listBox2.Size = new Size(247, 199);
-        listBox2.TabIndex = 2;
+        button2.Location = new Point(215, 148);
+        button2.Name = "button2";
+        button2.Size = new Size(171, 73);
+        button2.TabIndex = 2;
+        button2.Text = "StopServer";
+        button2.UseVisualStyleBackColor = true;
+        button2.Click += button2_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(615, 229);
-        Controls.Add(listBox2);
+        Controls.Add(button2);
         Controls.Add(button1);
-        Controls.Add(listBox1);
         Name = "Form1";
         Text = "Server";
         ResumeLayout(false);
     }
 
     #endregion
-
-    private ListBox listBox1;
     private Button button1;
-    private ListBox listBox2;
+    private Button button2;
 }

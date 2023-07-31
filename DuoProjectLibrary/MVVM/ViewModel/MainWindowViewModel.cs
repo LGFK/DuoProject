@@ -75,7 +75,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             
         }
            
-        private async Task LoadData()
+        /*private async Task LoadData()
         {
             ClientsCore clientsCore = new ClientsCore();
             var res = await clientsCore.SendRequestAsync(ComandsLib.GetAllBooks);
@@ -100,6 +100,6 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
                 ClientCache.Add(ComandsLib.GetAllBooks.ToString(), books);
             }            
-        }
+        }*/
     }
 }
