@@ -1,6 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+
+
+    <Style x:Key="test" TargetType="{x:Type Button}">
+
+        <Setter Property="Background" Value="Red"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FFFB7F01"/>
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+
+
     <Style x:Key="Button1" TargetType="{x:Type Button}">
 
         <Setter Property="MaxHeight" Value="400"></Setter>
@@ -267,7 +281,7 @@
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" ColorInterpolationMode="ScRgbLinearInterpolation">
 
                     <GradientStop Color="Red" Offset="0.1"/>
-                   
+
 
                 </LinearGradientBrush>
             </Setter.Value>
@@ -277,7 +291,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border CornerRadius="0 0 0 0" Background="{TemplateBinding Background}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                           
+
                         </ContentPresenter>
 
 
@@ -290,6 +304,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
 </ResourceDictionary>
