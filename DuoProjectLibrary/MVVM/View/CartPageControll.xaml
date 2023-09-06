@@ -36,8 +36,8 @@
                     <ColumnDefinition Width="241*" ></ColumnDefinition>
                     <ColumnDefinition Width="135.034"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="2" Style="{StaticResource checkoutBttnStyle}">
-                    <TextBlock FontSize="20"  Style="{StaticResource ThreeDTextStyle}">Checkout</TextBlock>
+                <Button  Panel.ZIndex="1" Style="{StaticResource checkoutBttnStyle}" Command="{Binding SellCommand}" Grid.Column="2">
+                    <TextBlock Style="{StaticResource ThreeDTextStyle }" FontSize="20">Checkout</TextBlock>
                 </Button>
                 <TextBlock Grid.Column="0" FontSize="20"  Style="{StaticResource ThreeDTextStyle}" Margin="230,3,0,0">Total Price :</TextBlock>
                 <TextBlock Grid.Column="1" FontSize="20"  Style="{StaticResource ThreeDTextStyle}" Text="{Binding TotalPrice}" Grid.ColumnSpan="2" Margin="0 3 0 0" />

@@ -34,7 +34,7 @@ namespace TextBoxWithPlaceholder
             private set { SetValue(IsEmptyPropertyKey, value); }
         }
 
-       
+        
         private static readonly DependencyPropertyKey IsEmptyPropertyKey =
             DependencyProperty.RegisterReadOnly("IsEmpty", typeof(bool), typeof(PlaceholderTextBox), new PropertyMetadata(true));
 

@@ -24,5 +24,7 @@ namespace DuoProjectLibrary.MVVM.View
         {
             InitializeComponent();
         }
+
+        
     }
 }

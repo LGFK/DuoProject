@@ -77,6 +77,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
             try
             {
                 var bookToAdd = new Book();
+                bookToAdd.Name = Title;
                 bookToAdd.Cost = Price;
                 bookToAdd.Author = new Author();
                 bookToAdd.Author.Name = this.Author;
@@ -90,7 +91,7 @@ namespace DuoProjectLibrary.MVVM.ViewModel
 
                 ClientsCore clientsCore = new ClientsCore();
                 var net = await clientsCore.Connected();
-                _ = clientsCore.AddBook(net.Value, bookToAdd);
+                await clientsCore.AddBook(net.Value, bookToAdd);
                 CustomMessageBoxViewModel vM = new CustomMessageBoxViewModel("Book Added");
                 ApplicationState.ModalWindowService.ShowModalWindow(vM);
             }
