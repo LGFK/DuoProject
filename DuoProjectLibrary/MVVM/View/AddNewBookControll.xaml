@@ -57,13 +57,13 @@
                 <TextBox Margin="0 0 50 5"  Style="{StaticResource ResourceKey=ediditingTextBoxStyle}" Text="{Binding Price}" Grid.Column="1" Grid.Row="4" ></TextBox>
                 <TextBox Margin="0 0 50 5"  Style="{StaticResource ResourceKey=ediditingTextBoxStyle}" Text="{Binding PrimeCost}" Grid.Column="1" Grid.Row="5" ></TextBox>
                     
-                <custom:PlaceholderTextBox Placeholder="YYYY:MM:DD" Text="{Binding PublicationDate}" Margin="0 0 50 5"  Grid.Column="1" Grid.Row="6" >
+                <custom:PlaceholderTextBox Placeholder="YYYY:MM:DD" Text="{Binding PublicationDate}" Margin="0 0 50 5"  Grid.Column="1" Grid.Row="6">
                    
                 </custom:PlaceholderTextBox>
                 <TextBox Margin="0 0 50 0"  Style="{StaticResource ResourceKey=ediditingTextBoxStyle}" Text="{Binding Publisher}" Grid.Column="1" Grid.Row="7"/>
 
 
-                <Button Grid.ColumnSpan="2" Height="30" Width="120" Grid.Row="8" Style="{StaticResource Button1}" Command="{Binding AddBttn}" FontSize="9">ADD</Button>
+                <Button Grid.ColumnSpan="2" Height="30" Width="120" Grid.Row="8" Style="{StaticResource test}" Command="{Binding AddBttn}" FontSize="9">ADD</Button>
             </Grid>
             </Viewbox>
         </Border>
