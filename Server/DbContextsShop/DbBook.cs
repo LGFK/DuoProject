@@ -39,12 +39,45 @@ public class DbBook
             .ToList();
 #pragma warning restore CS8602 
 
-    public void AddNewBook(Book book)
+    public async void AddNewBook(Book book)
     {
-        var isCheck = _dbContext.Books.FirstOrDefault(b => b.Id == book.Id);
-        if (isCheck != null)
+        var isCheck = _dbContext.Books.FirstOrDefault(b => b.Name == book.Name);
+        if (isCheck is null)
         {
-            _dbContext.Books.Add(book);
+            var genre = new Genre { Name = book.Genre.Name };
+            var publisher = new Publisher { Name = book.Publisher.Name };
+            var author = new Author { Name = book.Author.Name };
+            var countBook = new CountBooks();
+
+
+            var newBook = new Book
+            {
+                Name = "Test1",
+                Genre = genre,
+                Publisher = publisher,
+                Author = author,
+                CountBooks = countBook,
+                NumberOfPages = book.NumberOfPages,
+                TimeOfPublication = book.TimeOfPublication,
+                Cost = book.Cost,
+                PriceForSale = book.PriceForSale,
+                Image = book.Image
+            };
+/*            var test1 = new Book
+            {
+                Name = "Test1",
+                Cost = 100,
+                PriceForSale = 200,
+                Genre = new Genre { Name = "Genre1" },
+                Publisher = new Publisher { Name = "Publisher" },
+                Author = new Author { Name = "Author" },
+                CountBooks = new CountBooks() { Count = 100 },
+                NumberOfPages = 100,
+                TimeOfPublication = DateTime.Now,
+
+            };*/
+
+            _dbContext.Books.Add(newBook);
             _dbContext.SaveChanges();
         }
     }
