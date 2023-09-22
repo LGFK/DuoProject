@@ -42,44 +42,69 @@ public class DbBook
     public async void AddNewBook(Book book)
     {
         var isCheck = _dbContext.Books.FirstOrDefault(b => b.Name == book.Name);
-        if (isCheck is null)
+        if (isCheck is not null)
         {
-            var genre = new Genre { Name = book.Genre.Name };
-            var publisher = new Publisher { Name = book.Publisher.Name };
-            var author = new Author { Name = book.Author.Name };
-            var countBook = new CountBooks();
+            return;
+        }
+        var newBook = new Book() {Name = book.Name };
 
-
-            var newBook = new Book
-            {
-                Name = "Test1",
-                Genre = genre,
-                Publisher = publisher,
-                Author = author,
-                CountBooks = countBook,
-                NumberOfPages = book.NumberOfPages,
-                TimeOfPublication = book.TimeOfPublication,
-                Cost = book.Cost,
-                PriceForSale = book.PriceForSale,
-                Image = book.Image
-            };
-/*            var test1 = new Book
-            {
-                Name = "Test1",
-                Cost = 100,
-                PriceForSale = 200,
-                Genre = new Genre { Name = "Genre1" },
-                Publisher = new Publisher { Name = "Publisher" },
-                Author = new Author { Name = "Author" },
-                CountBooks = new CountBooks() { Count = 100 },
-                NumberOfPages = 100,
-                TimeOfPublication = DateTime.Now,
-
-            };*/
-
-            _dbContext.Books.Add(newBook);
+        var exGenre = _dbContext.Genres.FirstOrDefault(g => g.Name == book.Genre.Name);
+        if (exGenre is null)
+        {
+            exGenre = new Genre { Name = book.Genre.Name};
+            _dbContext.Genres.Add(exGenre);
             _dbContext.SaveChanges();
         }
+
+        newBook.Genre = exGenre;
+        newBook.GenreId = _dbContext.Genres
+            .Where(g=>g.Name == newBook.Genre.Name)
+            .Select(g=>g.Id)
+            .FirstOrDefault();
+
+        var exPublisher = _dbContext.Publisher
+            .FirstOrDefault(b => b.Name == book.Publisher.Name);
+
+        if (exPublisher is null)
+        {
+            exPublisher = new Publisher { Name = book.Genre.Name };
+            _dbContext.Publisher.Add(exPublisher);
+            _dbContext.SaveChanges();
+        }
+        newBook.Publisher = exPublisher;
+        newBook.PublisherId = _dbContext.Publisher
+            .Where(g=>g.Name == newBook.Publisher.Name)
+            .Select(g=>g.Id)
+            .FirstOrDefault();
+
+        var exAuthor = _dbContext.Author
+            .FirstOrDefault(b => b.Name == book.Author.Name);
+        if (exAuthor is null) 
+        {
+            exAuthor = new Author { Name = book.Author.Name };
+            _dbContext.Author.Add(exAuthor);
+            _dbContext.SaveChanges();
+        }
+        newBook.Author = exAuthor;
+        newBook.AuthorId = _dbContext.Author
+            .Where(g => g.Name == newBook.Author.Name)
+            .Select(g => g.Id)
+            .FirstOrDefault();
+
+        var exCountBooks = _dbContext.CountBooks
+            .FirstOrDefault(b => b.BookId == book.Id);
+        if (exCountBooks is null)
+        {
+            exCountBooks = new CountBooks { Count = 10,Book = newBook };
+            _dbContext.CountBooks.Add(exCountBooks);
+            //_dbContext.SaveChanges();
+        }
+        newBook.CountBooks = exCountBooks;
+        newBook.Cost = book.Cost;
+
+
+        _dbContext.Books.Add(newBook);
+        _dbContext.SaveChanges();
     }
     public void RemoveBook(Book book)
     {
@@ -114,7 +139,7 @@ public class DbBook
         var exGenre = _dbContext.Genres.FirstOrDefault(g => g.Name == book.Genre.Name);
         if (exGenre is null)
         {
-            exGenre = new Genre { Name = book.Genre.Name, Book = book.Genre.Book };
+            exGenre = new Genre { Name = book.Genre.Name };
             _dbContext.Genres.Add(exGenre);
         }
         bk.Genre = exGenre;
