@@ -5,7 +5,7 @@ using Server.Context;
 namespace Server.DbContextsShop;
 public class DbUser
 {
-    private BookShopDbContext _dbContext;
+    private readonly BookShopDbContext _dbContext;
     public DbUser(DbContextOptions options)
     {
         _dbContext = new BookShopDbContext((DbContextOptions<BookShopDbContext>)options);
