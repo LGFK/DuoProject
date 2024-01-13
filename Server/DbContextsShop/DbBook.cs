@@ -39,7 +39,7 @@ public class DbBook
             .ToList();
 #pragma warning restore CS8602 
 
-    public async void AddNewBook(Book book)
+    public void AddNewBook(Book book)
     {
         var isCheck = _dbContext.Books.FirstOrDefault(b => b.Name == book.Name);
         if (isCheck is not null)
@@ -51,7 +51,7 @@ public class DbBook
         var exGenre = _dbContext.Genres.FirstOrDefault(g => g.Name == book.Genre.Name);
         if (exGenre is null)
         {
-            exGenre = new Genre { Name = book.Genre.Name};
+            exGenre = new Genre { Name = book.Genre.Name??= string.Empty};
             _dbContext.Genres.Add(exGenre);
             _dbContext.SaveChanges();
         }

@@ -96,7 +96,7 @@ internal class ServerCore
 
     private void ApiWeather(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        //_weatherApi = new WeatherApi("./config/appsetings.json");.............
+        //_weatherApi = new WeatherApi("./config/appsetings.json");
     }
 
     private async void FiveBestBooks(NetworkStream networkStream, ClientRequest clientRequest)
@@ -137,11 +137,6 @@ internal class ServerCore
 
     private void EditBook(NetworkStream networkStream, ClientRequest clientRequest)
     {
-/*        if (!ValidatorClient(clientRequest))
-        {
-            return;
-        }*/
-
         var book = JsonConvert.DeserializeObject<Book>(clientRequest.Message!);
 
         if(book is null)
