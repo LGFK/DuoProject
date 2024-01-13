@@ -96,7 +96,7 @@ internal class ServerCore
 
     private void ApiWeather(NetworkStream networkStream, ClientRequest clientRequest)
     {
-        //_weatherApi = new WeatherApi("./config/appsetings.json");
+        //_weatherApi = new WeatherApi("./config/appsetings.json");.............
     }
 
     private async void FiveBestBooks(NetworkStream networkStream, ClientRequest clientRequest)
